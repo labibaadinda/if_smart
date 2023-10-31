@@ -17,14 +17,20 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->nullable();
-            // $table->string('nim')->unique()->nullable();
             $table->string('nim')->default('');
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->string('nim')->unique()->nullable();
             $table->string('password');
-            $table->rememberToken();
-            $table->string('role')->nullable();
-            $table->string('angkatan')->nullable();
+            $table->string('role')->default('user');
             $table->string('status')->default('aktif');
+            $table->string('angkatan')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('kota')->nullable();
+            $table->string('provinsi')->nullable();
+            $table->string('jalur_masuk')->nullable();
+            $table->string('handphone')->nullable();
+            $table->string('foto')->nullable();
+            $table->rememberToken();
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }
