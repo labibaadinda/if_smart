@@ -5,8 +5,8 @@
 - Clone this repository and install all dependency first
 
 ```
-git clone https://github.com/karindralinux/siap-undip-clone.git
-cd siap-undip-clone
+git clone https://github.com/labibhabibie/mini-project-ppl.git
+cd mini-project-ppl
 composer install
 ```
 
@@ -15,8 +15,8 @@ composer install
 ```
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=siap_undip
+DB_PORT=8111
+DB_DATABASE=mini-project-ppl
 DB_USERNAME=root
 DB_PASSWORD=
 
