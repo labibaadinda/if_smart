@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon">
             <i class="fab fa-laravel"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">CHIKADMIN</div>
+        <div class="sidebar-brand-text mx-3">IF SMART</div>
     </a>
 
     <!-- Divider -->
@@ -25,7 +25,7 @@
         <a class="nav-link" href="{{ route('user') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
-    </li>  
+    </li>
     @elseCan('admin')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user') }}">

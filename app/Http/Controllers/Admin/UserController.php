@@ -49,15 +49,25 @@ class UserController extends Controller
 
             $user = new User();
 
-            $user->name = $request->nae;
+            $user->name = $request->name;
 
             $isEmailExists = User::where('email', $request->email)->count() >= 1 ? true : false;
 
             if ($isEmailExists) {
                 throw new Exception("Email Already used", 400);
             }
-
             $user->email = $request->email;
+
+            $isNimExists = User::where('nim', $request->email)->count() >= 1 ? true : false;
+            if ($isNimExists) {
+                throw new Exception("NIM Already exists", 400);
+            }
+            $user->nim = $request->nim;
+
+            $user->angkatan = $request->angkatan;
+
+            $user->status = $request->status;
+
 
             $password = Hash::make($request->password);
             $user->password = $password;

@@ -31,9 +31,29 @@
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" required=id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
+                <input type="text" required id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
 
                 @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="nim">NIM</label>
+                <input required id="nim" name="nim" class="form-control @error('nim') is-invalid @enderror" value="{{ old('nim') }}">
+
+                @error('nim')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="angkatan">Angkatan</label>
+                <input required id="angkatan" name="angkatan" class="form-control @error('angkatan') is-invalid @enderror" value="{{ old('angkatan') }}">
+
+                @error('angkatan')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
@@ -50,15 +70,23 @@
                 @enderror
             </div>
             <div class="form-group">
+                <label for="r">Status</label>
+                <select name="status" id="r" class="form-control">
+                    <option disabled="">- PILIH STATUS -</option>
+                    <option selected value="aktif">Aktif</option>
+                    <option value="nonAktif">Non-Aktif</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="p">Password</label>
-                <input type="password" required="" id="p" name="password" class="form-control">
+                <input type="password" required="" id="p" name="password" class="form-control" value="{{ 'informatika_undip' }}">
             </div>
             <div class="form-group">
                 <label for="r">Role</label>
                 <select name="role" id="r" class="form-control">
                     <option disabled="">- PILIH ROLE -</option>
+                    <option selected value="user">User</option>
                     <option value="admin">Admin</option>
-                    <option value="user">User</option>
                 </select>
             </div>
 
