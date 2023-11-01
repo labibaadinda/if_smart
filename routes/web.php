@@ -54,7 +54,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::get('/',[UserController::class,'index'])->name('user');
 	Route::get('/profile',[ProfileController::class,'index'])->name('profile');
 	Route::patch('/profile/update/{user}',[ProfileController::class,'update'])->name('profile.update');
-	Route::patch('/profile/initialUpdate/{user}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
+	Route::post('/profile/initialUpdate/{user}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
 });
 
 Route::group(['namespace' => 'Auth','middleware' => 'guest'],function(){
