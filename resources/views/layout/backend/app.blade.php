@@ -105,7 +105,7 @@
                     </button> --}}
                 </div>
                 <div class="modal-footer">
-                    <form id="createForm" action="{{ route('user.store') }}" method="POST" autocomplete="off">
+                    <form id="createForm" action="{{ route('user.update') }}" method="POST" autocomplete="off">
                         @csrf
                         <div class="form-group">
                             <label for="name">Name</label>
