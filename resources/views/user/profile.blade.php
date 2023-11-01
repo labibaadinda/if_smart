@@ -72,7 +72,7 @@
                     <span aria-hidden="true">×</span>
                 </button> --}}
             </div>
-            <div class="modal-footer">
+            <div class="modal-body">
                 <form id="createForm" action="{{ route('profile.updateInitialData',Auth::user()->id) }}" method="POST" autocomplete="off">
                     @csrf
                     <div class="form-group">
@@ -138,10 +138,12 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="btn btn-md btn-primary">Simpan</button>
-                    {{-- <a href="{{ route('user.index') }}" class="btn btn-md btn-secondary">Back</a> --}}
 
+                    <button type="submit" class="btn btn-md btn-primary">Simpan</button>
                 </form>
+            </div>
+            <div class="modal-footer">
+                {{-- <a href="{{ route('user.index') }}" class="btn btn-md btn-secondary">Back</a> --}}
                 {{-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
