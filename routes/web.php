@@ -28,14 +28,14 @@ Route::view('/','welcome');
 
 
 Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin'],function(){
-	
+
 	Route::get('/',[AdminController::class,'index'])->name('admin')->middleware(['can:admin']);
 
 	//Route Rescource
 	Route::resource('/user','UserController')->middleware(['can:admin']);
 
 	//Route View
-	
+
 	Route::view('/404-page','admin.404-page')->name('404-page');
 	Route::view('/blank-page','admin.blank-page')->name('blank-page');
 	Route::view('/buttons','admin.buttons')->name('buttons');
@@ -46,7 +46,7 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin']
 	Route::view('/utilities-other','admin.utilities-other')->name('utilities-other');
 	Route::view('/chart','admin.chart')->name('chart');
 	Route::view('/tables','admin.tables')->name('tables');
-	
+
 
 });
 
@@ -54,6 +54,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::get('/',[UserController::class,'index'])->name('user');
 	Route::get('/profile',[ProfileController::class,'index'])->name('profile');
 	Route::patch('/profile/update/{user}',[ProfileController::class,'update'])->name('profile.update');
+	Route::patch('/profile/initialUpdate/{user}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
 });
 
 Route::group(['namespace' => 'Auth','middleware' => 'guest'],function(){
