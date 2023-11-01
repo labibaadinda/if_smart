@@ -151,4 +151,9 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+          $('#initialModal').modal('show');
+      });
+</script>
 @endsection
