@@ -31,7 +31,7 @@
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" required=id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') ? old('name') : $user->name }}">
+                <input type="text" required id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') ? old('name') : $user->name }}">
 
                 @error('name')
                 <div class="invalid-feedback">
@@ -60,12 +60,12 @@
 
 
                     @php
-        
+
                     $roles = [
                         ['value' => 'admin', 'name' => 'Admin'],
                         ['value' => 'user', 'name' => 'User']
                     ];
-        
+
                     @endphp
 
 
