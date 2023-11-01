@@ -94,6 +94,96 @@
         </div>
     </div>
 
+    <!-- Update Data Pribadi Modal-->
+    <div class="modal fade" id="initialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Update Data Mahasiswa</h5>
+                    {{-- <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button> --}}
+                </div>
+                <div class="modal-footer">
+                    <form id="createForm" action="{{ route('user.store') }}" method="POST" autocomplete="off">
+                        @csrf
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ Auth::user()->name }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">NIM</label>
+                            <input type="text" id="name" name="name" class="form-control" value="{{ Auth::user()->nim }}" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Alamat</label>
+                            <input required id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') ? old('alamat') : $user->alamat }}">
+
+                            @error('alamat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="handphone">No Handphone</label>
+                            <input required id="handphone" name="handphone" class="form-control @error('handphone') is-invalid @enderror" value="{{ old('handphone') ? old('handphone') : $user->handphone }}">
+
+                            @error('handphone')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="alamat">Kota/Kabupaten</label>
+                            <input required id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') ? old('alamat') : $user->kota }}">
+
+                            @error('alamat')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="provinsi">Provinsi</label>
+                            <input required id="provinsi" name="provinsi" class="form-control @error('provinsi') is-invalid @enderror" value="{{ old('provinsi') ? old('provinsi') : $user->provinsi }}">
+
+                            @error('provinsi')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
+                        </div>
+                        {{-- <div class="form-group">
+                            <label for="p">Password</label>
+                            <input type="password" required="" id="p" name="password" class="form-control">
+                        </div> --}}
+                        <div class="form-group">
+                            <label for="j">Jalur Masuk</label>
+                            <select name="jalus_masuk" id="j" class="form-control">
+                                <option disabled="">- Pilih Jalur Masuk -</option>
+                                <option value="snmptn">SNMPTN</option>
+                                <option value="sbmptn">SBMPTN</option>
+                                <option value="mandiri">Mandiri</option>
+                                <option value="lainnya">Lainnya</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-md btn-primary">Simpan</button>
+                        {{-- <a href="{{ route('user.index') }}" class="btn btn-md btn-secondary">Back</a> --}}
+
+                    </form>
+                    {{-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-primary">Logout</button>
+                    </form> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap core JavaScript-->
     <script src="{{ asset('template/backend/sb-admin-2') }}/vendor/jquery/jquery.min.js"></script>
     <script src="{{ asset('template/backend/sb-admin-2') }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
