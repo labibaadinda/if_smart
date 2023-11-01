@@ -19,7 +19,9 @@
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    @if(Auth::user()->role == 'admin')
+                    @if(Auth::user() === null)
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    @elseif(Auth::user()->role == 'admin')
                         <a class="nav-link" href="{{ route('admin') }}">Dashboard</a>
                     @elseif(Auth::user()->role == 'user')
                         <a class="nav-link" href="{{ route('user') }}">Dashboard</a>
