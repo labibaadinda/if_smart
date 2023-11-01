@@ -19,11 +19,13 @@
                     <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    @auth
-                    <a class="nav-link" href="{{ route('admin') }}">Dashboard</a>
+                    @if(Auth::user()->role == 'admin')
+                        <a class="nav-link" href="{{ route('admin') }}">Dashboard</a>
+                    @elseif(Auth::user()->role == 'user')
+                        <a class="nav-link" href="{{ route('user') }}">Dashboard</a>
                     @else
-                    <a class="nav-link" href="{{ route('login') }}">Login</a>
-                    @endauth
+                        <a class="nav-link" href="{{ route('login') }}">Login</a>
+                    @endif
                 </li>
             </ul>
             <span class="navbar-text">
