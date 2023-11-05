@@ -58,11 +58,11 @@ class UserController extends Controller
             }
             $user->email = $request->email;
 
-            $isNimExists = User::where('nim', $request->email)->count() >= 1 ? true : false;
+            $isNimExists = User::where('nim_nip', $request->nip)->count() >= 1 ? true : false;
             if ($isNimExists) {
                 throw new Exception("NIM Already exists", 400);
             }
-            $user->nim = $request->nim;
+            $user->nim_nip = $request->nim;
 
             $user->angkatan = $request->angkatan;
 

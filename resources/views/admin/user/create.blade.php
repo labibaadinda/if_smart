@@ -85,7 +85,7 @@
                 <label for="r">Role</label>
                 <select name="role" id="r" class="form-control">
                     <option disabled="">- PILIH ROLE -</option>
-                    <option selected value="user">User</option>
+                    <option selected value="mahasiswa">Mahasiswa</option>
                     <option value="admin">Admin</option>
                 </select>
             </div>
