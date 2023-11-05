@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('nim')->default('');
             // $table->string('nim')->unique()->nullable();
             $table->string('password');
-            $table->string('role')->default('user');
+            $table->string('role')->default('mahasiswa');
             $table->string('status')->default('aktif');
             $table->string('angkatan')->nullable();
             $table->string('alamat')->nullable();
