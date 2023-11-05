@@ -34,14 +34,14 @@ class UserSeeder extends Seeder
                 'name'      => 'Chika Fujiwara',
                 'email'     => 'chika@gmail.com',
                 'password'  => Hash::make('password'),
-                'role'      => 'user',
+                'role'      => 'mahasiswa',
                 'nim'       => '3',
             ],
             [
                 'name'      => 'Kotone',
                 'email'     => 'kotone@gmail.com',
                 'password'  => Hash::make('password'),
-                'role'      => 'user',
+                'role'      => 'mahasiswa',
                 'nim'       => '4',
             ],
         ]);
