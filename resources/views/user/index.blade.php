@@ -27,20 +27,20 @@
 </div>
 <script>
   // Periksa apakah alamat kosong
-  var userAddress = '{{ Auth::user()->alamat }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
-  var userKota = '{{ Auth::user()->kota }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
-  var userProvinsi = '{{ Auth::user()->provinsi }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
-  var userHandphone = '{{ Auth::user()->handphone }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
+  // var userAddress = '{{ Auth::user()->alamat }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
+  // var userKota = '{{ Auth::user()->kota }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
+  // var userProvinsi = '{{ Auth::user()->provinsi }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
+  // var userHandphone = '{{ Auth::user()->handphone }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
   
-  $(document).ready(function() {
-    $('#addressModal').modal({
-            backdrop: 'static', // Modal tidak akan ditutup saat mengklik latar belakang
-            keyboard: false,   // Modal tidak akan ditutup dengan tombol keyboard
-        });
-      if (userAddress === '' || userKota === '' || userProvinsi === '' || userHandphone === '' ) {
-          // Jika alamat kosong, tampilkan modal secara otomatis
-          $('#addressModal').modal('show');
-      }
-  });
+  // $(document).ready(function() {
+  //     if (userAddress === '' || userKota === '' || userProvinsi === '' || userHandphone === '' ) {
+  //         // Jika alamat kosong, tampilkan modal secara otomatis
+  //         $('#addressModal').modal('show');
+  //         $('#addressModal').modal({
+  //           backdrop: 'static', // Modal tidak akan ditutup saat mengklik latar belakang
+  //           keyboard: false,   // Modal tidak akan ditutup dengan tombol keyboard
+  //       });
+  //     }
+  // });
 </script>
 @endsection
