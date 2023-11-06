@@ -72,7 +72,7 @@ class UserController extends Controller
             $password = Hash::make($request->password);
             $user->password = $password;
 
-            $user->role = $request->role;
+            $user->role = 'mahasiswa';
 
             $user->save();
 
