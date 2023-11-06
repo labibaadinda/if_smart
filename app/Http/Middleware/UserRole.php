@@ -16,6 +16,22 @@ class UserRole
      */
     public function handle(Request $request, Closure $next)
     {
-        return $next($request);
+        if(Auth::check() && Auth::user()->role == $role)
+        {
+            return $next($request);
+        }
+
+        if(Auth::user()->role == 'admin'){
+            return redirect('/dashboard-dinas');
+        }
+        else if(Auth::user()->role == 'mahasiswa'){
+            return redirect('/dashboard-mahasiswa');
+        }
+        else if(Auth::user()->role == 'dosen'){
+            return redirect('/dashboard-mahasiswa');
+        }
+        else if(Auth::user()->role == 'departemen'){
+            return redirect('/dashboard-mahasiswa');
+        }
     }
 }
