@@ -21,11 +21,7 @@ class UserSeeder extends Seeder
                 'email'     => 'admin@gmail.com',
                 'password'  => Hash::make('password'),
                 'role'      => 'admin',
-<<<<<<< Updated upstream
                 'nim_nip'       => '1',
-=======
-                'nim_nip'   => '1',
->>>>>>> Stashed changes
             ],
             [
                 'name'      => 'Ayane',
@@ -46,11 +42,8 @@ class UserSeeder extends Seeder
                 'email'     => 'kotone@gmail.com',
                 'password'  => Hash::make('password'),
                 'role'      => 'mahasiswa',
-<<<<<<< Updated upstream
                 'nim_nip'       => '4',
-=======
-                'nim_nip'      => '4',
->>>>>>> Stashed changes
+
             ],
         ]);
     }

@@ -18,6 +18,7 @@ class CreateMahasiswasTable extends Migration
             $table->string('nim')->nullable(); //unique
             $table->timestamps();
             $table->string('nama')->nullable();
+            $table->string('dosen_id')->nullable();
             $table->string('status')->default('aktif');
             $table->string('angkatan')->nullable();
             $table->string('alamat')->nullable();
