@@ -18,7 +18,6 @@ class CreateDosensTable extends Migration
             $table->string('nip')->nullable();
             $table->string('nama')->nullable();
             $table->string('foto')->nullable();
-            $table->string('alamat')->nullable();
             $table->timestamps();
         });
     }
