@@ -40,10 +40,53 @@ class UserSeeder extends Seeder
             //     // 'handphone'    => '08123456789',
             // ],
             [
-                'email'     => 'kotone@gmail.com',
-                'password'  => Hash::make('password'),
-                'role'      => 'mahasiswa',
-                'nim_nip'       => '4',
+            
+                // 'name'         => 'Chika Fujiwara',
+                'email'        => 'chika@gmail.com',
+                'password'     => Hash::make('password'),
+                'role'         => 'mahasiswa',
+                'nim_nip'      => '24060120120001',
+                // 'alamat'       => 'Desa Ngrapah',
+                // 'kota'         => 'Semarang',
+                // 'provinsi'  => 'Jawa Tengah',
+                // 'handphone'    => '08123456789',
+            ],
+            [
+                'email'        => 'zee@gmail.com',
+                'password'     => Hash::make('password'),
+                'role'         => 'mahasiswa',
+                'nim_nip'      => '24060118120001',
+            ],
+        
+            [
+                'email'        => 'adel@gmail.com',
+                'password'     => Hash::make('password'),
+                'role'         => 'mahasiswa',
+                'nim_nip'      => '24060119120001',
+            ],
+            [
+                    'email'        => 'gita@gmail.com',
+                    'password'     => Hash::make('password'),
+                    'role'         => 'mahasiswa',
+                    'nim_nip'      => '24060120120002',
+            ],
+            [
+                    'email'        => 'freya@gmail.com',
+                    'password'     => Hash::make('password'),
+                    'role'         => 'mahasiswa',
+                    'nim_nip'      => '24060118120002',
+            ],
+            [
+                    'email'        => 'ashel@gmail.com',
+                    'password'     => Hash::make('password'),
+                    'role'         => 'mahasiswa',
+                    'nim_nip'      => '24060119120002',
+            ],
+            [
+                    'email'        => 'indah@gmail.com',
+                    'password'     => Hash::make('password'),
+                    'role'         => 'mahasiswa',
+                    'nim_nip'      => '24060118120003',
 
             ],
         ]);
