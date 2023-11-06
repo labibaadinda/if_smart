@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
+use App\Http\Requests\StoreUserRequest;
 
 class CreateMahasiswa extends Component
 {
