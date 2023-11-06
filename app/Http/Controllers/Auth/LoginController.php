@@ -22,7 +22,7 @@ class LoginController extends Controller
 					return redirect()->intended('admin');
 
 					break;
-				case "user":
+				case "mahasiswa":
 					return redirect()->intended('user');
 
 					break;

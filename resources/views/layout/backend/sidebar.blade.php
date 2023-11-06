@@ -1,6 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
+    
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin') }}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-laravel"></i>
@@ -12,21 +13,21 @@
     <hr class="sidebar-divider my-0">
 
     <!-- Nav Item - Dashboard -->
-    @can('admin')
+    @if(Auth::user()->role == 'admin')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('admin') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
-    @endcan
-
-    @can('user')
+    @elseif(Auth::user()->role == 'mahasiswa')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user') }}">
-            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-fw fa-user"></i>
             <span>Dashboard</span></a>
     </li>
-    @elseCan('admin')
+    @endif
+
+    @can('admin')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user') }}">
             <i class="fas fa-fw fa-user"></i>
