@@ -13,6 +13,8 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Livewire\Admin\DashboardAdmin;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,10 +31,14 @@ Route::view('/','welcome');
 
 Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin'],function(){
 
-	Route::get('/',[AdminController::class,'index'])->name('admin')->middleware(['can:admin']);
+	// Route::get('/',[AdminController::class,'index'])->name('admin')->middleware(['can:admin']);
+	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
+	// Route::get('/',DashboardAdmin::class)->name('admin');
+
+	Route::resource('/user','UserController')->middleware(['can:admin']);
 
 	//Route Rescource
-	Route::resource('/user','UserController')->middleware(['can:admin']);
+	// Route::resource('/user','UserController')->middleware(['can:admin']);
 
 	//Route View
 
