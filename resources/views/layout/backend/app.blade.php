@@ -18,9 +18,14 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('template/backend/sb-admin-2') }}/css/sb-admin-2.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    {{-- <link rel="stylesheet"
+    href="{{ mix('css/app.css') }}"> --}}
     @stack('css')
+    @livewireStyles
 </head>
 
 <body id="page-top">
@@ -54,7 +59,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            
+
             <!-- End of Footer -->
 
         </div>
@@ -127,6 +132,8 @@
 
 
     @stack('js')
+    @livewireScripts
+    <livewire:scripts/>
 </body>
 
 </html>

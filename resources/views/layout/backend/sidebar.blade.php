@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    
+
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin') }}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-laravel"></i>
@@ -52,7 +52,7 @@
         </a>
         <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('user.index') }}">User</a>
+                <a class="collapse-item" href="{{ route('manajemen-user') }}">User</a>
             </div>
         </div>
     </li>

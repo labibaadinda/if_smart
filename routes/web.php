@@ -14,6 +14,8 @@ use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Livewire\Admin\DashboardAdmin;
+use App\Http\Livewire\Admin\CreateMahasiswa;
+use App\Http\Livewire\Admin\ManajemenMahasiswa;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +37,12 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin']
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
 	// Route::get('/',DashboardAdmin::class)->name('admin');
 
-	Route::resource('/user','UserController')->middleware(['can:admin']);
+	// Route::resource('/user','UserController')->middleware(['can:admin']);
+
+	// Route::get('/user',[CreateMahasiswa::class,'render'])->name('admin')->middleware(['can:admin']);
+	Route::get('/user',[ManajemenMahasiswa::class,'render'])->name('manajemen-user')->middleware(['can:admin']);
+	Route::get('/create-mahasiswa',CreateMahasiswa::class)->name('create-mahasiswa')->middleware(['can:admin']);
+
 
 	//Route Rescource
 	// Route::resource('/user','UserController')->middleware(['can:admin']);

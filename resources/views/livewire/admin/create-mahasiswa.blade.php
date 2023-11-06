@@ -1,149 +1,106 @@
 @extends('layout.backend.app',[
-'title' => 'Manage User',
-'pageTitle' =>'Manage User',
+'title' => 'Manage User Livewire',
+'pageTitle' =>'Manage User Livewire ',
 ])
 
 @push('css')
-<link href="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.css"
-    rel="stylesheet">
+<link href="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 @endpush
 
 @section('content')
+@if(session()->get('error'))
+<div class="notify">
 
-@if(session()->get('message'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session()->get('error') }}
 
-@php
-$status = session()->get('message')['status'];
-$message = session()->get('message')['message'];
-@endphp
-
-@push('js')
-<script>
-    $(document).ready(function () {
-      console.log()
-      showToastr((`{{ $status }}` === 'true'), `{{ $message }}`)
-    })
-</script>
-@endpush
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
 @endif
+
 
 <div class="card">
     <div class="card-header">
-
-        <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
-
+        <h5 class="my-3 font-weight-bold text-primary">Add User</h5>
+        <h5>Data: {{ $test }}</h5>
+        <input wire:model='test'>
     </div>
     <div class="card-body">
-        <div class="table-responsive">
-            <table class="table table-bordered data-table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
+        <form id="createForm" action="
+        {{-- {{ route('user.store') }} --}}
+        " method="POST" autocomplete="off">
+            @csrf
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input wire:model="name" type="text" required id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}">
+
+                @error('name')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="nim">NIM</label>
+                <input required id="nim" name="nim" class="form-control @error('nim') is-invalid @enderror" value="{{ old('nim') }}">
+
+                @error('nim')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="angkatan">Angkatan</label>
+                <input required id="angkatan" name="angkatan" class="form-control @error('angkatan') is-invalid @enderror" value="{{ old('angkatan') }}">
+
+                @error('angkatan')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div>
+            {{-- <div class="form-group">
+                <label for="email">Email</label>
+                <input required id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
+
+                @error('email')
+                <div class="invalid-feedback">
+                    {{ $message }}
+                </div>
+                @enderror
+            </div> --}}
+            <div class="form-group">
+                <label for="r">Jalur Masuk</label>
+                <select name="status" id="r" class="form-control">
+                    <option selected disabled="">- PILIH JALUR MASUK -</option>
+                    <option  value="aktif">Aktif</option>
+                    <option value="nonAktif">Non-Aktif</option>
+                </select>
+            </div>
+            {{-- <div class="form-group">
+                <label for="r">Role</label>
+                <select name="role" id="r" class="form-control">
+                    <option disabled>- PILIH ROLE -</option>
+                    <option selected value="mahasiswa">Mahasiswa</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div> --}}
+            <div class="form-group">
+                <label for="p">Password</label>
+                <input type="password" required="" id="p" name="password" class="form-control" value="{{ 'informatika_undip' }}">
+            </div>
+
+            <button type="submit" class="btn btn-md btn-primary">Simpan</button>
+            <a href="
+            {{-- {{ route('user.index') }} --}}
+            " class="btn btn-md btn-secondary">back</a>
+
+        </form>
+
     </div>
 </div>
-
-
-<!-- Destroy Modal -->
-<div class="modal fade" id="destroy-modal" tabindex="-1" role="dialog" aria-labelledby="destroy-modalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="destroy-modalLabel">Yakin Hapus ?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger btn-destroy">Hapus</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Destroy Modal -->
-
-@stop
-
-@push('js')
-<script src="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('template/backend/sb-admin-2') }}/js/demo/datatables-demo.js"></script>
-
-<script type="text/javascript">
-    $(function() {
-
-    var table = $('.data-table').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: "{{ route('user.index') }}",
-      columns: [{
-          data: 'DT_RowIndex',
-          name: 'id'
-        },
-        {
-          data: 'name',
-          name: 'name'
-        },
-        {
-          data: 'email',
-          name: 'email'
-        },
-        {
-          data: 'role',
-          name: 'role'
-        },
-        {
-          data: 'action',
-          name: 'action',
-          orderable: false,
-          searchable: true
-        },
-      ]
-    });
-  });
-
-
-  $('body').on("click", ".btn-delete", function() {
-    var id = $(this).attr("id")
-    $(".btn-destroy").attr("id", id)
-    $("#destroy-modal").modal("show")
-  });
-
-  $(".btn-destroy").on("click", function() {
-    var id = $(this).attr("id")
-
-    $.ajax({
-      url: "/admin/user/" + id,
-      method: "DELETE",
-      success: function() {
-        $("#destroy-modal").modal("hide")
-        $('.data-table').DataTable().ajax.reload();
-        flash('success', 'Data berhasil dihapus')
-      },
-      error : function(xhr, status, error) {
-
-      }
-    });
-  })
-
-  function flash(type, message) {
-    $(".notify").html(`<div class="alert alert-` + type + ` alert-dismissible fade show" role="alert">
-                              ` + message + `
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>`)
-  }
-</script>
-@endpush
+@endsection
