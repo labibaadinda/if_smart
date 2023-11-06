@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProvinsiSeeder extends Seeder
 {
@@ -13,6 +14,15 @@ class ProvinsiSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('provinsis')->insert([
+            [
+                'nama' => 'Jawa Tengah',
+                
+            ],
+            [
+                'nama' => 'Jawab Barat',
+              
+            ],
+            ]);
     }
 }

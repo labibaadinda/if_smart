@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PklSeeder extends Seeder
 {
@@ -15,17 +16,20 @@ class PklSeeder extends Seeder
     {
         DB::table('pkls')->insert([
             [
-                'nim' => 'Irvan Gunawan, S.Si., M.T.',
-                'judul' => '00123456789',
+                'nim' => '24060119120001',
+                'judul' => 'Sistem Informasi Berbasis Website',
                 'progres' => '1',
                 'stat_pkl' => '1',
                 'tanggal_mulai' => '1',
             ],
             [
-                'nama' => 'Deddy Cahyadi, S.Kom., M.T.',
-                'nip' => '00123456789',   
+                'nim' => '24060119120001',
+                'judul' => 'Sistem Informasi Berbasis Website',
+                'progres' => '2',
+                'stat_pkl' => '1',
+                'tanggal_mulai' => '1',   
             ],
             ]);
         }
     }
-}
+

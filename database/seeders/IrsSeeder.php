@@ -1,8 +1,9 @@
-<?php
++<?php
 
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class IrsSeeder extends Seeder
 {
@@ -13,6 +14,42 @@ class IrsSeeder extends Seeder
      */
     public function run()
     {
-        //
+        DB::table('irs')->insert([
+            [
+                'nim' => '24060119120001',
+                'semester' => '1',
+                'jumlah_sks' => '24',
+            ],
+            [
+                'nim' => '24060119120001',
+                'semester' => '2',
+                'jumlah_sks' => '21',
+                
+            ],
+            [
+                'nim' => '24060119120001',
+                'semester' => '3',
+                'jumlah_sks' => '23',
+               
+            ],
+            [
+                'nim' => '24060119120001',
+                'semester' => '4',
+                'jumlah_sks' => '21',
+                
+            ],
+            [
+                'nim' => '24060119120001',
+                'semester' => '5',
+                'jumlah_sks' => '21',
+                
+            ],
+            [
+                'nim' => '24060119120001',
+                'semester' => '6',
+                'jumlah_sks' => '23',
+               
+            ],
+            ]);
     }
 }

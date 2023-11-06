@@ -16,8 +16,8 @@ class CreateIrsTable extends Migration
         Schema::create('irs', function (Blueprint $table) {
             $table->id();
             $table->string('nim')->nullable();
-            $table->string('semester')->nullable();
-            $table->string('jumlah_sks')->nullable();
+            $table->integer('semester')->nullable();
+            $table->integer('jumlah_sks')->nullable();
             $table->string('status')->nullable()->default('0');
             $table->string('file')->nullable();
             $table->timestamps();
