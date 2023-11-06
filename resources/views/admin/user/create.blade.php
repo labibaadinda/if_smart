@@ -77,17 +77,17 @@
                     <option value="nonAktif">Non-Aktif</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label for="p">Password</label>
-                <input type="password" required="" id="p" name="password" class="form-control" value="{{ 'informatika_undip' }}">
-            </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="r">Role</label>
                 <select name="role" id="r" class="form-control">
-                    <option disabled="">- PILIH ROLE -</option>
+                    <option disabled>- PILIH ROLE -</option>
                     <option selected value="mahasiswa">Mahasiswa</option>
                     <option value="admin">Admin</option>
                 </select>
+            </div> --}}
+            <div class="form-group">
+                <label for="p">Password</label>
+                <input type="password" required="" id="p" name="password" class="form-control" value="{{ 'informatika_undip' }}">
             </div>
 
             <button type="submit" class="btn btn-md btn-primary">Simpan</button>

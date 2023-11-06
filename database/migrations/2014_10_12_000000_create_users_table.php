@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             // $table->string('name');
             $table->string('email')->nullable();
             $table->string('nim_nip')->default('');
-            
+
             // $table->string('nim')->unique()->nullable();
             $table->string('password');
             $table->string('role')->default('mahasiswa');
