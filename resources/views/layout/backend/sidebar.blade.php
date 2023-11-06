@@ -1,13 +1,26 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
+<<<<<<< HEAD
 
+=======
+    @if(Auth::user()->role == 'admin')
+>>>>>>> d596e5fa5c960791c1ab14c61d4ee03a722943e7
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin') }}">
         <div class="sidebar-brand-icon">
             <i class="fab fa-laravel"></i>
         </div>
         <div class="sidebar-brand-text mx-3">IF SMART</div>
     </a>
+    @elseif(Auth::user()->role == 'mahasiswa')
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('user') }}">
+        <div class="sidebar-brand-icon">
+            <i class="fab fa-laravel"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">IF SMART</div>
+    </a>
+    @endif
+   
 
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
