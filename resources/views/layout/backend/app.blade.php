@@ -45,7 +45,7 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">{{ $pageTitle ?? '' }}</h1>
+                    <h1 class="h3 mb-2 text-gray-800">{{ $pageTitle ?? '' }}</h1>
                     @yield('content')
                 </div>
                 <!-- /.container-fluid -->
@@ -54,13 +54,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; IF SMART {{ date('Y') }}</span>
-                    </div>
-                </div>
-            </footer>
+            
             <!-- End of Footer -->
 
         </div>
