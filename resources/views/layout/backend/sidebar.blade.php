@@ -32,7 +32,7 @@
     @elseif(Auth::user()->role == 'mahasiswa')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user') }}">
-            <i class="fas fa-fw fa-user"></i>
+            <i class="fa-solid fa-gauge"></i>
             <span>Dashboard</span></a>
     </li>
     @endif
@@ -145,6 +145,26 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
     </li> --}}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('irs') }}">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Entry IRS</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('khs') }}">
+            <i class="fa-solid fa-chart-bar"></i>
+            <span>Entry KHS</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pkl') }}">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Entry PKL</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('skripsi') }}">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Entry Skripsi</span></a>
+    </li>
 
     <li class="nav-item">
         <a class="nav-link" href="{{ route('profile') }}">

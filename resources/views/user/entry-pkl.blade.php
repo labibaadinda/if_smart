@@ -46,7 +46,7 @@
             </div>
             <div class="form-group" id="progres-form" style="display: none">
                 <label for="progres">Progres Ke-</label>
-                <input type="number" id="progres" name="progres" class="form-control @error('progres') is-invalid @enderror" value="{{ old('progres') }}">
+                <input type="number" id="progres" name="progres" class="form-control @error('progres') is-invalid @enderror" value="{{ $progrespkl }}">
                 @error('progres')
                 <div class="invalid-feedback">
                     {{ $message }}

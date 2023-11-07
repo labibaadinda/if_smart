@@ -28,7 +28,7 @@
             @csrf
             <div class="form-group">
                 <label for="semester">Semester</label>
-                <input  type="number" required id="semester" name="semester" class="form-control @error('semester') is-invalid @enderror" value="{{ old('semester') }}">
+                <input  type="number" required id="semester" name="semester" class="form-control @error('semester') is-invalid @enderror" value="{{ $semesterirs }}">
 
                 @error('semester')
                 <div class="invalid-feedback">
