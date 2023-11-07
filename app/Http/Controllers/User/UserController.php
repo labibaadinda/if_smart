@@ -104,6 +104,21 @@ class UserController extends Controller
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
 
+	$existingData = Pkl::where('nim', Auth::user()->nim_nip)->get();
+
+    if ($existingData->isEmpty()) {
+        // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
+        if ($request->progres != 1) {
+            return redirect()->back()->with('error', 'Progres pertama harus dimulai dari 1.');
+        }
+    } else {
+        $latestProgres = $existingData->max('progres');
+
+        if ($request->progres != $latestProgres + 1) {
+            return redirect()->back()->with('error', 'Progres yang dimasukkan harus berurutan');
+        }
+    }
+
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
@@ -131,7 +146,7 @@ class UserController extends Controller
         'stat_skripsi' => 'required',
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
-
+	
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();

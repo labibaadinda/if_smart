@@ -5,9 +5,16 @@
 @section('content')
 <hr>
 @if(session()->has('success'))
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
-  </div>
+  <div class="notify">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
   <script>
     setTimeout(function(){
       $('.alert').alert('close');

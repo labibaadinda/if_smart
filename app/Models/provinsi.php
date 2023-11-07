@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class provinsi extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+    public function mahasiswa(){
+        return $this->hasMany(Mahasiswa::class);
+    }
 }
