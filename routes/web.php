@@ -72,6 +72,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::get('/khs',[UserController::class,'khs'])->name('khs');
 	Route::post('/pkl',[UserController::class,'storePkl'])->name('pkl.store');
 	Route::get('/pkl',[UserController::class,'pkl'])->name('pkl');
+	Route::post('/skripsi',[UserController::class,'storeSkripsi'])->name('skripsi.store');
 	Route::get('/skripsi',[UserController::class,'skripsi'])->name('skripsi');
 	Route::patch('/profile/update/{user}',[ProfileController::class,'update'])->name('profile.update');
 	Route::post('/profile/initialUpdate/{user}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');

@@ -4,11 +4,21 @@
 ])
 @section('content')
 <hr>
+@if(session()->has('success'))
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+  </div>
+  <script>
+    setTimeout(function(){
+      $('.alert').alert('close');
+    }, 2000);
+  </script>
+@endif
 <div class="row">
   <div class="col-lg-6">
     <div class="card">
       <div class="card-body">
-        <div class="card mb-2">
+        <div class="card m-0">
           <div class="row no-gutters">
             <div class="col-md-4">
               <img src="{{ asset('images/backend/profile.jpg') }}" class="card-img" alt="" width="207" height="207">
@@ -19,6 +29,7 @@
                 <h5 class="card-title text-dark">{{ $mahasiswa->nama }}</h5>
                 <h5 class="card-title text-dark">{{ $mahasiswa->nim }}</h5>
                 <h5 class="card-title text-dark">S1 Informatika</h5>
+                <h5 class="card-title text-dark">{{ $mahasiswa->angkatan }}</h5>
                 <h5 class="card-title text-dark">Dosen Wali: {{ $mahasiswa->dosen->nama }} ({{ $mahasiswa->dosen->nip }})</h5>
                 @endforeach
               </div>

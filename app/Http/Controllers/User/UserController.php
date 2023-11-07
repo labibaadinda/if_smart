@@ -7,6 +7,7 @@ use App\Models\Dosen;
 use App\Models\Irs;
 use App\Models\Khs;
 use App\Models\Pkl;
+use App\Models\Skripsi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -115,11 +116,40 @@ class UserController extends Controller
             'nim' => Auth::user()->nim_nip,
             'judul' => $request->judul,
             'progres' => $request->progres,
-            'stat_pkl' => $request->progres,
+            'stat_pkl' => $request->stat_pkl,
             'file' => $pdfFileName,
         ]);
 
-        return redirect()->route('user')->with('success', 'File KHS berhasil diunggah.');
+        return redirect()->route('user')->with('success', 'Entry PKL berhasil.');
+    }
+}
+	public function storeSkripsi(Request $request)
+{
+    // Validasi input jika diperlukan
+    $request->validate([
+        'judul' => 'required',
+        'stat_skripsi' => 'required',
+        'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
+    ]);
+
+    if ($request->hasFile('pdf_file')) {
+        $pdfFile = $request->file('pdf_file');
+        $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+
+        // Simpan file PDF ke direktori storage/app/public/irs
+        $pdfFile->storeAs('public/irs', $pdfFileName);
+
+        // Simpan data IRS ke dalam tabel IRS
+        Skripsi::create([
+            'nim' => Auth::user()->nim_nip,
+            'judul' => $request->judul,
+            'progres' => $request->progres,
+            'stat_skripsi' => $request->stat_skripsi,
+            'tanggal_sidang' => $request->tanggal_sidang,
+            'file' => $pdfFileName,
+        ]);
+
+        return redirect()->route('user')->with('success', 'Entry Skripsi berhasil.');
     }
 }
 }

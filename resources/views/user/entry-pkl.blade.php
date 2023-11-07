@@ -44,10 +44,9 @@
                     <option value="selesai">Selesai</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="progres-form" style="display: none">
                 <label for="progres">Progres Ke-</label>
-                <input required type="number" id="progres" name="progres" class="form-control @error('progres') is-invalid @enderror" value="{{ old('progres') }}">
-
+                <input type="number" id="progres" name="progres" class="form-control @error('progres') is-invalid @enderror" value="{{ old('progres') }}">
                 @error('progres')
                 <div class="invalid-feedback">
                     {{ $message }}
@@ -70,4 +69,16 @@
 
     </div>
 </div>
+<script>
+    const statPklSelect = document.getElementById('stat_pkl');
+    const progresForm = document.getElementById('progres-form');
+
+    statPklSelect.addEventListener('change', function () {
+        if (statPklSelect.value === 'progres') {
+            progresForm.style.display = 'block';
+        } else {
+            progresForm.style.display = 'none';
+        }
+    });
+</script>
 @endsection
