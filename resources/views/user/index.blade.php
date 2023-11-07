@@ -54,7 +54,8 @@
             <div class="card">
               <div class="card-body text-center">
                 <h5 class="card-title text-dark">IPK</h5>
-                <p class="card-text"> {{ number_format($IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"], 2) }} </p>
+                <p class="card-text"> {{ $IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"] != null && $IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"] > 0 ? number_format($IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"], 2) : 'Belum Entry Data' }}
+                </p>
               </div>
             </div>
           </div>
@@ -62,7 +63,7 @@
             <div class="card mb-3">
               <div class="card-body text-center">
                 <h5 class="card-title text-dark">Semester Studi</h5>
-                <p class="card-text"> {{ $semester }}</p>
+                <p class="card-text">{{ $semester ?: 1 }}</p>
               </div>
             </div>
           </div>
@@ -70,7 +71,7 @@
             <div class="card">
               <div class="card-body text-center">
                 <h5 class="card-title text-dark">SKSk</h5>
-                <p class="card-text">{{ $sksk }}</p>
+                <p class="card-text">{{ $sksk != null && $sksk > 0 ? $sksk : 'Belum Entry Data' }}</p>
               </div>
             </div>
           </div>

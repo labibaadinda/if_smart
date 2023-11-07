@@ -27,29 +27,33 @@ class UserController extends Controller
 
 	public function irs()
 	{
+		$mahasiswas = Mahasiswa::where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Irs::where('nim', Auth::user()->nim_nip)->max('semester');
 		$semesterirs = $latestProgres + 1;
-		return view('user.entry-irs',compact('semesterirs'));
+		return view('user.entry-irs',compact('semesterirs','mahasiswas'));
 	}
 
 	public function khs()
 	{
+		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Khs::where('nim', Auth::user()->nim_nip)->max('semester');
 		$semesterkhs = $latestProgres + 1;
-		return view('user.entry-khs',compact('semesterkhs'));
+		return view('user.entry-khs',compact('semesterkhs','mahasiswas'));
 	}
 
 	public function pkl()
 	{
+		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Pkl::where('nim', Auth::user()->nim_nip)->max('progres');
 		$progrespkl = $latestProgres + 1;
-		return view('user.entry-pkl', compact('progrespkl'));
+		return view('user.entry-pkl', compact('progrespkl','mahasiswas'));
 	}
 	public function skripsi()
 	{
+		$mahasiswas = Mahasiswa::where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Skripsi::where('nim', Auth::user()->nim_nip)->max('progres');
 		$progresskripsi = $latestProgres + 1;
-		return view('user.entry-skripsi',compact('progresskripsi'));
+		return view('user.entry-skripsi',compact('progresskripsi','mahasiswas'));
 	}
 
 	public function storeIrs(Request $request)
