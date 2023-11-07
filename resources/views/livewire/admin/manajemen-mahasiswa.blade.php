@@ -39,9 +39,10 @@ $message = session()->get('message')['message'];
         <div class="table-responsive">
             <table class="table table-bordered data-table">
                 <thead>
+                    <th>
                     <tr>
                         <th>No</th>
-                        <th>Name</th>
+                        <th>Nama</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Action</th>
@@ -82,20 +83,20 @@ $message = session()->get('message')['message'];
 <script src="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 <script src="{{ asset('template/backend/sb-admin-2') }}/js/demo/datatables-demo.js"></script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
     $(function() {
 
     var table = $('.data-table').DataTable({
       processing: true,
       serverSide: true,
-      ajax: "{{ route('user.index') }}",
+      ajax: "{{ route('user.render') }}",
       columns: [{
           data: 'DT_RowIndex',
           name: 'id'
         },
         {
-          data: 'name',
-          name: 'name'
+          data: 'nama',
+          name: 'nama'
         },
         {
           data: 'email',
@@ -147,5 +148,5 @@ $message = session()->get('message')['message'];
                               </button>
                             </div>`)
   }
-</script> --}}
+</script>
 @endpush

@@ -37,10 +37,10 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin']
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
 	// Route::get('/',DashboardAdmin::class)->name('admin');
 
-	// Route::resource('/user','UserController')->middleware(['can:admin']);
+	Route::resource('/user','UserController')->middleware(['can:admin']);
 
 	// Route::get('/user',[CreateMahasiswa::class,'render'])->name('admin')->middleware(['can:admin']);
-	Route::get('/user',[ManajemenMahasiswa::class,'render'])->name('manajemen-user')->middleware(['can:admin']);
+	// Route::get('/user',[ManajemenMahasiswa::class,'render'])->name('manajemen-user')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
 
 
