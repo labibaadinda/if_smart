@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUserRequest;
-use Illuminate\Http\Request;
-
-use App\Models\User;
 use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Models\User;
+use App\Models\mahasiswa;
+
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\StoreUserRequest;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
 {
@@ -19,6 +20,7 @@ class UserController extends Controller
     {
         if ($request->ajax()) {
             $data = User::select('*')->orderBy('created_at', 'DESC');
+            // $data = mahasiswa::select('*')->orderBy('created_at', 'DESC');
 
 
             return DataTables::of($data)
@@ -33,7 +35,13 @@ class UserController extends Controller
                 ->make(true);
         }
 
-        return view('admin.user.index');
+            // $data = User::select('*')->orderBy('created_at', 'DESC');
+            // $datas = DataTables::of($data);
+
+        return view('admin.user.index',[
+            // 'test' => 'masuk',
+            // 'datas' => $datas,
+        ]);
     }
 
     public function create()

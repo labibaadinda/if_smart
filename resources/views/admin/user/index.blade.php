@@ -4,70 +4,85 @@
 ])
 
 @push('css')
-<link href="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.css"
+    rel="stylesheet">
 @endpush
 
 @section('content')
 
 @if(session()->get('message'))
 
-  @php 
-   $status = session()->get('message')['status'];
-   $message = session()->get('message')['message'];
-  @endphp
-  
-  @push('js')
-  <script>
+@php
+$status = session()->get('message')['status'];
+$message = session()->get('message')['message'];
+@endphp
+
+@push('js')
+<script>
     $(document).ready(function () {
       console.log()
       showToastr((`{{ $status }}` === 'true'), `{{ $message }}`)
     })
-  </script>
-  @endpush
+</script>
+@endpush
 @endif
 
 <div class="card">
-  <div class="card-header">
+    <div class="card-header">
 
-    <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
+        <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
 
-  </div>
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered data-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
     </div>
-  </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered data-table">
+                <thead>
+                    <tr>
+                        {{-- <th width="5%"> Test: {{ $test }}</th> --}}
+                        {{-- <th width="5%"> Test: {{ $datas }}</th> --}}
+                    </tr>
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- @foreach ($datas as $data)
+                    <tr>
+                        <th>{{ $data->email }}</th>
+                        <th>{{ $data->role }}</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                    </tr>
+                    @endforeach --}}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 
 <!-- Destroy Modal -->
-<div class="modal fade" id="destroy-modal" tabindex="-1" role="dialog" aria-labelledby="destroy-modalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="destroy-modalLabel">Yakin Hapus ?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-        <button type="button" class="btn btn-danger btn-destroy">Hapus</button>
-      </div>
+<div class="modal fade" id="destroy-modal" tabindex="-1" role="dialog" aria-labelledby="destroy-modalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="destroy-modalLabel">Yakin Hapus ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-danger btn-destroy">Hapus</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 <!-- Destroy Modal -->
 
@@ -79,7 +94,7 @@
 <script src="{{ asset('template/backend/sb-admin-2') }}/js/demo/datatables-demo.js"></script>
 
 <script type="text/javascript">
-  $(function() {
+    $(function() {
 
     var table = $('.data-table').DataTable({
       processing: true,
@@ -90,8 +105,8 @@
           name: 'id'
         },
         {
-          data: 'name',
-          name: 'name'
+          data: 'nim_nip',
+          name: 'nim'
         },
         {
           data: 'email',
@@ -130,7 +145,7 @@
         flash('success', 'Data berhasil dihapus')
       },
       error : function(xhr, status, error) {
-        
+
       }
     });
   })
