@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserRole
 {
@@ -28,7 +29,7 @@ class UserRole
             return redirect('/dashboard-mahasiswa');
         }
         else if(Auth::user()->role == 'dosen'){
-            return redirect('/dashboard-mahasiswa');
+            return redirect()->route('dosen');
         }
         else if(Auth::user()->role == 'departemen'){
             return redirect('/dashboard-mahasiswa');

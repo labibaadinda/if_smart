@@ -167,11 +167,15 @@
             <span>Entry Skripsi</span></a>
     </li>
 
+    @if(Auth::user()->role == 'mahasiswa')
+    <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">
         <a class="nav-link" href="{{ route('profile') }}">
             <i class="fas fa-fw fa-user"></i>
             <span>Profile</span></a>
     </li>
+    @endif
+    
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

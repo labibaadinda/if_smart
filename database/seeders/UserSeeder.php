@@ -52,6 +52,18 @@ class UserSeeder extends Seeder
                 // 'handphone'    => '08123456789',
             ],
             [
+            
+                // 'name'         => 'Chika Fujiwara',
+                'email'        => 'dosen@gmail.com',
+                'password'     => Hash::make('password'),
+                'role'         => 'dosen',
+                'nim_nip'      => '00123456789',
+                // 'alamat'       => 'Desa Ngrapah',
+                // 'kota'         => 'Semarang',
+                // 'provinsi'  => 'Jawa Tengah',
+                // 'handphone'    => '08123456789',
+            ],
+            [
                 'email'        => 'zee@gmail.com',
                 'password'     => Hash::make('password'),
                 'role'         => 'mahasiswa',
