@@ -27,20 +27,28 @@
         <form id="createForm" method="post" action="{{ route('pkl.store') }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="semester">Semester</label>
-                <input  type="number" required id="semester" name="semester" class="form-control @error('semester') is-invalid @enderror" value="{{ old('semester') }}">
+                <label for="judul">Judul PKL</label>
+                <input  type="text" required id="judul" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul') }}">
 
-                @error('semester')
+                @error('judul')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="jumlah_jumlah_sks">Jumlah SKS</label>
-                <input required type="number" id="jumlah_sks" name="jumlah_sks" class="form-control @error('jumlah_sks') is-invalid @enderror" value="{{ old('jumlah_sks') }}">
+                <label for="stat_pkl">Status PKL</label>
+                <select name="stat_pkl" id="stat_pkl" class="form-control">
+                    <option selected disabled="">----------Status PKL----------</option>
+                    <option  value="progres">Sedang Berlangsung</option>
+                    <option value="selesai">Selesai</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="progres">Progres Ke-</label>
+                <input required type="number" id="progres" name="progres" class="form-control @error('progres') is-invalid @enderror" value="{{ old('progres') }}">
 
-                @error('jumlah_sks')
+                @error('progres')
                 <div class="invalid-feedback">
                     {{ $message }}
                 </div>

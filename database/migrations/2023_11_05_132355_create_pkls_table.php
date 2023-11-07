@@ -19,7 +19,6 @@ class CreatePklsTable extends Migration
             $table->string('judul')->nullable();
             $table->string('progres')->nullable();        
             $table->string('stat_pkl')->nullable();
-            $table->string('tanggal_mulai')->nullable();
             $table->string('konfirmasi')->nullable()->default('0');
             $table->string('file')->nullable();
             $table->timestamps();

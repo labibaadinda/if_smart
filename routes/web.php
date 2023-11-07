@@ -70,6 +70,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::post('/irs',[UserController::class,'storeIrs'])->name('irs.store');
 	Route::post('/khs',[UserController::class,'storeKhs'])->name('khs.store');
 	Route::get('/khs',[UserController::class,'khs'])->name('khs');
+	Route::post('/pkl',[UserController::class,'storePkl'])->name('pkl.store');
 	Route::get('/pkl',[UserController::class,'pkl'])->name('pkl');
 	Route::get('/skripsi',[UserController::class,'skripsi'])->name('skripsi');
 	Route::patch('/profile/update/{user}',[ProfileController::class,'update'])->name('profile.update');

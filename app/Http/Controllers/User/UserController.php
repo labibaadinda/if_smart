@@ -6,6 +6,7 @@ use App\Models\Mahasiswa;
 use App\Models\Dosen;
 use App\Models\Irs;
 use App\Models\Khs;
+use App\Models\Pkl;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -86,6 +87,35 @@ class UserController extends Controller
             'nim' => Auth::user()->nim_nip,
             'semester' => $request->semester,
             'ips' => $request->ips,
+            'file' => $pdfFileName,
+        ]);
+
+        return redirect()->route('user')->with('success', 'File KHS berhasil diunggah.');
+    }
+}
+
+	public function storePkl(Request $request)
+{
+    // Validasi input jika diperlukan
+    $request->validate([
+        'judul' => 'required',
+        'stat_pkl' => 'required',
+        'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
+    ]);
+
+    if ($request->hasFile('pdf_file')) {
+        $pdfFile = $request->file('pdf_file');
+        $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+
+        // Simpan file PDF ke direktori storage/app/public/irs
+        $pdfFile->storeAs('public/irs', $pdfFileName);
+
+        // Simpan data IRS ke dalam tabel IRS
+        Pkl::create([
+            'nim' => Auth::user()->nim_nip,
+            'judul' => $request->judul,
+            'progres' => $request->progres,
+            'stat_pkl' => $request->progres,
             'file' => $pdfFileName,
         ]);
 
