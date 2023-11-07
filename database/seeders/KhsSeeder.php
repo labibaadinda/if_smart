@@ -18,38 +18,44 @@ class KhsSeeder extends Seeder
             [
                 'nim' => '24060119120001',
                 'semester' => '1',
-                'jumlah_sks' => '24',
                 'ips' => '3.81',
+                'status' => '1',
             ],
             [
                 'nim' => '24060119120001',
                 'semester' => '2',
-                'jumlah_sks' => '21',
                 'ips' => '4',
+                'status' => '1',
             ],
             [
                 'nim' => '24060119120001',
                 'semester' => '3',
-                'jumlah_sks' => '23',
                 'ips' => '3.9',
+                'status' => '1',
             ],
             [
                 'nim' => '24060119120001',
                 'semester' => '4',
-                'jumlah_sks' => '21',
                 'ips' => '3.93',
+                'status' => '1',
             ],
             [
                 'nim' => '24060119120001',
                 'semester' => '5',
-                'jumlah_sks' => '21',
                 'ips' => '3.8',
+                'status' => '1',
             ],
             [
                 'nim' => '24060119120001',
                 'semester' => '6',
-                'jumlah_sks' => '23',
                 'ips' => '3.7',
+                'status' => '1',
+            ],
+            [
+                'nim' => '24060119120002',
+                'semester' => '1',
+                'ips' => '4',
+                'status' => '1',
             ],
             ]);
     }

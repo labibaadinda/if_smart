@@ -26,6 +26,10 @@ class LoginController extends Controller
 					return redirect()->intended('user');
 
 					break;
+				case "dosen":
+					return redirect()->intended('dosen');
+
+					break;
 				default:
 					redirect()->to('/');
 			}

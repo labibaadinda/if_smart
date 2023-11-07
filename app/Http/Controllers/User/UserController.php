@@ -18,26 +18,42 @@ class UserController extends Controller
 	{
 		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
 		$dosens = Dosen::All();
-		return view('user.index', compact('mahasiswas','dosens'));
+		$IPK = Khs::selectRaw('AVG(CAST(ips AS DECIMAL(10, 2)))')->where('nim', Auth::user()->nim_nip)->where('status', 1)->first();
+		$semester = Irs::where('nim', Auth::user()->nim_nip)->max('semester');
+		$sksk = Irs::where('nim', Auth::user()->nim_nip)->where('status', 1)->sum('jumlah_sks');
+		// $sksk = number_format($sks, 2);
+		return view('user.index', compact('mahasiswas','dosens', 'IPK', 'semester', 'sksk'));
 	}
 
 	public function irs()
 	{
-		return view('user.entry-irs');
+		$mahasiswas = Mahasiswa::where('nim', Auth::user()->nim_nip)->get();
+		$latestProgres = Irs::where('nim', Auth::user()->nim_nip)->max('semester');
+		$semesterirs = $latestProgres + 1;
+		return view('user.entry-irs',compact('semesterirs','mahasiswas'));
 	}
 
 	public function khs()
 	{
-		return view('user.entry-khs');
+		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
+		$latestProgres = Khs::where('nim', Auth::user()->nim_nip)->max('semester');
+		$semesterkhs = $latestProgres + 1;
+		return view('user.entry-khs',compact('semesterkhs','mahasiswas'));
 	}
 
 	public function pkl()
 	{
-		return view('user.entry-pkl');
+		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
+		$latestProgres = Pkl::where('nim', Auth::user()->nim_nip)->max('progres');
+		$progrespkl = $latestProgres + 1;
+		return view('user.entry-pkl', compact('progrespkl','mahasiswas'));
 	}
 	public function skripsi()
 	{
-		return view('user.entry-skripsi');
+		$mahasiswas = Mahasiswa::where('nim', Auth::user()->nim_nip)->get();
+		$latestProgres = Skripsi::where('nim', Auth::user()->nim_nip)->max('progres');
+		$progresskripsi = $latestProgres + 1;
+		return view('user.entry-skripsi',compact('progresskripsi','mahasiswas'));
 	}
 
 	public function storeIrs(Request $request)
@@ -49,6 +65,20 @@ class UserController extends Controller
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
 
+	$existingData = Irs::where('nim', Auth::user()->nim_nip)->get();
+
+    if ($existingData->isEmpty()) {
+        // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
+        if ($request->semester != 1) {
+            return redirect()->back()->with('error', 'Semester harus dimulai dari 1.');
+        }
+    } else {
+        $latestProgres = $existingData->max('semester');
+
+        if ($request->semester != $latestProgres + 1) {
+            return redirect()->back()->with('error', 'Semester yang dimasukkan harus berurutan');
+        }
+    }
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
@@ -76,12 +106,27 @@ class UserController extends Controller
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
 
+	
+	$existingData = Khs::where('nim', Auth::user()->nim_nip)->get();
+
+    if ($existingData->isEmpty()) {
+        // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
+        if ($request->semester != 1) {
+            return redirect()->back()->with('error', 'Semester harus dimulai dari 1.');
+        }
+    } else {
+        $latestProgres = $existingData->max('semester');
+
+        if ($request->semester != $latestProgres + 1) {
+            return redirect()->back()->with('error', 'Semester yang dimasukkan harus berurutan');
+        }
+    }
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
 
         // Simpan file PDF ke direktori storage/app/public/irs
-        $pdfFile->storeAs('public/irs', $pdfFileName);
+        $pdfFile->storeAs('public/khs', $pdfFileName);
 
         // Simpan data IRS ke dalam tabel IRS
         Khs::create([
@@ -124,7 +169,7 @@ class UserController extends Controller
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
 
         // Simpan file PDF ke direktori storage/app/public/irs
-        $pdfFile->storeAs('public/irs', $pdfFileName);
+        $pdfFile->storeAs('public/pkl', $pdfFileName);
 
         // Simpan data IRS ke dalam tabel IRS
         Pkl::create([
@@ -146,7 +191,20 @@ class UserController extends Controller
         'stat_skripsi' => 'required',
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
-	
+	$existingData = Skripsi::where('nim', Auth::user()->nim_nip)->get();
+
+    if ($existingData->isEmpty()) {
+        // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
+        if ($request->progres != 1) {
+            return redirect()->back()->with('error', 'Progres pertama harus dimulai dari 1.');
+        }
+    } else {
+        $latestProgres = $existingData->max('progres');
+
+        if ($request->progres != $latestProgres + 1) {
+            return redirect()->back()->with('error', 'Progres yang dimasukkan harus berurutan');
+        }
+    }
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();

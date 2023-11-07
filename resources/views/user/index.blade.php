@@ -54,7 +54,8 @@
             <div class="card">
               <div class="card-body text-center">
                 <h5 class="card-title text-dark">IPK</h5>
-                <p class="card-text">3.8</p>
+                <p class="card-text"> {{ $IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"] != null && $IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"] > 0 ? number_format($IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"], 2) : 'Belum Entry Data' }}
+                </p>
               </div>
             </div>
           </div>
@@ -62,7 +63,7 @@
             <div class="card mb-3">
               <div class="card-body text-center">
                 <h5 class="card-title text-dark">Semester Studi</h5>
-                <p class="card-text">5</p>
+                <p class="card-text">{{ $semester ?: 1 }}</p>
               </div>
             </div>
           </div>
@@ -70,7 +71,7 @@
             <div class="card">
               <div class="card-body text-center">
                 <h5 class="card-title text-dark">SKSk</h5>
-                <p class="card-text">112</p>
+                <p class="card-text">{{ $sksk != null && $sksk > 0 ? $sksk : 'Belum Entry Data' }}</p>
               </div>
             </div>
           </div>
@@ -145,21 +146,21 @@
 </div>
 </div>
 <script>
-  // Periksa apakah alamat kosong
-  // var userAddress = '{{ Auth::user()->alamat }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
-  // var userKota = '{{ Auth::user()->kota }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
-  // var userProvinsi = '{{ Auth::user()->provinsi }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
-  // var userHandphone = '{{ Auth::user()->handphone }}'; // Gantilah ini dengan cara Anda mendapatkan alamat pengguna
-  
-  // $(document).ready(function() {
-  //     if (userAddress === '' || userKota === '' || userProvinsi === '' || userHandphone === '' ) {
-  //         // Jika alamat kosong, tampilkan modal secara otomatis
-  //         $('#addressModal').modal('show');
-  //         $('#addressModal').modal({
-  //           backdrop: 'static', // Modal tidak akan ditutup saat mengklik latar belakang
-  //           keyboard: false,   // Modal tidak akan ditutup dengan tombol keyboard
-  //       });
-  //     }
-  // });
+  // Periksa apakah alamat, kota, provinsi, dan handphone kosong
+  var mahasiswaAddress = '{{ $mahasiswa->alamat }}'; // Gantilah ini dengan cara Anda mendapatkan alamat mahasiswa
+  var mahasiswaKota = '{{ $mahasiswa->kota }}'; // Gantilah ini dengan cara Anda mendapatkan kota mahasiswa
+  var mahasiswaProvinsi = '{{ $mahasiswa->provinsi_id }}'; // Gantilah ini dengan cara Anda mendapatkan provinsi mahasiswa
+  var mahasiswaHandphone = '{{ $mahasiswa->handphone }}'; // Gantilah ini dengan cara Anda mendapatkan handphone mahasiswa
+
+  $(document).ready(function() {
+      if (mahasiswaAddress === '' || mahasiswaKota === '' || mahasiswaProvinsi === '' || mahasiswaHandphone === '' ) {
+          // Jika salah satu dari data kosong, tampilkan modal secara otomatis
+          $('#addressModal').modal('show');
+          $('#addressModal').modal({
+            backdrop: 'static', // Modal tidak akan ditutup saat mengklik latar belakang
+            keyboard: false,   // Modal tidak akan ditutup dengan tombol keyboard
+        });
+      }
+  });
 </script>
 @endsection

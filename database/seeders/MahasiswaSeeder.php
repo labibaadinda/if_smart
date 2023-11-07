@@ -57,16 +57,6 @@ class MahasiswaSeeder extends Seeder
             'handphone'    => '08123456789',
         ],
         [
-            'nama' => 'Freyana Syifa Jayawardana',
-            'nim' => '24060118120002',
-            'angkatan' => '2018',
-            'alamat'       => 'Desa Ngrapah',
-            'kota'         => 'Semarang',
-            'provinsi_id'  => '1',
-            'dosen_id'  => '1',
-            'handphone'    => '08123456789',
-        ],
-        [
             'nama' => 'Adzana Shaliha',
             'nim' => '24060119120002',
             'angkatan' => '2019',

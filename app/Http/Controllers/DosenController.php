@@ -2,9 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\dosen;
+
 use App\Http\Requests\StoredosenRequest;
 use App\Http\Requests\UpdatedosenRequest;
+use App\Models\Mahasiswa;
+use App\Models\Dosen;
+use App\Models\Irs;
+use App\Models\Khs;
+use App\Models\Pkl;
+use App\Models\Skripsi;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 
 class DosenController extends Controller
 {
@@ -15,7 +25,9 @@ class DosenController extends Controller
      */
     public function index()
     {
-        //
+        $dosens = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->get();
+		$mahasiswas = Mahasiswa::All();
+		return view('dosen.index', compact('mahasiswas','dosens'));
     }
 
     /**

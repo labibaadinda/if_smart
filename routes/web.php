@@ -78,6 +78,11 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::post('/profile/initialUpdate/{user}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
 });
 
+Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
+	Route::get('/',[DosenController::class,'index'])->name('dosen');
+	
+});
+
 Route::group(['namespace' => 'Auth','middleware' => 'guest'],function(){
 	Route::view('/login','auth.login')->name('login');
 	Route::post('/login',[LoginController::class,'authenticate'])->name('login.post');
