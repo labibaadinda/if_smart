@@ -73,7 +73,7 @@
 </div>
 <div class="row mt-4">
   <div class="col-md-3">
-    <a href="" class="card-link">
+    <a href="{{ route('irs') }}" class="card-link">
       <div class="card ">
         <div class="card-body text-center">
           <h5 class="card-title">Entry IRS</h5>
@@ -82,7 +82,7 @@
     </a>
   </div>
   <div class="col-md-3">
-    <a href="" class="card-link">
+    <a href="{{ route('khs') }}" class="card-link">
       <div class="card ">
         <div class="card-body text-center">
           <h5 class="card-title">Entry KHS</h5>
@@ -91,7 +91,7 @@
     </a>
   </div>
   <div class="col-md-3">
-    <a href="" class="card-link">
+    <a href="{{ route('pkl') }}" class="card-link">
       <div class="card ">
         <div class="card-body text-center">
           <h5 class="card-title">Entry PKL</h5>
@@ -100,7 +100,7 @@
     </a>
   </div>
   <div class="col-md-3">
-    <a href="" class="card-link">
+    <a href="{{ route('skripsi') }}" class="card-link">
       <div class="card">
         <div class="card-body text-center">
           <h5 class="card-title">Entry Skripsi</h5>

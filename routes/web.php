@@ -66,6 +66,12 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin']
 Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],function(){
 	Route::get('/',[UserController::class,'index'])->name('user');
 	Route::get('/profile',[ProfileController::class,'index'])->name('profile');
+	Route::get('/irs',[UserController::class,'irs'])->name('irs');
+	Route::post('/irs',[UserController::class,'storeIrs'])->name('irs.store');
+	Route::post('/khs',[UserController::class,'storeKhs'])->name('khs.store');
+	Route::get('/khs',[UserController::class,'khs'])->name('khs');
+	Route::get('/pkl',[UserController::class,'pkl'])->name('pkl');
+	Route::get('/skripsi',[UserController::class,'skripsi'])->name('skripsi');
 	Route::patch('/profile/update/{user}',[ProfileController::class,'update'])->name('profile.update');
 	Route::post('/profile/initialUpdate/{user}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
 });

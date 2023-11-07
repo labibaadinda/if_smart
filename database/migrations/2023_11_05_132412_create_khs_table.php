@@ -16,10 +16,9 @@ class CreateKhsTable extends Migration
         Schema::create('khs', function (Blueprint $table) {
             $table->id();
             $table->string('nim')->nullable();
-            $table->integer('semester')->nullable();
-            $table->string('jumlah_sks')->nullable();
-            $table->integer('ips')->nullable();
-            $table->string('status')->nullable()->default('0');
+            $table->integer('semester')->nullable();    
+            $table->string('ips')->nullable();
+            $table->string('status')->default('0');
             $table->string('file')->nullable(); 
             $table->timestamps();
         });
