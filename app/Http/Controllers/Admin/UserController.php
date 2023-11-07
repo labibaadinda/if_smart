@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\mahasiswa;
 
 use Illuminate\Http\Request;
+use Livewire\WithPagination;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -16,6 +17,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class UserController extends Controller
 {
+    use WithPagination;
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
@@ -35,12 +38,12 @@ class UserController extends Controller
                 ->make(true);
         }
 
-            // $data = User::select('*')->orderBy('created_at', 'DESC');
+            $data = mahasiswa::orderBy('nama','ASC')->paginate(20);;
             // $datas = DataTables::of($data);
 
         return view('admin.user.index',[
             // 'test' => 'masuk',
-            // 'datas' => $datas,
+            'datas' => $data,
         ]);
     }
 
@@ -140,5 +143,9 @@ class UserController extends Controller
         } catch (Exception $e) {
             return back()->with('error', $e->getCode() == 500 ? 'Failed to delete user' : $e->getMessage());
         }
+        // return redirect()->to('/admin/user')->with('message', [
+        //     'status' => 'true',
+        //     'message' => 'Successfully Delete User'
+        // ]);
     }
 }

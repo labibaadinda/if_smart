@@ -34,7 +34,7 @@ $message = session()->get('message')['message'];
 
     </div>
     <div class="card-body">
-        <div class="table-responsive">
+        <div id='table' class="table-responsive">
             <table class="table table-bordered data-table">
                 <thead>
                     <tr>
@@ -44,23 +44,38 @@ $message = session()->get('message')['message'];
                     <tr>
                         <th>No</th>
                         <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
+                        <th>NIM</th>
+                        <th>Angkatan</th>
+                        <th>Status</th>
+                        <th>Dosen Wali</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- @foreach ($datas as $data)
+                    @forelse ($datas as $data)
                     <tr>
-                        <th>{{ $data->email }}</th>
-                        <th>{{ $data->role }}</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Action</th>
+                        <th>{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</th>
+                        <th>{{ $data->nama }}</th>
+                        <th>{{ $data->nim }}</th>
+                        <th>{{ $data->angkatan }}</th>
+                        <th>{{ 'status' }}</th>
+                        <th>{{ $data->dosen_id }}</th>
+                        {{-- <th>Email</th> --}}
+                        {{-- <th>Role</th> --}}
+                        <th>
+
+                            <div class="row">
+                                <a href="{{ route('user.edit', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>
+                                <a href="javascript:void(0)" id="{{ $data->id }}" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a>
+                            </div>
+                        </th>
                     </tr>
-                    @endforeach --}}
+                    @empty
+
+                    @endforelse
                 </tbody>
             </table>
+            {{-- <div class="">{{ $datas->links() }}</div> --}}
         </div>
     </div>
 </div>
@@ -94,37 +109,37 @@ $message = session()->get('message')['message'];
 <script src="{{ asset('template/backend/sb-admin-2') }}/js/demo/datatables-demo.js"></script>
 
 <script type="text/javascript">
-    $(function() {
+//     $(function() {
 
-    var table = $('.data-table').DataTable({
-      processing: true,
-      serverSide: true,
-      ajax: "{{ route('user.index') }}",
-      columns: [{
-          data: 'DT_RowIndex',
-          name: 'id'
-        },
-        {
-          data: 'nim_nip',
-          name: 'nim'
-        },
-        {
-          data: 'email',
-          name: 'email'
-        },
-        {
-          data: 'role',
-          name: 'role'
-        },
-        {
-          data: 'action',
-          name: 'action',
-          orderable: false,
-          searchable: true
-        },
-      ]
-    });
-  });
+//     var table = $('.data-table').DataTable({
+//       processing: true,
+//       serverSide: true,
+//       ajax: "{{ route('user.index') }}",
+//       columns: [{
+//           data: 'DT_RowIndex',
+//           name: 'id'
+//         },
+//         {
+//           data: 'nim_nip',
+//           name: 'nim'
+//         },
+//         {
+//           data: 'email',
+//           name: 'email'
+//         },
+//         {
+//           data: 'role',
+//           name: 'role'
+//         },
+//         {
+//           data: 'action',
+//           name: 'action',
+//           orderable: false,
+//           searchable: true
+//         },
+//       ]
+//     });
+//   });
 
 
   $('body').on("click", ".btn-delete", function() {
@@ -143,6 +158,7 @@ $message = session()->get('message')['message'];
         $("#destroy-modal").modal("hide")
         $('.data-table').DataTable().ajax.reload();
         flash('success', 'Data berhasil dihapus')
+        $("#table").html("…").load(url);
       },
       error : function(xhr, status, error) {
 
