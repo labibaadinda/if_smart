@@ -49,7 +49,7 @@
 <div class="row mt-4">
     <div class="col-md-3">
         <a href="
-    {{-- {{ route('verif.irs') }} --}}
+    {{ route('irs.index') }}
     " class="card-link">
             <div class="card ">
                 <div class="card-body text-center">
