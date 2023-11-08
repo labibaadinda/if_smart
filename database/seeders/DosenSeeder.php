@@ -17,14 +17,14 @@ class DosenSeeder extends Seeder
         DB::table('dosens')->insert([
             [
                 'nama' => 'Irvan Gunawan, S.Si., M.T.',
-                'nip' => '00123456789',
-                
+                'nip' => '00123456788',
+
             ],
             [
                 'nama' => 'Deddy Cahyadi, S.Kom., M.T.',
-                'nip' => '00123456789',   
+                'nip' => '00123456789',
             ],
             ]);
         }
-    
+
 }

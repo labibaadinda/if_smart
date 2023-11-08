@@ -28,9 +28,9 @@ class DosenController extends Controller
      */
     public function index()
     {
-        $dosens = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->get();
+        $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
 		$mahasiswas = Mahasiswa::All();
-		return view('dosen.index', compact('mahasiswas','dosens'));
+		return view('dosen.index', compact('mahasiswas','dosen'));
     }
 
     public function viewIrs(){
