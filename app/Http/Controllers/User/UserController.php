@@ -92,6 +92,7 @@ class UserController extends Controller
             'semester' => $request->semester,
             'jumlah_sks' => $request->jumlah_sks,
             'file' => $pdfFileName,
+            'status' => '0'
         ]);
 
         return redirect()->route('user')->with('success', 'File IRS berhasil diunggah.');

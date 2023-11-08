@@ -1,6 +1,6 @@
 @extends('layout.backend.app',[
-'title' => 'Manage User',
-'pageTitle' =>'Manage User',
+'title' => 'Verifikasi IRS',
+'pageTitle' =>'Verifikasi IRS',
 ])
 
 @push('css')
@@ -28,11 +28,11 @@ $message = session()->get('message')['message'];
 @endif
 
 <div class="card">
-    <div class="card-header">
+    {{-- <div class="card-header">
 
         <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
 
-    </div>
+    </div> --}}
     <div class="card-body">
         <div id='table' class="table-responsive">
             <table class="table table-bordered data-table">

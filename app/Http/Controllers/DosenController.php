@@ -46,13 +46,9 @@ class DosenController extends Controller
 
     public function verifIrs(Request $request, Irs $irs)
 {
-    // Lakukan verifikasi atau penolakan berdasarkan nilai $request->action
-
     if ($request->action === 'verifikasi') {
-        // Lakukan verifikasi IRS
-        $irs->update(['status' => 'verifikasi']);
+        $irs->update(['status' => '1']);
     } elseif ($request->action === 'tolak') {
-        // Lakukan penolakan IRS
         $irs->update(['status' => 'tolak']);
     }
 
