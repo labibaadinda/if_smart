@@ -33,11 +33,11 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                @foreach($dosens as $dosen)
                                 <h5 class="card-title text-dark">{{ $dosen->nama }}</h5>
                                 <h5 class="card-title text-dark">{{ $dosen->nip }}</h5>
+                                {{-- @foreach($dosens as $dosen)
                                 <h5 class="card-title text-dark">Dosen S1 Informatika</h5>
-                                @endforeach
+                                @endforeach --}}
                             </div>
                         </div>
                     </div>
