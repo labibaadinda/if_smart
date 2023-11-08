@@ -1,6 +1,6 @@
 @extends('layout.backend.app',[
-'title' => 'Manage User',
-'pageTitle' =>'Manage User',
+'title' => 'Verifikasi IRS',
+'pageTitle' =>'Verifikasi IRS',
 ])
 
 @push('css')
@@ -28,11 +28,11 @@ $message = session()->get('message')['message'];
 @endif
 
 <div class="card">
-    <div class="card-header">
+    {{-- <div class="card-header">
 
         <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
 
-    </div>
+    </div> --}}
     <div class="card-body">
         <div id='table' class="table-responsive">
             <table class="table table-bordered data-table">
@@ -45,28 +45,23 @@ $message = session()->get('message')['message'];
                         <th>No</th>
                         <th>Name</th>
                         <th>NIM</th>
-                        <th>Angkatan</th>
-                        <th>Status</th>
-                        <th>Dosen Wali</th>
+                        <th>Semester</th>
+                        <th>Jumlah SKS</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($datas as $data)
+                    @forelse ($irss as $irs)
                     <tr>
-                        <th>{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</th>
-                        <th>{{ $data->nama }}</th>
-                        <th>{{ $data->nim }}</th>
-                        <th>{{ $data->angkatan }}</th>
-                        <th>{{ 'status' }}</th>
-                        <th>{{ $dosens->where('id',$data->dosen_id)->first()->nama }}</th>
-                        {{-- <th>Email</th> --}}
-                        {{-- <th>Role</th> --}}
+                        <th>{{ ($irss ->currentpage()-1) * $irss ->perpage() + $loop->index + 1 }}</th>
+                        <th>{{ $mahasiswas->where('nim',$irs->nim)->first()->nama }}</th>
+                        <th>{{ $irs->nim }}</th>
+                        <th>{{ $irs->semester }}</th>
+                        <th>{{ $irs->jumlah_sks }}</th>
                         <th>
 
                             <div class="row">
-                                <a href="{{ route('user.edit', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>
-                                <a href="javascript:void(0)" id="{{ $data->id }}" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a>
+                                <a href="{{ route('irs.showVerifikasi', $irs->id) }}" id="{{ $irs->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Verifikasi</a>
                             </div>
                         </th>
                     </tr>

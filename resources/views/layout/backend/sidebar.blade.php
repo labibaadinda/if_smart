@@ -16,6 +16,13 @@
         </div>
         <div class="sidebar-brand-text mx-3">IF SMART</div>
     </a>
+    @elseif(Auth::user()->role == 'dosen')
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dosen') }}">
+        <div class="sidebar-brand-icon">
+            <i class="fab fa-laravel"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">IF SMART</div>
+    </a>
     @endif
 
 
@@ -35,15 +42,53 @@
             <i class="fa-solid fa-gauge"></i>
             <span>Dashboard</span></a>
     </li>
+    @elseif(Auth::user()->role == 'dosen')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('dosen') }}">
+            <i class="fa-solid fa-gauge"></i>
+            <span>Dashboard</span></a>
+    </li>
     @endif
 
-    @can('admin')
+    @if(Auth::user()->role == 'dosen')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('irs.index') }}">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Verifikasi IRS</span></a>
+    </li>
+    {{-- <li class="nav-item">
+        <a class="nav-link" href="{{ route('khs') }}">
+            <i class="fa-solid fa-chart-bar"></i>
+            <span>Entry KHS</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('pkl') }}">
+            <i class="fa-solid fa-book-open"></i>
+            <span>Entry PKL</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('skripsi') }}">
+            <i class="fa-solid fa-graduation-cap"></i>
+            <span>Entry Skripsi</span></a>
+    </li> --}}
+
+    {{-- @if(Auth::user()->role == 'mahasiswa')
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('profile') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Profile</span></a>
+    </li>
+    @endif --}}
+    @endif
+
+    {{-- @can('admin')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('user') }}">
             <i class="fas fa-fw fa-user"></i>
             <span>User Dashboard</span></a>
     </li>
-    @endCan
+    @endCan --}}
 
     <!-- Divider -->
     {{--
@@ -146,6 +191,7 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
     </li> --}}
+    @can('user')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('irs') }}">
             <i class="fa-solid fa-pen-to-square"></i>
@@ -175,10 +221,13 @@
             <span>Profile</span></a>
     </li>
     @endif
-    
+
+
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
+    @endcan
+
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
