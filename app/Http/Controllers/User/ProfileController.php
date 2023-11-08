@@ -7,55 +7,72 @@ use Exception;
 
 use App\Models\User;
 
+use App\Models\Mahasiswa;
+use App\Models\Provinsi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
 {
-    public function updateInitialData(Request $request, User $user)
+    public function updateInitialData(Request $request, $id)
     {
-        try {
+        // 
+        $mahasiswa = Mahasiswa::findOrFail($id);
+        $validatedData = $request->validate([
+            'alamat' => 'required|string|max:255',
+            'handphone' => 'required|',
+            'kota' => 'required|',
+            'provinsi_id' => 'required|',
+        ]);
 
-            DB::beginTransaction();
+        // $existingData = Mahasiswa::where('n', $validatedData['nama'])
+        //                     ->where('penampungan_id', $validatedData['penampungan_id'])
+        //                     ->where('id', '!=', $alat->id)
+        //                     ->first();
 
-            $isHandphoneExists = User::where('handphone', $request->handphone)->count() >= 1 ? true : false;
+        // if($existingData){
+        //     return redirect()->with('error', 'Data yang sama sudah ada di database!');
+        // }
 
-            if ($isHandphoneExists) {
-                throw new Exception("No Handphone Already used", 400);
-            }
-            $user->handphone = $request->handphone;
-
-            $user->update($request->all());
-
-            DB::commit();
-
-            return redirect()->to('/admin/user')->with('message', [
-                'status' => 'true',
-                'message' => 'Successfully Created User'
-            ]);
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            return back()->with('error', $e->getCode() == 500 ? 'Failed to create user' : $e->getMessage());
+        $result = $mahasiswa->update($validatedData);
+        
+        if($result){
+            return redirect()->route('user')->with('success', 'Data berhasil diupdate!');
+        }else{
+            return redirect()->route('user')->with('error', 'Data gagal diupdate!');
         }
     }
 
     public function index()
-    {
-    	return view('user.profile');
+    {   
+        $mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
+        $provinsis = Provinsi::All();
+    	return view('user.profile', compact('mahasiswas','provinsis'));
     }
 
-    public function update(Request $request, User $user)
-    {
-    	if ($request->password) {
-    		$password = Hash::make($request->password);
-    	}else{
-    		$password = $request->old_password;
-    	}
+    public function update(Request $request, $id) {
+        // Ambil data pengguna berdasarkan ID
+        $user = User::findOrFail($id);
+        // Validasi input
+        $validatedData = $request->validate([
+            'password' => 'required|min:6',
+        ]);
 
-    	$request->request->add(['password' => $password]);
-    	$user->update($request->all());
-    	return back()->with('success','Proflie updated successfully');
+    
+        // Periksa apakah password lama benar
+        if (Hash::check($request->old_password, Auth::user()->password)) {
+            return redirect()->route('user')->with('error', 'Password lama tidak cocok');
+        }
+
+        // Update password
+        $result = $user->update($validatedData);
+    
+        if($result){
+            return redirect()->route('user')->with('success', 'Data berhasil diupdate!');
+        }else{
+            return redirect()->route('user')->with('error', 'Data gagal diupdate!');
+        }
     }
 }

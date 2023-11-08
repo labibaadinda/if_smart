@@ -7,6 +7,7 @@
 <div class="row">
     <div class="col-lg-6">
         <div class="card">
+        @foreach($mahasiswas as $mahasiswa)
             <div class="card-header">
                 Email : {{ Auth::user()->email }}
             </div>
@@ -14,15 +15,12 @@
                 <div class="card mb-3" style="max-width: 540px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="{{ asset('images/backend/laravel.jpg') }}" class="card-img" alt="">
+                            <img src="{{ asset('images/backend/profile.jpg') }}" class="card-img" alt="" width="207" height="207">
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title">{{ Auth::user()->name }}</h5>
+                                <h5 class="card-title">{{ $mahasiswa->nama }}</h5>
 
-                                <p class="card-text"><small class="text-muted">{{ 'updated at
-                                        '.\Carbon\Carbon::parse(Auth::user()->updated_at)->diffForHumans() }}</small>
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -35,26 +33,36 @@
             <div class="card-header">
                 Edit Profile
             </div>
+            
             <div class="card-body">
-                <form method="POST" action="{{ route('profile.update',Auth::user()->id) }}">
+                <form method="POST" action="{{ route('profile.update',$mahasiswa->id) }}">
                     @csrf
-                    @method('PATCH')
+                    @method('PUT')
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input required="" value="{{ Auth::user()->name }}" class="form-control" type="" id="name"
-                            name="name">
+                        
+                        <label for="nama">Name</label>
+                        <input required="" value="{{ $mahasiswa->nama }}" class="form-control" type="" id="nama"
+                            name="nama" disabled>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input required="" value="{{ Auth::user()->password }}" class="form-control" type="hidden"
+                    {{-- <div class="form-group">
+                        <label for="old_password">Password Lama</label>
+                        <input type="password" class="form-control" 
                             id="old_password" name="old_password">
+
+                        <small class="text-secondary">masukkan password lama</small>
+                    </div> --}}
+                    {{-- <div class="form-group">
+                        <label for="password">Password Baru</label>
+
                         <input type="password" id="password" name="password" class="form-control">
-                        <small class="text-secondary">kosongkan kolom password jika tidak ingin mengubah
-                            password</small>
-                    </div>
-                    <div class="form-group">
+
+                    </div> --}}
+                    {{-- <div class="form-group">
                         <button class="btn btn-primary btn-sm">Update</button>
-                    </div>
+                    </div> --}}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#initialModal">
+                        Update
+                      </button>
                 </form>
             </div>
             <div class="card-footer"></div>
@@ -73,19 +81,20 @@
                 </button> --}}
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('profile.updateInitialData',Auth::user()->id) }}" method="POST" autocomplete="off">
+                <form id="createForm" action="{{ route('profile.updateInitialData',$mahasiswa->id) }}" method="POST" >
+                    @method('PUT')
                     @csrf
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" value="{{ Auth::user()->name }}" disabled>
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" name="nama" class="form-control" value="{{ $mahasiswa->nama }}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="name">NIM</label>
-                        <input type="text" id="name" name="name" class="form-control" value="{{ Auth::user()->nim }}" disabled>
+                        <label for="nim">NIM</label>
+                        <input type="text" id="nim" name="nim" class="form-control" value="{{ $mahasiswa->nim }}" disabled>
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
-                        <input required id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}">
+                        <input required id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->alamat }}">
 
                         @error('alamat')
                         <div class="invalid-feedback">
@@ -95,7 +104,7 @@
                     </div>
                     <div class="form-group">
                         <label for="handphone">No Handphone</label>
-                        <input required id="handphone" name="handphone" class="form-control @error('handphone') is-invalid @enderror" value="{{ old('handphone') }}">
+                        <input required id="handphone" name="handphone" class="form-control @error('handphone') is-invalid @enderror" value="{{ $mahasiswa->handphone }}">
 
                         @error('handphone')
                         <div class="invalid-feedback">
@@ -104,8 +113,8 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="alamat">Kota/Kabupaten</label>
-                        <input required id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ old('alamat') }}">
+                        <label for="kota">Kota/Kabupaten</label>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota }}">
 
                         @error('alamat')
                         <div class="invalid-feedback">
@@ -113,7 +122,7 @@
                         </div>
                         @enderror
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <label for="provinsi">Provinsi</label>
                         <input required id="provinsi" name="provinsi" class="form-control @error('provinsi') is-invalid @enderror" value="{{ old('provinsi') }}">
 
@@ -122,19 +131,27 @@
                             {{ $message }}
                         </div>
                         @enderror
-                    </div>
+                    </div> --}}
+                    {{-- <div class="form-group">
+                        <label for="provinsi">Provinsi</label>
+                        <select class="form-select" name="provinsi" aria-label="Default select example">
+                          <option value="">-------- Pilih Provinsi --------</option>
+                          @foreach($provinsis->unique('nama') as $provinsi)
+                          <option value="{{ $provinsi->id}}">{{ $provinsi->nama }}</option>
+                          @endforeach 
+                        </select>
+                    </div> --}}
                     {{-- <div class="form-group">
                         <label for="p">Password</label>
                         <input type="password" required="" id="p" name="password" class="form-control">
                     </div> --}}
                     <div class="form-group">
-                        <label for="j">Jalur Masuk</label>
-                        <select name="jalus_masuk" id="j" class="form-control">
-                            <option disabled="">- Pilih Jalur Masuk -</option>
-                            <option value="snmptn">SNMPTN</option>
-                            <option value="sbmptn">SBMPTN</option>
-                            <option value="mandiri">Mandiri</option>
-                            <option value="lainnya">Lainnya</option>
+                        <label for="provinsi">Provinsi</label>
+                        <select name="provinsi_id" id="provinsi_id" class="form-control">
+                            <option disabled="">- Pilih Provinsi -</option>
+                            @foreach($provinsis->unique('nama') as $provinsi)
+                            <option value="{{ $provinsi->id}}">{{ $provinsi->nama }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -142,6 +159,7 @@
                     <button type="submit" class="btn btn-md btn-primary">Simpan</button>
                 </form>
             </div>
+            @endforeach
             <div class="modal-footer">
                 {{-- <a href="{{ route('user.index') }}" class="btn btn-md btn-secondary">Back</a> --}}
                 {{-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
