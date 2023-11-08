@@ -106,7 +106,7 @@ class UserController extends Controller
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
 
-	
+
 	$existingData = Khs::where('nim', Auth::user()->nim_nip)->get();
 
     if ($existingData->isEmpty()) {

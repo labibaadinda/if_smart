@@ -27,7 +27,7 @@
         <h5 class="my-3 font-weight-bold text-primary">Add User</h5>
     </div>
     <div class="card-body">
-        <form id="createForm" action="{{ route('user.store') }}" method="POST" autocomplete="off">
+        <form id="createForm" action="{{ route('user.storeMahasiswa') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="name">Name</label>
@@ -60,23 +60,22 @@
                 @enderror
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input required id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}">
-
-                @error('email')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-                @enderror
-            </div>
-            <div class="form-group">
-                <label for="r">Status</label>
-                <select name="status" id="r" class="form-control">
-                    <option disabled="">- PILIH STATUS -</option>
-                    <option selected value="aktif">Aktif</option>
-                    <option value="nonAktif">Non-Aktif</option>
+                <label for="d">Dosen Wali</label>
+                <select name="dosen_wali" id="d" class="form-control">
+                    <option selected disabled="">- Pilih Dosen Wali -</option>
+                    @foreach ($dosens as $dosen)
+                    <option value="{{ $dosen->id }}">{{ $dosen->nama }} ({{ $dosen->nip }})</option>
+                    @endforeach
                 </select>
             </div>
+            {{-- <div class="form-group">
+                <label for="r">Dosen Wali</label>
+                <select name="dosenWali" id="r" class="form-control">
+                    <option disabled="">- PILIH Dosen -</option>
+                    <option value="1">1 A</option>
+                    <option value="2">2 B</option>
+                </select>
+            </div> --}}
             {{-- <div class="form-group">
                 <label for="r">Role</label>
                 <select name="role" id="r" class="form-control">
@@ -86,8 +85,10 @@
                 </select>
             </div> --}}
             <div class="form-group">
-                <label for="p">Password</label>
-                <input type="password" required="" id="p" name="password" class="form-control" value="{{ 'informatika_undip' }}">
+                <label for="p">Password Default:
+                    <label class='font-weight-bold' >informatika_undip</label>
+                </label>
+                {{-- <input type="password" required="" id="p" name="password" class="form-control" value="{{ 'informatika_undip' }}"> --}}
             </div>
 
             <button type="submit" class="btn btn-md btn-primary">Simpan</button>

@@ -13,8 +13,8 @@ class LoginController extends Controller
 		$credentials = request()->only(['email', 'password']);
 
 
-		if (Auth::attempt($credentials)) {
-
+		// if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials) || Auth::attempt(['nim_nip' => $credentials['email'], 'password' => $credentials['password']])) {
 			$userRole = auth()->user()->role;
 
 			switch ($userRole) {
@@ -34,7 +34,7 @@ class LoginController extends Controller
 					redirect()->to('/');
 			}
 		}
-	
+
 		return back()->with('error', 'Invalid login crendentials');
 	}
 }

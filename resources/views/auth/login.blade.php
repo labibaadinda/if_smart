@@ -19,9 +19,9 @@
                             <form class="user" method="POST" action="{{ route('login.post') }}">
                                 @csrf
                                 <div class="form-group">
-                                    <input name="email" required="" type="email" class="form-control form-control-user"
+                                    <input name="email" required="" type="text" class="form-control form-control-user"
                                         id="exampleInputEmail" aria-describedby="emailHelp"
-                                        placeholder="Enter Email Address...">
+                                        placeholder="Enter Email Address or NIM...">
                                 </div>
                                 <div class="form-group">
                                     <input name="password" required="" type="password" class="form-control form-control-user"

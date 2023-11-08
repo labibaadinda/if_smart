@@ -1,21 +1,23 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-//Namespace Auth
-use App\Http\Controllers\Auth\LoginController;
-
-//Namespace Admin
-use App\Http\Controllers\Admin\AdminController;
-
-//Namespace User
-use App\Http\Controllers\User\UserController;
-use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Auth;
 
+//Namespace Auth
+use Illuminate\Support\Facades\Route;
+
+//Namespace Admin
+use App\Http\Controllers\DosenController;
+
+//Namespace User
 use App\Http\Livewire\Admin\DashboardAdmin;
 use App\Http\Livewire\Admin\CreateMahasiswa;
+use App\Http\Controllers\User\UserController;
+
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Livewire\Admin\ManajemenMahasiswa;
+use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\Admin\MahasiswaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +39,12 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin']
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
 	// Route::get('/',DashboardAdmin::class)->name('admin');
 
-	Route::resource('/user','UserController')->middleware(['can:admin']);
+	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
 
 	// Route::get('/user',[CreateMahasiswa::class,'render'])->name('admin')->middleware(['can:admin']);
 	// Route::get('/user',[ManajemenMahasiswa::class,'render'])->name('manajemen-user')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
+    Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.storeMahasiswa');
 
 
 	//Route Rescource
@@ -80,7 +83,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 	Route::get('/',[DosenController::class,'index'])->name('dosen');
-	
+
 });
 
 Route::group(['namespace' => 'Auth','middleware' => 'guest'],function(){
