@@ -15,6 +15,26 @@
         </button>
     </div>
 </div>
+
+  <script>
+    setTimeout(function(){
+      $('.alert').alert('close');
+    }, 2000);
+  </script>
+@endif
+
+@if(session()->has('error'))
+  <div class="notify">
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <i class="fa-solid fa-circle-check"></i> {{ session('error') }}
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
   <script>
     setTimeout(function(){
       $('.alert').alert('close');

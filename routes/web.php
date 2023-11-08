@@ -77,8 +77,8 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::get('/pkl',[UserController::class,'pkl'])->name('pkl');
 	Route::post('/skripsi',[UserController::class,'storeSkripsi'])->name('skripsi.store');
 	Route::get('/skripsi',[UserController::class,'skripsi'])->name('skripsi');
-	Route::patch('/profile/update/{user}',[ProfileController::class,'update'])->name('profile.update');
-	Route::post('/profile/initialUpdate/{user}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
+	Route::put('/profile/update/{id}',[ProfileController::class,'update'])->name('profile.update');
+	Route::put('/profile/initialUpdate/{id}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
 });
 
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){

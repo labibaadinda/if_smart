@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
     	$this->call(KhsSeeder::class);
     	$this->call(MahasiswaSeeder::class);
     	$this->call(DosenSeeder::class);
+    	$this->call(ProvinsiSeeder::class);
         Mahasiswa::create([
             'nama' => 'Freyana Syifa Jayawardana',
             'nim' => '24060118120002',
