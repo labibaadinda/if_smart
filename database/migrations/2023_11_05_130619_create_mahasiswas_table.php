@@ -16,7 +16,6 @@ class CreateMahasiswasTable extends Migration
         Schema::create('mahasiswas', function (Blueprint $table) {
             $table->id();
             $table->string('nim')->nullable(); //unique
-            $table->timestamps();
             $table->string('nama')->nullable();
             $table->string('dosen_id')->nullable();
             $table->string('status')->default('aktif');
@@ -27,6 +26,7 @@ class CreateMahasiswasTable extends Migration
             $table->string('jalur_masuk')->nullable();
             $table->string('handphone')->nullable();
             $table->string('foto')->nullable();
+            $table->timestamps();
         });
     }
 

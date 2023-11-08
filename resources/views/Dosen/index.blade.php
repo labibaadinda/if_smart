@@ -47,7 +47,9 @@
 </div>
 <div class="row mt-4">
   <div class="col-md-3">
-    <a href="{{ route('verif.irs') }}" class="card-link">
+    <a href="
+    {{-- {{ route('verif.irs') }} --}}
+    " class="card-link">
       <div class="card ">
         <div class="card-body text-center">
           <h5 class="card-title">Verifikasi IRS</h5>
@@ -56,7 +58,9 @@
     </a>
   </div>
   <div class="col-md-3">
-    <a href="{{ route('verif.khs') }}" class="card-link">
+    <a href="
+    {{-- {{ route('verif.khs') }} --}}
+    " class="card-link">
       <div class="card ">
         <div class="card-body text-center">
           <h5 class="card-title">Verifikasi KHS</h5>
@@ -65,7 +69,9 @@
     </a>
   </div>
   <div class="col-md-3">
-    <a href="{{ route('verif.pkl') }}" class="card-link">
+    <a href="
+    {{-- {{ route('verif.pkl') }} --}}
+    " class="card-link">
       <div class="card ">
         <div class="card-body text-center">
           <h5 class="card-title">Verifikasi PKL</h5>
@@ -74,7 +80,9 @@
     </a>
   </div>
   <div class="col-md-3">
-    <a href="{{ route('verif.skripsi') }}" class="card-link">
+    <a href="
+    {{-- {{ route('verif.skripsi') }} --}}
+    " class="card-link">
       <div class="card">
         <div class="card-body text-center">
           <h5 class="card-title">Verifikasi Skripsi</h5>

@@ -39,12 +39,14 @@ class MahasiswaController extends Controller
                 ->make(true);
         }
 
-            $data = mahasiswa::orderBy('nama','ASC')->paginate(20);;
+            $data = mahasiswa::orderBy('nama','ASC')->paginate(20);
+            $dosens = dosen::All();
             // $datas = DataTables::of($data);
 
         return view('admin.user.index',[
             // 'test' => 'masuk',
             'datas' => $data,
+            'dosens' => $dosens
         ]);
     }
 

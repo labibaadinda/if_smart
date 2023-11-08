@@ -34,22 +34,20 @@ Route::view('/','welcome');
 
 
 Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin'],function(){
-
-	// Route::get('/',[AdminController::class,'index'])->name('admin')->middleware(['can:admin']);
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
-	// Route::get('/',DashboardAdmin::class)->name('admin');
-
+	// Route::get('/profile',[ProfileController::class,'index'])->name('profile');
 	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
-
-	// Route::get('/user',[CreateMahasiswa::class,'render'])->name('admin')->middleware(['can:admin']);
-	// Route::get('/user',[ManajemenMahasiswa::class,'render'])->name('manajemen-user')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
     Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.storeMahasiswa');
 
 
+
+	// Route::get('/',[AdminController::class,'index'])->name('admin')->middleware(['can:admin']);
+	// Route::get('/',DashboardAdmin::class)->name('admin');
+	// Route::get('/user',[CreateMahasiswa::class,'render'])->name('admin')->middleware(['can:admin']);
+	// Route::get('/user',[ManajemenMahasiswa::class,'render'])->name('manajemen-user')->middleware(['can:admin']);
 	//Route Rescource
 	// Route::resource('/user','UserController')->middleware(['can:admin']);
-
 	//Route View
 
 	Route::view('/404-page','admin.404-page')->name('404-page');
@@ -83,6 +81,15 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 	Route::get('/',[DosenController::class,'index'])->name('dosen');
+	// Route::resource('/irs','MahasiswaController')->middleware(['can:admin']);
+	Route::get('/irs',[DosenController::class,'viewIrs'])->name('irs.index');
+
+    Route::get('irs/verif/{irs}', [DosenController::class,'showVerifikasi'])->name('irs.showVerifikasi');
+    Route::post('irs/verif/{irs}', [DosenController::class,'verifIrs'])->name('irs.verifIrs');
+
+
+	// Route::post('/irs',[DosenController::class,'storeIrs'])->name('verif.irs');
+
 
 });
 
