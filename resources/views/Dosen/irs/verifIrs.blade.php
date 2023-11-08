@@ -12,7 +12,7 @@
                 <p><strong>Semester:</strong> {{ $irs->semester }}</p>
                 <p><strong>Jumlah SKS:</strong> {{ $irs->jumlah_sks }}</p>
                 <p><strong>File PDF:</strong></p>
-                <a href="{{ Storage::url($irs->file) }}" target="_blank">Lihat PDF</a>
+                <a href="{{ asset('storage/irs/' . $irs->file) }}" target="_blank">Lihat PDF</a>
             </div>
         </div>
         <div class="mt-3">
