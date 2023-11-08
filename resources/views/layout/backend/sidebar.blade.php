@@ -56,48 +56,7 @@
             <i class="fa-solid fa-pen-to-square"></i>
             <span>Verifikasi IRS</span></a>
     </li>
-    {{-- <li class="nav-item">
-        <a class="nav-link" href="{{ route('khs') }}">
-            <i class="fa-solid fa-chart-bar"></i>
-            <span>Entry KHS</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('pkl') }}">
-            <i class="fa-solid fa-book-open"></i>
-            <span>Entry PKL</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('skripsi') }}">
-            <i class="fa-solid fa-graduation-cap"></i>
-            <span>Entry Skripsi</span></a>
-    </li> --}}
-
-    {{-- @if(Auth::user()->role == 'mahasiswa')
-    <hr class="sidebar-divider d-none d-md-block">
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('profile') }}">
-            <i class="fas fa-fw fa-user"></i>
-            <span>Profile</span></a>
-    </li>
-    @endif --}}
     @endif
-
-    {{-- @can('admin')
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('user') }}">
-            <i class="fas fa-fw fa-user"></i>
-            <span>User Dashboard</span></a>
-    </li>
-    @endCan --}}
-
-    <!-- Divider -->
-    {{--
-    <hr class="sidebar-divider"> --}}
-
-    <!-- Heading -->
-    {{-- <div class="sidebar-heading">
-        Interface
-    </div> --}}
 
     @can('admin')
     <li class="nav-item">
@@ -191,7 +150,7 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
     </li> --}}
-    @can('user')
+    @if(Auth::user()->role == 'mahasiswa')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('irs') }}">
             <i class="fa-solid fa-pen-to-square"></i>
@@ -212,6 +171,7 @@
             <i class="fa-solid fa-graduation-cap"></i>
             <span>Entry Skripsi</span></a>
     </li>
+    @endif
 
     @if(Auth::user()->role == 'mahasiswa')
     <hr class="sidebar-divider d-none d-md-block">
@@ -226,7 +186,7 @@
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
-    @endcan
+  
 
 
     <!-- Sidebar Toggler (Sidebar) -->
