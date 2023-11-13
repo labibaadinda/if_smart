@@ -83,9 +83,12 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 	Route::get('/',[DosenController::class,'index'])->name('dosen');
 	// Route::resource('/irs','MahasiswaController')->middleware(['can:admin']);
 	Route::get('/irs',[DosenController::class,'viewIrs'])->name('irs.index');
+	Route::get('/khs',[DosenController::class,'viewKhs'])->name('khs.index')    ;
 
-    Route::get('irs/verif/{irs}', [DosenController::class,'showVerifikasi'])->name('irs.showVerifikasi');
+    Route::get('irs/verif/{irs}', [DosenController::class,'showVerifikasiIrs'])->name('irs.showVerifikasi');
     Route::post('irs/verif/{irs}', [DosenController::class,'verifIrs'])->name('irs.verifIrs');
+    Route::get('khs/verif/{khs}', [DosenController::class,'showVerifikasiKhs'])->name('khs.showVerifikasi');
+    Route::post('khs/verif/{khs}', [DosenController::class,'verifKhs'])->name('khs.verifKhs');
 
 
 	// Route::post('/irs',[DosenController::class,'storeIrs'])->name('verif.irs');

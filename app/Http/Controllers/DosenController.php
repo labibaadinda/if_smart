@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoredosenRequest;
 use App\Http\Requests\UpdatedosenRequest;
 
-
 class DosenController extends Controller
 {
     use WithPagination;
@@ -33,69 +32,112 @@ class DosenController extends Controller
 		return view('dosen.index', compact('mahasiswas','dosen'));
     }
 
+    // IRS function
     public function viewIrs(){
         $irss = irs::where('status','0')->orderBy('id','ASC')->paginate(20);
 		$mahasiswas = Mahasiswa::All();
 		return view('dosen.irs.index', compact('irss','mahasiswas'));
     }
 
-    public function showVerifikasi(Irs $irs)
+    public function showVerifikasiIrs(Irs $irs)
     {
         return view('dosen.irs.verifIrs', compact('irs'));
     }
 
     public function verifIrs(Request $request, Irs $irs)
-{
-    if ($request->action === 'verifikasi') {
-        $irs->update(['status' => '1']);
-    } elseif ($request->action === 'tolak') {
-        $irs->update(['status' => 'tolak']);
-    }
-
-    return redirect()->route('irs.index')->with('success', 'IRS berhasil diverifikasi atau ditolak.');
-}
-
-    public function storeIrs(Request $request)
-{
-    // Validasi input jika diperlukan
-    $request->validate([
-        'semester' => 'required',
-        'jumlah_sks' => 'required',
-        'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
-    ]);
-
-	$existingData = Irs::where('nim', Auth::user()->nim_nip)->get();
-
-    if ($existingData->isEmpty()) {
-        // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
-        if ($request->semester != 1) {
-            return redirect()->back()->with('error', 'Semester harus dimulai dari 1.');
+    {
+        if ($request->action === 'verifikasi') {
+            $irs->update(['status' => '1']);
+            $message = 'IRS berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $irs->update(['status' => 'tolak']);
+            $message = 'IRS berhasil ditolak.';
         }
-    } else {
-        $latestProgres = $existingData->max('semester');
 
-        if ($request->semester != $latestProgres + 1) {
-            return redirect()->back()->with('error', 'Semester yang dimasukkan harus berurutan');
-        }
-    }
-    if ($request->hasFile('pdf_file')) {
-        $pdfFile = $request->file('pdf_file');
-        $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
-
-        // Simpan file PDF ke direktori storage/app/public/irs
-        $pdfFile->storeAs('public/irs', $pdfFileName);
-
-        // Simpan data IRS ke dalam tabel IRS
-        Irs::create([
-            'nim' => Auth::user()->nim_nip,
-            'semester' => $request->semester,
-            'jumlah_sks' => $request->jumlah_sks,
-            'file' => $pdfFileName,
+        return redirect()->route('irs.index', $irs->id)->with('message', [
+            'status' => 'true',
+            'message' => $message,
         ]);
-
-        return redirect()->route('user')->with('success', 'File IRS berhasil diunggah.');
     }
-}
+
+    // public function storeIrs(Request $request)
+    // {
+    //     // Validasi input jika diperlukan
+    //     $request->validate([
+    //         'semester' => 'required',
+    //         'jumlah_sks' => 'required',
+    //         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
+    //     ]);
+
+    //     $existingData = Irs::where('nim', Auth::user()->nim_nip)->get();
+
+    //     if ($existingData->isEmpty()) {
+    //         // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
+    //         if ($request->semester != 1) {
+    //             return redirect()->back()->with('error', 'Semester harus dimulai dari 1.');
+    //         }
+    //     } else {
+    //         $latestProgres = $existingData->max('semester');
+
+    //         if ($request->semester != $latestProgres + 1) {
+    //             return redirect()->back()->with('error', 'Semester yang dimasukkan harus berurutan');
+    //         }
+    //     }
+    //     if ($request->hasFile('pdf_file')) {
+    //         $pdfFile = $request->file('pdf_file');
+    //         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+
+    //         // Simpan file PDF ke direktori storage/app/public/irs
+    //         $pdfFile->storeAs('public/irs', $pdfFileName);
+
+    //         // Simpan data IRS ke dalam tabel IRS
+    //         Irs::create([
+    //             'nim' => Auth::user()->nim_nip,
+    //             'semester' => $request->semester,
+    //             'jumlah_sks' => $request->jumlah_sks,
+    //             'file' => $pdfFileName,
+    //         ]);
+
+    //         return redirect()->route('user')->with('success', 'File IRS berhasil diunggah.');
+    //     }
+    // }
+
+    // KHS function
+    public function viewKhs(){
+        $datas = khs::where('status','0')->orderBy('id','ASC')->paginate(20);
+		$mahasiswas = Mahasiswa::All();
+		return view('dosen.khs.index', compact('datas','mahasiswas'));
+    }
+
+    public function showVerifikasiKhs(Khs $khs)
+    {
+        return view('dosen.khs.verifIrs', compact('khs'));
+    }
+
+    public function verifKhs(Request $request, Khs $khs)
+    {
+        if ($request->action === 'verifikasi') {
+            $khs->update(['status' => '1']);
+            $message = 'KHS berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $khs->update(['status' => 'tolak']);
+            $message = 'KHS berhasil ditolak.';
+        }
+
+        return redirect()->route('khs.index', $khs->id)->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
+    }
+
+    // PKL function
+    // public function viewPkl(){
+    //     $datas = pkl::where('status','0')->orderBy('id','ASC')->paginate(20);
+	// 	$mahasiswas = Mahasiswa::All();
+	// 	return view('dosen.khs.index', compact('datas','mahasiswas'));
+    // }
+
+
 
     /**
      * Show the form for creating a new resource.

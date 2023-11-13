@@ -50,13 +50,7 @@
     </li>
     @endif
 
-    @if(Auth::user()->role == 'dosen')
-    <li class="nav-item">
-        <a class="nav-link" href="{{ route('irs.index') }}">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <span>Verifikasi IRS</span></a>
-    </li>
-    @endif
+
 
     @can('admin')
     <li class="nav-item">
@@ -111,6 +105,35 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
+    {{-- @if(Auth::user()->role == 'dosen')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('irs.index') }}">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Verifikasi IRS</span></a>
+    </li>
+    @endif --}}
+
+    <!-- Nav Item - Utilities Collapse Menu -->
+    @if(Auth::user()->role == 'dosen')
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+            aria-expanded="true" aria-controls="collapseUtilities">
+            {{-- <i class="fas fa-fw fa-wrench"></i> --}}
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Verifikasi</span>
+        </a>
+        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{-- <h6 class="collapse-header">Custom Utilities:</h6> --}}
+                <a class="collapse-item" href="{{ route('irs.index') }}">Verifikasi IRS</a>
+                <a class="collapse-item" href="{{ route('khs.index') }}">Verifikasi KHS</a>
+                <a class="collapse-item" href="{{ route('utilities-animations') }}">Animations</a>
+                <a class="collapse-item" href="{{ route('utilities-other') }}">Other</a>
+            </div>
+        </div>
+    </li>
+    @endif
+
     <!-- Heading -->
     {{-- <div class="sidebar-heading">
         Addons
@@ -119,7 +142,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true"
-            aria-controls="collapsePages">
+        aria-controls="collapsePages">
             <i class="fas fa-fw fa-folder"></i>
             <span>Pages</span>
         </a>
@@ -150,6 +173,9 @@
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
     </li> --}}
+
+
+
     @if(Auth::user()->role == 'mahasiswa')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('irs') }}">
