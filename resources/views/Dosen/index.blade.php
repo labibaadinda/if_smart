@@ -35,8 +35,8 @@
                             <div class="card-body">
                                 <h5 class="card-title text-dark">{{ $dosen->nama }}</h5>
                                 <h5 class="card-title text-dark">{{ $dosen->nip }}</h5>
-                                {{-- @foreach($dosens as $dosen)
                                 <h5 class="card-title text-dark">Dosen S1 Informatika</h5>
+                                {{-- @foreach($dosens as $dosen)
                                 @endforeach --}}
                             </div>
                         </div>
@@ -60,7 +60,7 @@
     </div>
     <div class="col-md-3">
         <a href="
-    {{-- {{ route('verif.khs') }} --}}
+    {{ route('khs.index') }}
     " class="card-link">
             <div class="card ">
                 <div class="card-body text-center">
@@ -71,7 +71,7 @@
     </div>
     <div class="col-md-3">
         <a href="
-    {{-- {{ route('verif.pkl') }} --}}
+    {{ route('pkl.index') }}
     " class="card-link">
             <div class="card ">
                 <div class="card-body text-center">
@@ -82,7 +82,7 @@
     </div>
     <div class="col-md-3">
         <a href="
-    {{-- {{ route('verif.skripsi') }} --}}
+    {{ route('skripsi.index') }}
     " class="card-link">
             <div class="card">
                 <div class="card-body text-center">

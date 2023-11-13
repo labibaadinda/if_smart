@@ -211,7 +211,7 @@ class UserController extends Controller
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
 
         // Simpan file PDF ke direktori storage/app/public/irs
-        $pdfFile->storeAs('public/irs', $pdfFileName);
+        $pdfFile->storeAs('public/skripsi', $pdfFileName);
 
         // Simpan data IRS ke dalam tabel IRS
         Skripsi::create([

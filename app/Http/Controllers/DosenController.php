@@ -32,6 +32,49 @@ class DosenController extends Controller
 		return view('dosen.index', compact('mahasiswas','dosen'));
     }
 
+    // Search Mahasiswa
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        // Sesuaikan dengan model Mahasiswa dan struktur tabel di database
+        $mahasiswas = Mahasiswa::where('nim', 'LIKE', "%$keyword%")
+            ->orWhere('nama', 'LIKE', "%$keyword%")
+            ->get();
+
+        return view('dosen.search', compact('mahasiswas', 'keyword'));
+    }
+
+    public function showDetail($nim)
+    {
+        $mahasiswa = Mahasiswa::where('nim', $nim)->firstOrFail();
+        // Sesuaikan dengan model dan struktur tabel semester di database
+        // $semesters = $mahasiswa->select('semesters');
+        $irss = Irs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
+        $khss = Khs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
+        $skripsis = Skripsi::where('nim',$nim)->orderBy('progres', 'ASC')->get();
+
+
+        return view('dosen.detailSearch', compact(
+            'mahasiswa',
+            'skripsis',
+            'irss',
+            'khss'
+        ));
+    }
+
+    public function showSemesterDetail($nim, $semester)
+{
+    $mahasiswa = Mahasiswa::where('nim', $nim)->firstOrFail();
+    // Sesuaikan dengan model dan struktur tabel semester di database
+    $semesterDetail = $mahasiswa->semesters->where('semester', $semester)->first();
+
+    return view('mahasiswa.semester_detail', compact('mahasiswa', 'semesterDetail'));
+}
+
+
+
+
     // IRS function
     public function viewIrs(){
         $irss = irs::where('status','0')->orderBy('id','ASC')->paginate(20);
@@ -41,7 +84,8 @@ class DosenController extends Controller
 
     public function showVerifikasiIrs(Irs $irs)
     {
-        return view('dosen.irs.verifIrs', compact('irs'));
+		$mahasiswas = Mahasiswa::All();
+        return view('dosen.irs.verifIrs', compact('irs','mahasiswas'));
     }
 
     public function verifIrs(Request $request, Irs $irs)
@@ -111,7 +155,8 @@ class DosenController extends Controller
 
     public function showVerifikasiKhs(Khs $khs)
     {
-        return view('dosen.khs.verifIrs', compact('khs'));
+		$mahasiswas = Mahasiswa::All();
+        return view('dosen.khs.verifIrs', compact('khs','mahasiswas'));
     }
 
     public function verifKhs(Request $request, Khs $khs)
@@ -131,12 +176,62 @@ class DosenController extends Controller
     }
 
     // PKL function
-    // public function viewPkl(){
-    //     $datas = pkl::where('status','0')->orderBy('id','ASC')->paginate(20);
-	// 	$mahasiswas = Mahasiswa::All();
-	// 	return view('dosen.khs.index', compact('datas','mahasiswas'));
-    // }
+    public function viewPkl(){
+        $datas = pkl::where('konfirmasi','0')->orderBy('id','ASC')->paginate(20);
+		$mahasiswas = Mahasiswa::All();
+		return view('dosen.pkl.index', compact('datas','mahasiswas'));
+    }
 
+    public function showVerifikasiPkl(Pkl $pkl)
+    {
+        $mahasiswas = Mahasiswa::All();
+        return view('dosen.pkl.verifIrs', compact('pkl','mahasiswas'));
+    }
+
+    public function verifPkl(Request $request, Pkl $pkl)
+    {
+        if ($request->action === 'verifikasi') {
+            $pkl->update(['konfirmasi' => '1']);
+            $message = 'PKL berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $pkl->update(['konfirmasi' => 'tolak']);
+            $message = 'PKL berhasil ditolak.';
+        }
+
+        return redirect()->route('pkl.index', $pkl->id)->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
+    }
+
+    // Skripsi function
+    public function viewSkripsi(){
+        $datas = skripsi::where('konfirmasi','0')->orderBy('id','ASC')->paginate(20);
+		$mahasiswas = Mahasiswa::All();
+		return view('dosen.skripsi.index', compact('datas','mahasiswas'));
+    }
+
+    public function showVerifikasiSkripsi(Skripsi $skripsi)
+    {
+        $mahasiswas = Mahasiswa::All();
+        return view('dosen.skripsi.verifIrs', compact('skripsi','mahasiswas'));
+    }
+
+    public function verifSkripsi(Request $request, Skripsi $skripsi)
+    {
+        if ($request->action === 'verifikasi') {
+            $skripsi->update(['konfirmasi' => '1']);
+            $message = 'Skripsi berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $skripsi->update(['konfirmasi' => 'tolak']);
+            $message = 'Skripsi berhasil ditolak.';
+        }
+
+        return redirect()->route('skripsi.index', $skripsi->id)->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
+    }
 
 
     /**

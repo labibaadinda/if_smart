@@ -126,9 +126,9 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 {{-- <h6 class="collapse-header">Custom Utilities:</h6> --}}
                 <a class="collapse-item" href="{{ route('irs.index') }}">Verifikasi IRS</a>
-                <a class="collapse-item" href="{{ route('khs.index') }}">Verifikasi KHS</a>
-                <a class="collapse-item" href="{{ route('utilities-animations') }}">Animations</a>
-                <a class="collapse-item" href="{{ route('utilities-other') }}">Other</a>
+                <a class="collapse-item" href="{{ route('khs.index') }}">Verifikasi KHS </a>
+                <a class="collapse-item" href="{{ route('pkl.index') }}">Verifikasi PKL</a>
+                <a class="collapse-item" href="{{ route('skripsi.index') }}">Verifikasi Skripsi</a>
             </div>
         </div>
     </li>

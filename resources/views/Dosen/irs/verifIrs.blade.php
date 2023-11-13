@@ -7,12 +7,21 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-6">
-                <p><strong>NIM:</strong> {{ $irs->nim }}</p>
-                <p><strong>Semester:</strong> {{ $irs->semester }}</p>
-                <p><strong>Jumlah SKS:</strong> {{ $irs->jumlah_sks }}</p>
-                <p><strong>File PDF:</strong></p>
-                <a href="{{ asset('storage/irs/' . $irs->file) }}" target="_blank">Lihat PDF</a>
+            <div class="col-md-1">
+                <p><strong>Nama</strong> </p>
+                <p><strong>NIM</strong> </p>
+                <p><strong>Semester</strong> </p>
+                <p><strong>Jumlah SKS</strong> </p>
+                <p><strong>File PDF</strong></p>
+            </div>
+            <div class="col-md-11">
+                <p><strong>:</strong> {{ $mahasiswas->where('nim',$irs->nim)->first()->nama }}</p>
+                <p><strong>:</strong> {{ $irs->nim }}</p>
+                <p><strong>:</strong> {{ $irs->semester }}</p>
+                <p><strong>:</strong> {{ $irs->jumlah_sks }}</p>
+                <p style="display:inline-block"><strong>:</strong>
+                    <a href="{{ asset('storage/irs/' . $irs->file) }}" target="_blank">Lihat PDF</a>
+                </p>
             </div>
         </div>
         <div class="mt-3">

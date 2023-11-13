@@ -10,23 +10,25 @@
             <div class="col-md-1" >
                 <p><strong>Nama</strong> </p>
                 <p><strong>NIM</strong> </p>
-                <p><strong>Semester</strong> </p>
-                <p><strong>IP Semester</strong> </p>
+                <p><strong>Judul PKL</strong> </p>
+                <p><strong>Progres Ke</strong> </p>
+                <p><strong>Status</strong> </p>
                 <p style="display:inline-block"><strong>File PDF</strong>
                 </p>
             </div>
             <div class="col-md-11">
-                <p><strong>:</strong> {{ $mahasiswas->where('nim',$khs->nim)->first()->nama }}</p>
-                <p><strong>:</strong> {{ $khs->nim }}</p>
-                <p><strong>:</strong> {{ $khs->semester }}</p>
-                <p><strong>:</strong> {{ $khs->ips }}</p>
-                <p style="display:inline-block"><strong>:</strong>
-                    <a href="{{ asset('storage/khs/' . $khs->file) }}" target="_blank">Lihat PDF</a>
+                <p><strong>:</strong> {{ $mahasiswas->where('nim',$pkl->nim)->first()->nama }}</p>
+                <p><strong>:</strong> {{ $pkl->nim }}</p>
+                <p><strong>:</strong> {{ $pkl->judul }}</p>
+                <p><strong>:</strong> {{ $pkl->progres }}</p>
+                <p><strong>:</strong> {{ $pkl->stat_pkl }}</p>
+                <p ><strong>:</strong>
+                    <a href="{{ asset('storage/pkl/' . $pkl->file) }}" target="_blank">Lihat PDF</a>
                 </p>
             </div>
         </div>
         <div class="mt-3">
-            <form action="{{ route('khs.verifKhs', $khs->id) }}" method="POST">
+            <form action="{{ route('pkl.verifPkl', $pkl->id) }}" method="POST">
                 @csrf
                 <button type="submit" name="action" value="verifikasi" class="btn btn-success">Verifikasi</button>
                 <button type="submit" name="action" value="tolak" class="btn btn-danger">Tolak</button>
