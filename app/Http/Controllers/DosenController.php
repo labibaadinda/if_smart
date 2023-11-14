@@ -53,25 +53,114 @@ class DosenController extends Controller
         $irss = Irs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
         $khss = Khs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
         $skripsis = Skripsi::where('nim',$nim)->orderBy('progres', 'ASC')->get();
+        $pkls = Pkl::where('nim',$nim)->orderBy('progres', 'ASC')->get();
 
 
         return view('dosen.detailSearch', compact(
             'mahasiswa',
             'skripsis',
             'irss',
-            'khss'
+            'khss',
+            'pkls'
         ));
     }
 
     public function showSemesterDetail($nim, $semester)
-{
+    {
     $mahasiswa = Mahasiswa::where('nim', $nim)->firstOrFail();
     // Sesuaikan dengan model dan struktur tabel semester di database
     $semesterDetail = $mahasiswa->semesters->where('semester', $semester)->first();
 
     return view('mahasiswa.semester_detail', compact('mahasiswa', 'semesterDetail'));
-}
+    }
 
+    public function searchVerifikasiIrs(Irs $irs)
+    {
+		$mahasiswas = Mahasiswa::All();
+        return view('dosen.search.verifIrs', compact('irs','mahasiswas'));
+    }
+
+    public function searchVerifIrs(Request $request, Irs $irs)
+    {
+        if ($request->action === 'verifikasi') {
+            $irs->update(['status' => '1']);
+            $message = 'IRS berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $irs->update(['status' => 'tolak']);
+            $message = 'IRS berhasil ditolak.';
+        }
+
+        return redirect()->route('dosen.detailSearch', $irs->nim)->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
+    }
+
+    public function searchVerifikasiKhs(Khs $khs)
+    {
+		$mahasiswas = Mahasiswa::All();
+        return view('dosen.search.verifKhs', compact('khs','mahasiswas'));
+    }
+
+    public function searchVerifKhs(Request $request, Khs $khs)
+    {
+        if ($request->action === 'verifikasi') {
+            $khs->update(['status' => '1']);
+            $message = 'KHS berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $khs->update(['status' => 'tolak']);
+            $message = 'KHS berhasil ditolak.';
+        }
+
+        return redirect()->route('dosen.detailSearch', $khs->nim)->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
+    }
+
+    public function searchVerifikasiPkl(Pkl $pkl)
+    {
+        $mahasiswas = Mahasiswa::All();
+        return view('dosen.search.verifPkl', compact('pkl','mahasiswas'));
+    }
+
+    public function searchVerifPkl(Request $request, Pkl $pkl)
+    {
+        if ($request->action === 'verifikasi') {
+            $pkl->update(['konfirmasi' => '1']);
+            $message = 'PKL berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $pkl->update(['konfirmasi' => 'tolak']);
+            $message = 'PKL berhasil ditolak.';
+        }
+
+        return redirect()->route('dosen.detailSearch', $pkl->nim)->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
+    }
+
+    public function searchVerifikasiSkripsi(Skripsi $skripsi)
+    {
+        $mahasiswas = Mahasiswa::All();
+        return view('dosen.search.verifSkripsi', compact('skripsi','mahasiswas'));
+    }
+
+    public function searchVerifSkripsi(Request $request, Skripsi $skripsi)
+    {
+        if ($request->action === 'verifikasi') {
+            $skripsi->update(['konfirmasi' => '1']);
+            $message = 'Skripsi berhasil diverifikasi.';
+        } elseif ($request->action === 'tolak') {
+            $skripsi->update(['konfirmasi' => 'tolak']);
+            $message = 'Skripsi berhasil ditolak.';
+        }
+
+        return redirect()->route('dosen.detailSearch', $skripsi->nim)->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
+    }
 
 
 

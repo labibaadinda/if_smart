@@ -40,14 +40,15 @@
                                 <td>
                                     <!-- IRS -->
                                     @if ($irs->status === '1')
-                                        <a href="{{ asset('storage/irs/' . $irs->file) }}" target="_blank" class="btn btn-primary">IRS</a>
-                                    @else
-                                        <a href="{{ asset('storage/irs/' . $irs->file) }}" target="_blank" class="btn btn-danger">Verifikasi IRS</a>
-
-                                    <!-- KHS -->
+                                        <a href="{{ asset('storage/irs/' . $irs->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2">IRS</a>
+                                    @elseif ($irs->status === '0')
+                                        <a href="{{ route('search.showVerifikasiIrs', $irs->id) }}" id="{{ $irs->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi IRS</a>
                                     @endif
+                                    <!-- KHS -->
                                     @if ($khss->where('semester',$irs->semester)->firstOrFail()->status === '1')
-                                        <a href="{{ asset('storage/khs/' . $khss->where('semester',$irs->semester)->firstOrFail()->file) }}" target="_blank" class="btn btn-primary" >KHS</a>
+                                        <a href="{{ asset('storage/khs/' . $khss->where('semester',$irs->semester)->firstOrFail()->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2 " >KHS</a>
+                                    @elseif ($khss->where('semester',$irs->semester)->firstOrFail()->status === '0')
+                                        <a href="{{ route('search.showVerifikasiKhs', $khss->where('semester',$irs->semester)->firstOrFail()->id) }}" id="{{ $khss->where('semester',$irs->semester)->firstOrFail()->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi KHS</a>
                                     @endif
 
                                     {{-- <a href="{{ route('semester.detail', [$mahasiswa->nim, $semester->semester]) }}" class="btn btn-primary">Detail</a> --}}
@@ -77,21 +78,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($irss as $irs)
+                        @foreach($pkls as $pkl)
                             <tr>
-                                <td>{{ $irs->semester }}</td>
-                                <td>{{ $irs->jumlah_sks }}</td>
-                                <td>{{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}</td>
+                                <td>{{ $pkl->progres }}</td>
+                                <td>{{ $pkl->judul }}</td>
+                                <td>{{ $pkl->stat_pkl }}</td>
                                 <!-- Tambahkan kolom lain sesuai kebutuhan -->
                                 <td>
-                                    <!-- IRS -->
-                                    {{-- <a href="{{ route('semester.detail', [$mahasiswa->nim, $semester->semester]) }}" class="btn btn-primary">Detail</a> --}}
-                                    <!-- KHS -->
-                                    {{-- <a href="{{ route('semester.detail', [$mahasiswa->nim, $semester->semester]) }}" class="btn btn-primary">Detail</a> --}}
-                                    <!-- SKRIPSI -->
-                                    {{-- @if ()
-
-                                    @endif --}}
+                                    @if ($pkl->konfirmasi === '1')
+                                        <a href="{{ asset('storage/pkl/' . $pkl->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2">PDF</a>
+                                    @elseif ($pkl->konfirmasi === '0')
+                                        <a href="{{ route('search.showVerifikasiPkl', $pkl->id) }}" id="{{ $pkl->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi PKL</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -110,27 +108,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($irss as $irs)
+                        @foreach($skripsis as $skripsi)
                             <tr class='text-center'>
-                                <td>{{ $irs->semester }}</td>
-                                <td>{{ $irs->jumlah_sks }}</td>
-                                <td>{{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}</td>
-                                <!-- Tambahkan kolom lain sesuai kebutuhan -->
+                                <td>{{ $skripsi->progres }}</td>
+                                <td>{{ $skripsi->judul }}</td>
+                                <td>{{ $skripsi->stat_skripsi }}</td>
                                 <td>
-                                    <!-- IRS -->
-                                    {{-- <a href="{{ route('semester.detail', [$mahasiswa->nim, $semester->semester]) }}" class="btn btn-primary">Detail</a> --}}
-                                    <!-- KHS -->
-                                    {{-- <a href="{{ route('semester.detail', [$mahasiswa->nim, $semester->semester]) }}" class="btn btn-primary">Detail</a> --}}
-                                    <!-- SKRIPSI -->
-                                    {{-- @if ()
-
-                                    @endif --}}
+                                    @if ($skripsi->konfirmasi === '1')
+                                        <a href="{{ asset('storage/skripsi/' . $skripsi->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2">PDF</a>
+                                    @elseif ($skripsi->konfirmasi === '0')
+                                        <a href="{{ route('search.showVerifikasiSkripsi', $skripsi->id) }}" id="{{ $skripsi->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi Skripsi</a>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
-                        @if ( $irs) <!-- $skripsi->stat_skripsi === 'selesai' -->
+                        @if ( $skripsi->stat_skripsi === 'selesai') <!-- $skripsi->stat_skripsi === 'selesai' -->
                             <tr>
-                                <td colspan="3" style="text-align: center;"><strong>Tanggal Sidang: &ensp;10 Januari, 2023 </strong>
+                                <td colspan="3" style="text-align: center;"><strong>Tanggal Sidang: &ensp;{{ $tanggal_sidang }} </strong>
                                 </td>
                             </tr>
                         @endif

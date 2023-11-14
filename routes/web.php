@@ -84,14 +84,23 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 
 	Route::get('/search',[DosenController::class,'search'])->name('dosen.search');
     Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');
-    Route::get('/mahasiswa/{nim}/irs/{irs}',[DosenController::class,'showDetailIrs'])->name('dosen.detailIrs');
+    // Route::get('/mahasiswa/{nim}/irs/{irs}',[DosenController::class,'showDetailIrs'])->name('dosen.detailIrs');
 
+    Route::get('search/verifIrs/{irs}', [DosenController::class,'searchVerifikasiIrs'])->name('search.showVerifikasiIrs');
+    Route::post('search/verifIrs/{irs}', [DosenController::class,'searchVerifIrs'])->name('search.verifIrs');
+    Route::get('search/verifKhs/{khs}', [DosenController::class,'searchVerifikasiKhs'])->name('search.showVerifikasiKhs');
+    Route::post('search/verifKhs/{khs}', [DosenController::class,'searchVerifKhs'])->name('search.verifKhs');
+    Route::get('search/verifPkl/{pkl}', [DosenController::class,'searchVerifikasiPkl'])->name('search.showVerifikasiPkl');
+    Route::post('search/verifPkl/{pkl}', [DosenController::class,'searchVerifPkl'])->name('search.verifPkl');
+    Route::get('search/verifSkripsi/{skripsi}', [DosenController::class,'searchVerifikasiSkripsi'])->name('search.showVerifikasiSkripsi');
+    Route::post('search/verifSkripsi/{skripsi}', [DosenController::class,'SearchVerifSkripsi'])->name('search.verifSkripsi');
 
 
 	Route::get('/irs',[DosenController::class,'viewIrs'])->name('irs.index');
 	Route::get('/khs',[DosenController::class,'viewKhs'])->name('khs.index');
 	Route::get('/pkl',[DosenController::class,'viewPkl'])->name('pkl.index');
 	Route::get('/skripsi',[DosenController::class,'viewSkripsi'])->name('skripsi.index');
+
 
     Route::get('irs/verif/{irs}', [DosenController::class,'showVerifikasiIrs'])->name('irs.showVerifikasi');
     Route::post('irs/verif/{irs}', [DosenController::class,'verifIrs'])->name('irs.verifIrs');
