@@ -213,15 +213,15 @@ class MahasiswaController extends Controller
         return redirect()->route('user.edit', $id)->with('success', 'Password mahasiswa berhasil direset.');
     }
 
-    public function delete($id)
-    {
-        $user = User::findOrFail($id);
+    // public function delete($id)
+    // {
+    //     $user = User::findOrFail($id);
 
-        // Hapus mahasiswa dan user terkait
-        $user->delete();
+    //     // Hapus mahasiswa dan user terkait
+    //     $user->delete();
 
-        return redirect()->route('user.index')->with('success', 'Mahasiswa berhasil dihapus.');
-    }
+    //     return redirect()->route('user.index')->with('success', 'Mahasiswa berhasil dihapus.');
+    // }
 
     // public function edit(User $user)
     // {

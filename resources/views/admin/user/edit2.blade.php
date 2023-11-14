@@ -36,7 +36,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
             <a href="{{ route('user.reset-password', $user->id) }}" class="btn btn-warning">Reset Password</a>
-            <a href="{{ route('user.delete', $user->id) }}" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus mahasiswa ini?')">Delete</a>
+            {{-- <a href="{{ route('user.delete', $user->id) }}" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus mahasiswa ini?')">Delete</a> --}}
         </form>
     </div>
 </div>

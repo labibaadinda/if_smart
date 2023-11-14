@@ -42,7 +42,7 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin']
     Route::get('/user/edit/{id}',[MahasiswaController::class,'edit'])->name('user.edit');
     Route::post('/user/update/{id}',[MahasiswaController::class,'update'])->name('user.update');
     Route::get('/user/reset-password/{id}',[MahasiswaController::class,'resetPassword'])->name('user.reset-password');
-    Route::get('/user/delete/{id}',[MahasiswaController::class,'delete'])->name('user.delete');
+    // Route::get('/user/delete/{id}',[MahasiswaController::class,'delete'])->name('user.delete');
 
 
 
