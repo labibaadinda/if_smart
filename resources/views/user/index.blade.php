@@ -48,12 +48,16 @@
                 <div class="card m-0">
                     <div class="row no-gutters">
                         <div class="col-md-4">
-                            <img src="{{ asset('images/backend/profile.jpg') }}" class="card-img" alt="" width="207"
-                                height="207">
+                            @foreach($mahasiswas as $mahasiswa)
+                            @if(empty($mahasiswa->foto))
+                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="207">
+                            @else
+                                <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="207">
+                            @endif
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                @foreach($mahasiswas as $mahasiswa)
+                                
                                 <h5 class="card-title text-dark">{{ $mahasiswa->nama }}</h5>
                                 <h5 class="card-title text-dark">{{ $mahasiswa->nim }}</h5>
                                 <h5 class="card-title text-dark">S1 Informatika</h5>
@@ -76,10 +80,11 @@
                         <div class="card">
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">IPK</h5>
-                                <p class="card-text"> {{ $IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"] != null &&
-                                    $IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"] > 0 ? number_format($IPK["AVG(CAST(ips AS
-                                    DECIMAL(10, 2)))"], 2) : 'Belum Entry Data' }}
-                                </p>
+                                @if(isset($IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"]) && $IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"] > 0)
+                                    {{ number_format($IPK["AVG(CAST(ips AS DECIMAL(10, 2)))"], 2) }}
+                                @else
+                                    Belum Entry Data
+                                @endif
                             </div>
                         </div>
                     </div>

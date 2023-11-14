@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\User;
 
-use Hash;
+
 use Exception;
 
 use App\Models\User;
 
-use App\Models\Mahasiswa;
 use App\Models\Provinsi;
+use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
@@ -25,6 +26,7 @@ class ProfileController extends Controller
             'handphone' => 'required|',
             'kota' => 'required|',
             'provinsi_id' => 'required|',
+            'email' => 'required|email',    
         ]);
 
         // $existingData = Mahasiswa::where('n', $validatedData['nama'])
@@ -36,12 +38,49 @@ class ProfileController extends Controller
         //     return redirect()->with('error', 'Data yang sama sudah ada di database!');
         // }
 
-        $result = $mahasiswa->update($validatedData);
+        $mahasiswa->update($validatedData);
         
-        if($result){
+        
+        $user = User::where('nim_nip', Auth::user()->nim_nip)->first();
+
+        if ($user) {
+            $user->update(['email' => $validatedData['email']]);
+        }
+
+        // Check the result and redirect with appropriate messages
+        if ($mahasiswa && $user) {
             return redirect()->route('user')->with('success', 'Data berhasil diupdate!');
-        }else{
+        } else {
             return redirect()->route('user')->with('error', 'Data gagal diupdate!');
+        }
+    }
+
+    public function updateFoto(Request $request, $id)
+    { 
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Validasi input jika diperlukan
+        $request->validate([
+            'foto' => 'nullable|mimes:jpg,png|max:2048',
+        ]);
+    
+        if ($request->hasFile('foto')) {
+            $pdfFile = $request->file('foto');
+            $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+    
+            // Simpan file ke direktori storage/app/public/foto
+            $pdfFile->storeAs('public/foto', $pdfFileName);
+    
+            // Update data Mahasiswa dengan 'foto' baru
+            $mahasiswa->update(['foto' => $pdfFileName]);
+    
+            return redirect()->route('user')->with('success', 'Foto berhasil diperbaharui.');
+        } else {
+            // Handle kasus tanpa file (opsional)
+            // Jika tidak ada 'foto' yang diunggah, 'foto' tidak akan diubah
+            // $mahasiswa->update($validatedData);
+    
+            return redirect()->route('user')->with('success', 'Data berhasil diupdate.');
         }
     }
 
@@ -53,26 +92,23 @@ class ProfileController extends Controller
     }
 
     public function update(Request $request, $id) {
-        // Ambil data pengguna berdasarkan ID
         $user = User::findOrFail($id);
-        // Validasi input
-        $validatedData = $request->validate([
-            'password' => 'required|min:6',
+
+        // Validasi input jika diperlukan
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
         ]);
-
     
-        // Periksa apakah password lama benar
-        if (Hash::check($request->old_password, Auth::user()->password)) {
-            return redirect()->route('user')->with('error', 'Password lama tidak cocok');
-        }
-
+        // Verifikasi password lama
+        // if (!Hash::check($request->input('current_password'), $user->password)) {
+        //     return redirect()->back()->withErrors(['current_password' => 'Password lama tidak cocok.'])->withInput();
+        // }
+    
         // Update password
-        $result = $user->update($validatedData);
+        $user->update([
+            'password' => Hash::make($request->input('password')),
+        ]);
     
-        if($result){
-            return redirect()->route('user')->with('success', 'Data berhasil diupdate!');
-        }else{
-            return redirect()->route('user')->with('error', 'Data gagal diupdate!');
-        }
+        return redirect()->route('profile')->with('success', 'Password berhasil diperbaharui.');
     }
 }
