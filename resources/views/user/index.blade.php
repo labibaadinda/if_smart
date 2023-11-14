@@ -50,9 +50,9 @@
                         <div class="col-md-4">
                             @foreach($mahasiswas as $mahasiswa)
                             @if(empty($mahasiswa->foto))
-                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="207">
+                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="250>
                             @else
-                                <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="207">
+                                <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="250">
                             @endif
                         </div>
                         <div class="col-md-8">
@@ -180,15 +180,17 @@
   var mahasiswaKota = '{{ $mahasiswa->kota }}'; // Gantilah ini dengan cara Anda mendapatkan kota mahasiswa
   var mahasiswaProvinsi = '{{ $mahasiswa->provinsi_id }}'; // Gantilah ini dengan cara Anda mendapatkan provinsi mahasiswa
   var mahasiswaHandphone = '{{ $mahasiswa->handphone }}'; // Gantilah ini dengan cara Anda mendapatkan handphone mahasiswa
+  var mahasiswaFoto = '{{ $mahasiswa->foto }}'; // Gantilah ini dengan cara Anda mendapatkan handphone mahasiswa
 
   $(document).ready(function() {
-      if (mahasiswaAddress === '' || mahasiswaKota === '' || mahasiswaProvinsi === '' || mahasiswaHandphone === '' ) {
-          // Jika salah satu dari data kosong, tampilkan modal secara otomatis
-          $('#addressModal').modal('show');
-          $('#addressModal').modal({
+      if (mahasiswaAddress === '' || mahasiswaKota === '' || mahasiswaProvinsi === '' || mahasiswaHandphone === '' || mahasiswaFoto === '' ) {
+        $('#addressModal').modal({
             backdrop: 'static', // Modal tidak akan ditutup saat mengklik latar belakang
             keyboard: false,   // Modal tidak akan ditutup dengan tombol keyboard
         });
+          // Jika salah satu dari data kosong, tampilkan modal secara otomatis
+          $('#addressModal').modal('show');
+          
       }
 
   });

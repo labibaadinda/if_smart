@@ -35,9 +35,9 @@
                         
                         <div class="col-md-4">
                             @if(empty($mahasiswa->foto))
-                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="207">
+                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="250>
                             @else
-                                <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="207">
+                                <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="250">
                                 
                             @endif
                             <div class="d-flex justify-content-center m-3">
