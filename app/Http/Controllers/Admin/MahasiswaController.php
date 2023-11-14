@@ -171,37 +171,89 @@ class MahasiswaController extends Controller
     {
     }
 
-    public function edit(User $user)
+    public function edit($id)
     {
-        return view('admin.user.edit', compact('user'));
+        $user = User::findOrFail($id);
+        $dosens = Dosen::all(); // Anda mungkin perlu menyesuaikan ini sesuai kebutuhan
+        $mahasiswa = Mahasiswa::where('id',$id)->firstOrFail();
+
+        return view('admin.user.edit2', compact('user', 'dosens','mahasiswa'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
+        // Validasi request jika diperlukan
+        $request->validate([
+            // Atur validasi sesuai kebutuhan
+        ]);
 
-        try {
+        $user = User::findOrFail($id);
 
-            DB::beginTransaction();
+        // Update data mahasiswa
+        $user->update([
+            'nama' => $request->input('nama'),
+            'nim' => $request->input('nim'),
+            'angkatan' => $request->input('angkatan'),
+            'status' => $request->input('status'),
+            'dosen_id' => $request->input('dosen_id'),
+        ]);
 
-            if ($request->password) {
-                $password = Hash::make($request->password);
-                $user->password = $password;
-            }
-
-            $user->update($request->all());
-
-            DB::commit();
-
-            return redirect()->to('/admin/user')->with('message', [
-                'status' => 'true',
-                'message' => 'Successfully Updated User'
-            ]);
-
-        } catch (Exception $e) {
-            DB::rollBack();
-            return back()->with('error', $e->getCode() == 500 ? 'Failed to update user' : $e->getMessage());
-        }
+        return redirect()->route('user.edit', $id)->with('success', 'Mahasiswa berhasil diperbarui.');
     }
+
+    public function resetPassword($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Reset password ke default "password"
+        $user->update([
+            'password' => bcrypt('password'),
+        ]);
+
+        return redirect()->route('user.edit', $id)->with('success', 'Password mahasiswa berhasil direset.');
+    }
+
+    public function delete($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Hapus mahasiswa dan user terkait
+        $user->delete();
+
+        return redirect()->route('user.index')->with('success', 'Mahasiswa berhasil dihapus.');
+    }
+
+    // public function edit(User $user)
+    // {
+    //     return view('admin.user.edit', compact('user'));
+    // }
+
+    // public function update(Request $request, User $user)
+    // {
+
+    //     try {
+
+    //         DB::beginTransaction();
+
+    //         if ($request->password) {
+    //             $password = Hash::make($request->password);
+    //             $user->password = $password;
+    //         }
+
+    //         $user->update($request->all());
+
+    //         DB::commit();
+
+    //         return redirect()->to('/admin/user')->with('message', [
+    //             'status' => 'true',
+    //             'message' => 'Successfully Updated User'
+    //         ]);
+
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+    //         return back()->with('error', $e->getCode() == 500 ? 'Failed to update user' : $e->getMessage());
+    //     }
+    // }
 
     public function destroy(User $user)
     {

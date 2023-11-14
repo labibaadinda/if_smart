@@ -35,10 +35,16 @@ Route::view('/','welcome');
 
 Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin'],function(){
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
-	// Route::get('/profile',[ProfileController::class,'index'])->name('profile');
 	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
-    Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.storeMahasiswa');
+    Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.store');
+
+    Route::get('/user/edit/{id}',[MahasiswaController::class,'edit'])->name('user.edit');
+    Route::post('/user/update/{id}',[MahasiswaController::class,'update'])->name('user.update');
+    Route::get('/user/reset-password/{id}',[MahasiswaController::class,'resetPassword'])->name('user.reset-password');
+    Route::get('/user/delete/{id}',[MahasiswaController::class,'delete'])->name('user.delete');
+
+
 
 
 

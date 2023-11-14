@@ -25,13 +25,18 @@
 <div class="card">
     <div class="card-header">
         <h5 class="my-3 font-weight-bold text-primary">Edit User</h5>
+        <h5>{{ $mahasiswa }}</h5>
+        <p>
+            nama: {{ $mahasiswa->nama }}
+        </p>
     </div>
     <div class="card-body">
         <form id="createForm" action="{{ route('user.store') }}" method="POST" autocomplete="off">
             @csrf
             <div class="form-group">
+            <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" required id="name" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') ? old('name') : $user->name }}">
+                <input type="text" required id="nama" name="nama" class="form-control @error('nama') is-invalid @enderror" value="{{ old('nama') ? old('nama') : $mahasiswa->nama }}">
 
                 @error('name')
                 <div class="invalid-feedback">

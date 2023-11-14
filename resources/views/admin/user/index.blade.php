@@ -66,7 +66,7 @@ $message = session()->get('message')['message'];
 
                             <div class="row">
                                 <a href="{{ route('user.edit', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>
-                                <a href="javascript:void(0)" id="{{ $data->id }}" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a>
+                                {{-- <a href="javascript:void(0)" id="{{ $data->id }}" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a> --}}
                             </div>
                         </th>
                     </tr>
