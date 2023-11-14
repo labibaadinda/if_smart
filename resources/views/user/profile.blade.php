@@ -125,12 +125,41 @@
             </div>
             
             <div class="card-body">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#initialModal">
-                    Update Data Diri
-                  </button>
-                {{-- <form method="POST" action="{{ route('profile.update',$mahasiswa->id) }}">
+                
+                <form method="POST" action="{{ route('profile.update',$mahasiswa->id) }}">
                     @csrf
-                    @method('PUT') --}}
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" name="nama" class="form-control" value="{{ $mahasiswa->nama }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="nim">NIM</label>
+                        <input type="text" id="nim" name="nim" class="form-control" value="{{ $mahasiswa->nim }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input required id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ Auth::user()->email }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <input required id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->alamat }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="handphone">No Handphone</label>
+                        <input required id="handphone" name="handphone" class="form-control @error('handphone') is-invalid @enderror" value="{{ $mahasiswa->handphone }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="kota">Kota/Kabupaten</label>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="kota">Provinsi</label>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->provinsi->nama }}" disabled>
+                    </div>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#initialModal">
+                        Update Data Diri
+                      </button>
                     {{-- <div class="form-group">
                         
                         <label for="nama">Name</label>
@@ -154,7 +183,7 @@
                         <button class="btn btn-primary btn-sm">Update</button>
                     </div> --}}
                     
-                {{-- </form> --}}
+                </form>
             </div>
             <div class="card-footer"></div>
         </div>
