@@ -86,7 +86,7 @@
             </div> --}}
             <div class="form-group">
                 <label for="p">Password Default:
-                    <label class='font-weight-bold' >informatika_undip</label>
+                    <label class='font-weight-bold' >password</label>
                 </label>
                 {{-- <input type="password" required="" id="p" name="password" class="form-control" value="{{ 'informatika_undip' }}"> --}}
             </div>

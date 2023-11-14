@@ -11,7 +11,8 @@
                 <p>
                     ini foto
                 </p>
-                {{-- <img src="{{ asset('path-to-mahasiswa-photo/' . $mahasiswa->foto) }}" alt="Mahasiswa Photo" class="img-fluid"> --}}
+                {{-- <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="207"> --}}
+                <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" alt="Mahasiswa Photo" class="img-fluid">
             </div>
             <div class="col-md-8">
                 <h5>{{ $mahasiswa->nama }}</h5>
