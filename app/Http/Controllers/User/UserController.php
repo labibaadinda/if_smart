@@ -18,6 +18,7 @@ class UserController extends Controller
 	{
 		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
 		$dosens = Dosen::All();
+
 		$IPK = Khs::selectRaw('AVG(CAST(ips AS DECIMAL(10, 2)))')->where('nim', Auth::user()->nim_nip)->where('status', 1)->first();
 		$semester = Irs::where('nim', Auth::user()->nim_nip)->max('semester');
 		$sksk = Irs::where('nim', Auth::user()->nim_nip)->where('status', 1)->sum('jumlah_sks');
@@ -27,10 +28,12 @@ class UserController extends Controller
 
 	public function irs()
 	{
+        $khss = Khs::where('nim',Auth::user()->nim_nip)->orderBy('semester', 'ASC')->get();
+        $irss = Irs::where('nim',Auth::user()->nim_nip)->orderBy('semester', 'ASC')->get();
 		$mahasiswas = Mahasiswa::where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Irs::where('nim', Auth::user()->nim_nip)->max('semester');
 		$semesterirs = $latestProgres + 1;
-		return view('user.entry-irs',compact('semesterirs','mahasiswas'));
+		return view('user.entry-irs',compact('semesterirs','mahasiswas', 'khss', 'irss'));
 	}
 
 	public function khs()
@@ -38,7 +41,8 @@ class UserController extends Controller
 		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Khs::where('nim', Auth::user()->nim_nip)->max('semester');
 		$semesterkhs = $latestProgres + 1;
-		return view('user.entry-khs',compact('semesterkhs','mahasiswas'));
+        $khss = Khs::where('nim',Auth::user()->nim_nip)->orderBy('semester', 'ASC')->get();
+		return view('user.entry-khs',compact('semesterkhs','mahasiswas', 'khss'));
 	}
 
 	public function pkl()
@@ -46,14 +50,16 @@ class UserController extends Controller
 		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Pkl::where('nim', Auth::user()->nim_nip)->max('progres');
 		$progrespkl = $latestProgres + 1;
-		return view('user.entry-pkl', compact('progrespkl','mahasiswas'));
+        $pkls = Pkl::where('nim',Auth::user()->nim_nip)->orderBy('progres', 'ASC')->get();
+		return view('user.entry-pkl', compact('progrespkl','mahasiswas','pkls'));
 	}
 	public function skripsi()
 	{
 		$mahasiswas = Mahasiswa::where('nim', Auth::user()->nim_nip)->get();
 		$latestProgres = Skripsi::where('nim', Auth::user()->nim_nip)->max('progres');
 		$progresskripsi = $latestProgres + 1;
-		return view('user.entry-skripsi',compact('progresskripsi','mahasiswas'));
+        $skripsis = Skripsi::where('nim',Auth::user()->nim_nip)->orderBy('progres', 'ASC')->get();
+		return view('user.entry-skripsi',compact('progresskripsi','mahasiswas','skripsis'));
 	}
 
 	public function storeIrs(Request $request)
@@ -95,7 +101,7 @@ class UserController extends Controller
             'status' => '0'
         ]);
 
-        return redirect()->route('user')->with('success', 'File IRS berhasil diunggah.');
+        return redirect()->route('irs')->with('success', 'File IRS berhasil diunggah.');
     }
 }
 	public function storeKhs(Request $request)
@@ -137,7 +143,7 @@ class UserController extends Controller
             'file' => $pdfFileName,
         ]);
 
-        return redirect()->route('user')->with('success', 'File KHS berhasil diunggah.');
+        return redirect()->route('khs')->with('success', 'File KHS berhasil diunggah.');
     }
 }
 
@@ -181,7 +187,7 @@ class UserController extends Controller
             'file' => $pdfFileName,
         ]);
 
-        return redirect()->route('user')->with('success', 'Entry PKL berhasil.');
+        return redirect()->route('pkl')->with('success', 'Entry PKL berhasil.');
     }
 }
 	public function storeSkripsi(Request $request)
@@ -223,7 +229,7 @@ class UserController extends Controller
             'file' => $pdfFileName,
         ]);
 
-        return redirect()->route('user')->with('success', 'Entry Skripsi berhasil.');
+        return redirect()->route('skripsi')->with('success', 'Entry Skripsi berhasil.');
     }
 }
 }

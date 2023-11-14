@@ -50,9 +50,9 @@
                         <div class="col-md-4">
                             @foreach($mahasiswas as $mahasiswa)
                             @if(empty($mahasiswa->foto))
-                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="250>
+                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="250">
                             @else
-                                <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="250">
+                                <img src= "{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="250">
                             @endif
                         </div>
                         <div class="col-md-8">

@@ -35,10 +35,9 @@
                         
                         <div class="col-md-4">
                             @if(empty($mahasiswa->foto))
-                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="250>
+                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="207" height="230">
                             @else
                                 <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="250">
-                                
                             @endif
                             <div class="d-flex justify-content-center m-3">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fotoModal">Pilih Foto</button>
