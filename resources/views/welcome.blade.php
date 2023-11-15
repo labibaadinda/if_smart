@@ -23,6 +23,8 @@
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     @elseif(Auth::user()->role == 'admin')
                         <a class="nav-link" href="{{ route('admin') }}">Dashboard</a>
+                    @elseif(Auth::user()->role == 'departemen')
+                        <a class="nav-link" href="{{ route('departemen') }}">Dashboard</a>
                     @elseif(Auth::user()->role == 'user')
                         <a class="nav-link" href="{{ route('user') }}">Dashboard</a>
                     @else

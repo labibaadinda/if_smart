@@ -32,7 +32,7 @@ class UserRole
             return redirect()->route('dosen');
         }
         else if(Auth::user()->role == 'departemen'){
-            return redirect('/dashboard-mahasiswa');
+            return redirect('departemen');
         }
     }
 }
