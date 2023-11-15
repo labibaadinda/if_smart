@@ -8,9 +8,9 @@
     <div class="card-body px-5">
         <div class="row mb-4">
             <div class="col-md-3">
-                <p>
+                {{-- <p>
                     ini foto
-                </p>
+                </p> --}}
                 {{-- <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="207"> --}}
                 <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" alt="Mahasiswa Photo" class="img-fluid">
             </div>
@@ -123,9 +123,9 @@
                                 </td>
                             </tr>
                         @endforeach
-                        @if ( $skripsi->stat_skripsi === 'selesai') <!-- $skripsi->stat_skripsi === 'selesai' -->
+                        @if ( $sidang != null )
                             <tr>
-                                <td colspan="3" style="text-align: center;"><strong>Tanggal Sidang: &ensp;{{ $tanggal_sidang }} </strong>
+                                <td colspan="3" style="text-align: center;"><strong>Tanggal Sidang: &ensp;{{ $sidang != null? $sidang->tanggal_sidang: '' }} </strong>
                                 </td>
                             </tr>
                         @endif

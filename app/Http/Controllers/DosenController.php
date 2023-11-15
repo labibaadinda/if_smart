@@ -53,12 +53,14 @@ class DosenController extends Controller
         $irss = Irs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
         $khss = Khs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
         $skripsis = Skripsi::where('nim',$nim)->orderBy('progres', 'ASC')->get();
+        $sidang = Skripsi::where('nim',$nim)->get('stat_skripsi')->last();
         $pkls = Pkl::where('nim',$nim)->orderBy('progres', 'ASC')->get();
 
 
         return view('dosen.detailSearch', compact(
             'mahasiswa',
             'skripsis',
+            'sidang',
             'irss',
             'khss',
             'pkls'
