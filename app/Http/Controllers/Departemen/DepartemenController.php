@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Departemen;
 
 use Exception;
 use App\Models\User;
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class MahasiswaController extends Controller
+class DepartemenController extends Controller
 {
     use WithPagination;
 
@@ -58,58 +58,58 @@ class MahasiswaController extends Controller
         return view('admin.user.create',compact('dosens'));
     }
 
-    public function store(StoreUserRequest $request)
-    {
-        try {
+    // public function store(StoreUserRequest $request)
+    // {
+    //     try {
 
-            DB::beginTransaction();
+    //         DB::beginTransaction();
 
-            $user = new User();
-            $mahasiswa = new mahasiswa();
+    //         $user = new User();
+    //         $mahasiswa = new mahasiswa();
 
-            $mahasiswa->nama = $request->name;
-            $isNimExists = User::where('nim_nip', $request->nip)->count() >= 1 ? true : false;
-            if ($isNimExists) {
-                throw new Exception("NIM Already exists", 400);
-            }
-            $user->nim_nip = $request->nim;
-            $mahasiswa->nim = $request->nim;
-            $mahasiswa->angkatan = $request->angkatan;
-            $mahasiswa->dosen_id = $request->dosenWali;
+    //         $mahasiswa->nama = $request->name;
+    //         $isNimExists = User::where('nim_nip', $request->nip)->count() >= 1 ? true : false;
+    //         if ($isNimExists) {
+    //             throw new Exception("NIM Already exists", 400);
+    //         }
+    //         $user->nim_nip = $request->nim;
+    //         $mahasiswa->nim = $request->nim;
+    //         $mahasiswa->angkatan = $request->angkatan;
+    //         $mahasiswa->dosen_id = $request->dosenWali;
 
-            // $user->status = $request->status;
-
-
-
-
-            // $isEmailExists = User::where('email', $request->email)->count() >= 1 ? true : false;
-
-            // if ($isEmailExists) {
-            //     throw new Exception("Email Already used", 400);
-            // }
-            // $user->email = $request->email;
+    //         // $user->status = $request->status;
 
 
 
 
-            $password = Hash::make($request->password);
-            $user->password = $password;
-            $user->role = 'mahasiswa';
+    //         // $isEmailExists = User::where('email', $request->email)->count() >= 1 ? true : false;
 
-            $user->save();
+    //         // if ($isEmailExists) {
+    //         //     throw new Exception("Email Already used", 400);
+    //         // }
+    //         // $user->email = $request->email;
 
-            DB::commit();
 
-            return redirect()->to('/admin/user')->with('message', [
-                'status' => 'true',
-                'message' => 'Successfully Created User'
-            ]);
-        } catch (Exception $e) {
-            DB::rollBack();
 
-            return back()->with('error', $e->getCode() == 500 ? 'Failed to create user' : $e->getMessage());
-        }
-    }
+
+    //         $password = Hash::make($request->password);
+    //         $user->password = $password;
+    //         $user->role = 'mahasiswa';
+
+    //         $user->save();
+
+    //         DB::commit();
+
+    //         return redirect()->to('/admin/user')->with('message', [
+    //             'status' => 'true',
+    //             'message' => 'Successfully Created User'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         DB::rollBack();
+
+    //         return back()->with('error', $e->getCode() == 500 ? 'Failed to create user' : $e->getMessage());
+    //     }
+    // }
 
     public function storeMahasiswa(Request $request)
     {

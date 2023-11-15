@@ -54,10 +54,10 @@
                 </div>
                 @enderror
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="p">Password</label>
                 <input type="password" required="" id="p" name="password" class="form-control">
-            </div>
+            </div> --}}
             <div class="form-group">
                 <label for="r">Role</label>
                 <select name="role" id="r" class="form-control">
@@ -83,6 +83,16 @@
                 </select>
 
 
+            </div>
+            <div class="form-group">
+                <label for="dosen_id" class="form-label">Dosen Wali</label>
+                <select class="form-select" id="dosen_id" name="dosen_id">
+                    @foreach($dosens as $dosen)
+                        <option value="{{ $dosen->id }}" {{ $user->dosen_id == $dosen->id ? 'selected' : '' }}>
+                            {{ $dosen->nama }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <button type="submit" class="btn btn-md btn-primary">Simpan</button>
