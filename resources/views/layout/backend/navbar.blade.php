@@ -192,9 +192,8 @@
             elseif ($user->role === 'mahasiswa') {
                 $data = $mahasiswa
             }
-                                                                                                                                                                                                                                                                                       
             else {
-                $data =
+                $data['nama'] = 'Selamat Datang'
             }
 
             // App\Models\User::;
