@@ -68,6 +68,21 @@
                     @endforeach
                 </select>
             </div>
+            <div class="form-group">
+                <label for="s">Status</label>
+                <select name="status" id="d" class="form-control">
+                    <option  disabled="">- Pilih Status -</option>
+                    {{-- @foreach ($dosens as $dosen) --}}
+                    <option value="aktif" selected>Aktif</option>
+                    <option value="lulus">Lulus</option>
+                    <option value="do">Do</option>
+                    <option value="mangkir">Mangkir</option>
+                    <option value="mengundurkan_diri">Mengundurkan Diri</option>
+                    <option value="cuti">Cuti</option>
+                    <option value="meninggal_dunia">Meninggal Dunia</option>
+                    {{-- @endforeach --}}
+                </select>
+            </div>
             {{-- <div class="form-group">
                 <label for="r">Dosen Wali</label>
                 <select name="dosenWali" id="r" class="form-control">

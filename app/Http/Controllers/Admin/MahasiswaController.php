@@ -119,6 +119,7 @@ class MahasiswaController extends Controller
             'nim' => 'required',
             'angkatan' => 'required',
             'dosen_wali' => 'required',
+            'status' => 'required',
             // 'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
         ]);
 
@@ -135,7 +136,7 @@ class MahasiswaController extends Controller
         User::create([
             'nim_nip' => $request->nim,
             'role' => 'mahasiswa',
-            'password' => $password
+            'password' => $password,
         ]);
 
         mahasiswa::create([
@@ -143,7 +144,7 @@ class MahasiswaController extends Controller
             'nama' => $request->name,
             'angkatan' => $request->angkatan,
             'dosen_id' => $request->dosen_wali,
-
+            'status' => $request->status,
         ]);
             return redirect()->to('/admin/user')->with('success', 'Mahasiswa berhasil ditambahkan');
 
@@ -174,9 +175,10 @@ class MahasiswaController extends Controller
     public function edit($id)
     {
         // $user = User::findOrFail($id);
-        $dosens = Dosen::all(); // Anda mungkin perlu menyesuaikan ini sesuai kebutuhan
         $mahasiswa = Mahasiswa::where('id',$id)->firstOrFail();
         $user = User::where('nim_nip',$mahasiswa->nim)->firstOrFail();
+        $dosens = Dosen::all(); // Anda mungkin perlu menyesuaikan ini sesuai kebutuhan
+        // $user = User::where('nim_nip',$mahasiswa->nim)->firstOrFail();
 
         return view('admin.user.edit3', compact('user', 'dosens','mahasiswa'));
     }
@@ -188,6 +190,7 @@ class MahasiswaController extends Controller
         'nim' => 'required|numeric',
         'angkatan' => 'required|numeric',
         'dosen_id' => 'required|exists:dosens,id',
+        'status' => 'required',
     ]);
 
     $mahasiswa = Mahasiswa::findOrFail($id);
@@ -196,6 +199,8 @@ class MahasiswaController extends Controller
         'nim' => $request->input('nim'),
         'angkatan' => $request->input('angkatan'),
         'dosen_id' => $request->input('dosen_id'),
+        'status' => $request->input('status'),
+
     ]);
 
     $user = User::where('nim_nip',$mahasiswa->nim)->firstOrFail();
@@ -259,10 +264,19 @@ class MahasiswaController extends Controller
 
     public function delete($id)
     {
-        $user = User::where('nim_nip',$mahasiswa->nim)->firstOrFail();
+        // $mahasiswa = Mahasiswa::where('id',$id)->firstOrFail();
+        // $user = User::where('nim_nip',$mahasiswa->nim)->firstOrFail();
+        $user = User::findOrFail($id);
+        $mahasiswa = Mahasiswa::where('nim',$user->nim_nip);
 
         // Hapus mahasiswa dan user terkait
-        $user->delete();
+        // $user->delete();
+        try {
+            $user->delete();
+            $mahasiswa->delete();
+        } catch (Exception $e) {
+            return back()->with('error', $e->getCode() == 500 ? 'Failed to delete user' : $e->getMessage());
+        }
 
         return redirect()->route('user.index')->with('success', 'Mahasiswa berhasil dihapus.');
     }

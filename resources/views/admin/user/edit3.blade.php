@@ -72,7 +72,7 @@ $message = session()->get('message')['message'];
                     $roles = [
                     ['value' => 'admin', 'name' => 'Admin'],
                     ['value' => 'dosen', 'name' => 'Dosen'],
-                    ['value' => 'departemen', 'name' => 'Departemen']
+                    ['value' => 'departemen', 'name' => 'Departemen'],
                     ['value' => 'mahasiswa', 'name' => 'Mahasiswa'],
                     ];
 
@@ -88,14 +88,19 @@ $message = session()->get('message')['message'];
                 </select>
             </div>
             <div class="form-group">
-                <label for="status">Status</label>
-                <select name="staus" id="r" class="form-control">
+                <label for="s">Status</label>
+                <select name="status" id="r" class="form-control">
                     <option disabled="">- PILIH Status -</option>
                     @php
 
                     $statuss = [
-                    ['value' => 'aktif', 'name' => 'Aktif'],
-                    ['value' => 'non-aktif', 'name' => 'Non-Aktif'],
+                        ['value' => 'aktif', 'name' => 'Aktif'],
+                        ['value' => 'lulus', 'name' => 'Lulus'],
+                        ['value' => 'do', 'name' => 'DO'],
+                        ['value' => 'mangkir', 'name' => 'Mangkir'],
+                        ['value' => 'mengundurkan_diri', 'name' => 'Mengundurkan Diri'],
+                        ['value' => 'cuti', 'name' => 'Cuti'],
+                        ['value' => 'meninggal_dunia', 'name' => 'Meninggal Dunia'],
                     ];
 
                     @endphp

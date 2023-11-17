@@ -58,7 +58,23 @@ $message = session()->get('message')['message'];
                         <th>{{ $data->nama }}</th>
                         <th>{{ $data->nim }}</th>
                         <th>{{ $data->angkatan }}</th>
-                        <th>{{ 'status' }}</th>
+                        <th>
+                            @if ($data->status === 'aktif')
+                                Aktif
+                            @elseif ($data->status === 'do')
+                                DO
+                            @elseif ($data->status === 'mangkir')
+                                Mangkir
+                            @elseif ($data->status === 'mengundurkan_diri')
+                                Mengundurkan Diri
+                            @elseif ($data->status === 'cuti')
+                                Cuti
+                            @elseif ($data->status === 'meninggal_dunia')
+                                Meninggal Dunia
+                            @elseif ($data->status === 'lulus')
+                                Lulus
+                            @endif
+                        </th>
                         <th>{{ $dosens->where('id',$data->dosen_id)->first()->nama }}</th>
                         {{-- <th>Email</th> --}}
                         {{-- <th>Role</th> --}}
