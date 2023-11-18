@@ -16,9 +16,8 @@ class CreatePklsTable extends Migration
         Schema::create('pkls', function (Blueprint $table) {
             $table->id();
             $table->string('nim')->nullable();
-            $table->string('judul')->nullable();
-            $table->string('progres')->nullable();        
-            $table->string('stat_pkl')->nullable();
+            $table->string('semester')->nullable();
+            $table->string('nilai')->nullable();        
             $table->string('konfirmasi')->nullable()->default('0');
             $table->string('file')->nullable();
             $table->timestamps();

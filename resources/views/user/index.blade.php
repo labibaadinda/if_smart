@@ -57,7 +57,6 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                
                                 <h5 class="card-title text-dark">{{ $mahasiswa->nama }}</h5>
                                 <h5 class="card-title text-dark">{{ $mahasiswa->nim }}</h5>
                                 <h5 class="card-title text-dark">S1 Informatika</h5>
@@ -117,44 +116,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<div class="row mt-4">
-    <div class="col-md-3">
-        <a href="{{ route('irs') }}" class="card-link">
-            <div class="card ">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Entry IRS</h5>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="col-md-3">
-        <a href="{{ route('khs') }}" class="card-link">
-            <div class="card ">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Entry KHS</h5>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="col-md-3">
-        <a href="{{ route('pkl') }}" class="card-link">
-            <div class="card ">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Entry PKL</h5>
-                </div>
-            </div>
-        </a>
-    </div>
-    <div class="col-md-3">
-        <a href="{{ route('skripsi') }}" class="card-link">
-            <div class="card">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Entry Skripsi</h5>
-                </div>
-            </div>
-        </a>
     </div>
 </div>
 <!-- resources/views/modal/address.blade.php -->

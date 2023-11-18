@@ -48,18 +48,14 @@ use Illuminate\Support\Facades\Auth;
 	public function pkl()
 	{
 		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
-		$latestProgres = Pkl::where('nim', Auth::user()->nim_nip)->max('progres');
-		$progrespkl = $latestProgres + 1;
-        $pkls = Pkl::where('nim',Auth::user()->nim_nip)->orderBy('progres', 'ASC')->get();
-		return view('user.entry-pkl', compact('progrespkl','mahasiswas','pkls'));
+        $pkls = Pkl::where('nim',Auth::user()->nim_nip)->get();
+		return view('user.entry-pkl', compact('mahasiswas','pkls'));
 	}
 	public function skripsi()
 	{
 		$mahasiswas = Mahasiswa::where('nim', Auth::user()->nim_nip)->get();
-		$latestProgres = Skripsi::where('nim', Auth::user()->nim_nip)->max('progres');
-		$progresskripsi = $latestProgres + 1;
-        $skripsis = Skripsi::where('nim',Auth::user()->nim_nip)->orderBy('progres', 'ASC')->get();
-		return view('user.entry-skripsi',compact('progresskripsi','mahasiswas','skripsis'));
+        $skripsis = Skripsi::where('nim',Auth::user()->nim_nip)->get();
+		return view('user.entry-skripsi',compact('mahasiswas','skripsis'));
 	}
 
 	public function storeIrs(Request $request)
@@ -104,6 +100,8 @@ use Illuminate\Support\Facades\Auth;
         return redirect()->route('irs')->with('success', 'File IRS berhasil diunggah.');
     }
 }
+
+
 	public function storeKhs(Request $request)
 {
     // Validasi input jika diperlukan
@@ -147,29 +145,45 @@ use Illuminate\Support\Facades\Auth;
     }
 }
 
+public function updateFile(Request $request, $id)
+{ 
+    $khs = Khs::findOrFail($id);
+
+    // Validasi input jika diperlukan
+    $request->validate([
+        'file' => 'required|mimes:pdf|',
+    ]);
+
+    if ($request->hasFile('file')) {
+        $pdfFile = $request->file('file');
+        $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+
+        // Simpan file ke direktori storage/app/public/foto
+        $pdfFile->storeAs('public/khs', $pdfFileName);
+
+        // Update data Mahasiswa dengan 'foto' baru
+        $khs->update(['file' => $pdfFileName]);
+
+        return redirect()->route('khs')->with('success', 'Berkas berhasil diperbaharui.');
+    } else {
+        // Handle kasus tanpa file (opsional)
+        // Jika tidak ada 'foto' yang diunggah, 'foto' tidak akan diubah
+        // $mahasiswa->update($validatedData);
+
+        return redirect()->route('user')->with('success', 'Data berhasil diupdate.');
+    }
+}
+
 	public function storePkl(Request $request)
 {
     // Validasi input jika diperlukan
     $request->validate([
-        'judul' => 'required',
-        'stat_pkl' => 'required',
+        'semester' => 'required',
+        'nilai' => 'required',
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
 
-	$existingData = Pkl::where('nim', Auth::user()->nim_nip)->get();
-
-    if ($existingData->isEmpty()) {
-        // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
-        if ($request->progres != 1) {
-            return redirect()->back()->with('error', 'Progres pertama harus dimulai dari 1.');
-        }
-    } else {
-        $latestProgres = $existingData->max('progres');
-
-        if ($request->progres != $latestProgres + 1) {
-            return redirect()->back()->with('error', 'Progres yang dimasukkan harus berurutan');
-        }
-    }
+	
 
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
@@ -181,37 +195,31 @@ use Illuminate\Support\Facades\Auth;
         // Simpan data IRS ke dalam tabel IRS
         Pkl::create([
             'nim' => Auth::user()->nim_nip,
-            'judul' => $request->judul,
-            'progres' => $request->progres,
-            'stat_pkl' => $request->stat_pkl,
+            'semester' => $request->semester,
+            'nilai' => $request->nilai,
             'file' => $pdfFileName,
         ]);
 
         return redirect()->route('pkl')->with('success', 'Entry PKL berhasil.');
     }
 }
+
+
+    //ENTRYYYYYYYY SKRIPSIII
 	public function storeSkripsi(Request $request)
 {
     // Validasi input jika diperlukan
     $request->validate([
-        'judul' => 'required',
-        'stat_skripsi' => 'required',
+        'semester' => 'required',
+        'nilai' => 'required',
+        'tanggal_sidang' => 'required',
+        'lama_studi' => 'required',
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
 	$existingData = Skripsi::where('nim', Auth::user()->nim_nip)->get();
 
-    if ($existingData->isEmpty()) {
-        // Jika tidak ada data progres, maka hanya progres 1 yang diizinkan
-        if ($request->progres != 1) {
-            return redirect()->back()->with('error', 'Progres pertama harus dimulai dari 1.');
-        }
-    } else {
-        $latestProgres = $existingData->max('progres');
 
-        if ($request->progres != $latestProgres + 1) {
-            return redirect()->back()->with('error', 'Progres yang dimasukkan harus berurutan');
-        }
-    }
+    
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
@@ -222,10 +230,10 @@ use Illuminate\Support\Facades\Auth;
         // Simpan data IRS ke dalam tabel IRS
         Skripsi::create([
             'nim' => Auth::user()->nim_nip,
-            'judul' => $request->judul,
-            'progres' => $request->progres,
-            'stat_skripsi' => $request->stat_skripsi,
+            'semester' => $request->semester,
+            'nilai' => $request->nilai,
             'tanggal_sidang' => $request->tanggal_sidang,
+            'lama_studi' => $request->lama_studi,
             'file' => $pdfFileName,
         ]);
 

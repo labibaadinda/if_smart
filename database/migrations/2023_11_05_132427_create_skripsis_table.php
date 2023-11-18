@@ -16,11 +16,11 @@ class CreateSkripsisTable extends Migration
         Schema::create('skripsis', function (Blueprint $table) {
             $table->id();
             $table->string('nim')->nullable();
-            $table->string('judul')->nullable();
-            $table->string('progres')->nullable();        
-            $table->string('stat_skripsi')->nullable();
+            $table->string('semester')->nullable();
+            $table->string('nilai')->nullable();        
+            $table->string('lama_studi')->nullable();
             $table->string('tanggal_sidang')->nullable();
-            $table->string('konfirmasi')->nullable()->default('0');
+            $table->string('status')->nullable()->default('0');
             $table->string('file')->nullable();
             $table->timestamps();
         });

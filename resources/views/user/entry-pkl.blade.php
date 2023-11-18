@@ -60,23 +60,23 @@
                     <table class="table align-items-center mb-0">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Judul</th>
-                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Progres Ke-</th>
-                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center ps-2">Status Entry</th>
-                                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Berkas</th>
+                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Semester</th>
+                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Nilai</th>
+                                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Status Konfirmasi</th>
+                                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Berita Acara</th>
                             </tr>
                         </thead>
                         <tbody id="alatTableBody">
                             @foreach ($pkls as $pkl)
                                 <tr>
                                     <td class="text-sm align-middle text-center">
-                                        {{ $pkl->judul }}
+                                        {{ $pkl->semester }}
                                     </td>
                                     <td class="text-sm align-middle text-center">
-                                        {{ $pkl->progres }}
+                                        {{ $pkl->nilai }}
                                     </td>
                                     <td class="text-sm align-middle text-center">
-                                        @if($pkl->konfirmasi == '1')
+                                        @if($pkl->status == '1')
                                             <span class="badge bg-success text-white">
                                                 Sudah Diverifikasi
                                             </span>
@@ -88,7 +88,7 @@
                                     </td>
                                     <td class="text-sm align-middle text-center">
                                         <a href="{{ asset('storage/pkl/' . $pkl->file) }}" target="_blank"
-                                            class="btn btn-primary btn-sm ml-2">PKL</a>
+                                            class="btn btn-primary btn-sm ml-2">Berita Acara</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -105,8 +105,8 @@
                                                 <form id="createForm" method="post" action="{{ route('pkl.store') }}" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="form-group">
-                                                        <label for="judul">Judul PKL</label>
-                                                        <input  type="text" required id="judul" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul') }}">
+                                                        <label for="judul">Semester PKL</label>
+                                                        <input  type="text" required id="semester" name="semester" class="form-control @error('judul') is-invalid @enderror" value="{{ old('semester') }}">
                                                 
                                                         @error('judul')
                                                         <div class="invalid-feedback">
@@ -114,25 +114,17 @@
                                                         </div>
                                                         @enderror
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="stat_pkl">Status PKL</label>
-                                                        <select name="stat_pkl" id="stat_pkl" class="form-control">
-                                                            <option selected disabled="">----------Status PKL----------</option>
-                                                            <option  value="progres">Sedang Berlangsung</option>
-                                                            <option value="selesai">Selesai</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group" id="progres-form" style="display: none">
-                                                        <label for="progres">Progres Ke-</label>
-                                                        <input type="number" id="progres" name="progres" class="form-control @error('progres') is-invalid @enderror" value="{{ $progrespkl }}">
-                                                        @error('progres')
+                                                    <div class="form-group" id="progres-form" >
+                                                        <label for="nilai">Nilai</label>
+                                                        <input type="string" id="nilai" name="nilai" class="form-control @error('nilai') is-invalid @enderror">
+                                                        @error('nilai')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="file">File</label>
+                                                        <label for="file">Scan Berita Acara</label>
                                                         <input required type="file" name="pdf_file" id="pdf_file" class="form-control">
                                                 
                                                         @error('pdf_file')
@@ -164,9 +156,6 @@
 </div>
 
 
-
-    @foreach ($mahasiswas as $mahasiswa)
-    @endforeach
 </div>
 
 <div class="modal fade" id="addressModal" tabindex="-1" role="dialog">
@@ -205,17 +194,6 @@
 
   });
 </script>
-<script>
-    const statPklSelect = document.getElementById('stat_pkl');
-    const progresForm = document.getElementById('progres-form');
 
-    statPklSelect.addEventListener('change', function () {
-        if (statPklSelect.value === 'progres') {
-            progresForm.style.display = 'block';
-        } else {
-            progresForm.style.display = 'none';
-        }
-    });
-</script>
 @endsection
 

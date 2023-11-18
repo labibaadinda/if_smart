@@ -60,20 +60,28 @@
                     <table class="table align-items-center mb-0">
                         <thead class="bg-gray-100">
                             <tr>
-                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Judul</th>
-                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Progres Ke-</th>
+                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Semester</th>
+                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Nilai</th>
+                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Tanggal Sidang</th>
+                                <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Lama Studi</th>
                                 <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center ps-2">Status Entry</th>
-                                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Berkas</th>
+                                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Berita Acara</th>
                             </tr>
                         </thead>
                         <tbody id="alatTableBody">
                             @foreach ($skripsis as $skripsi)
                                 <tr>
                                     <td class="text-sm align-middle text-center">
-                                        {{ $skripsi->judul }}
+                                        {{ $skripsi->semester }}
                                     </td>
                                     <td class="text-sm align-middle text-center">
-                                        {{ $skripsi->progres }}
+                                        {{ $skripsi->nilai }}
+                                    </td>
+                                    <td class="text-sm align-middle text-center">
+                                        {{ $skripsi->tanggal_sidang }}
+                                    </td>
+                                    <td class="text-sm align-middle text-center">
+                                        {{ $skripsi->lama_studi }}
                                     </td>
                                     <td class="text-sm align-middle text-center">
                                         @if($skripsi->konfirmasi == '1')
@@ -102,34 +110,28 @@
                                                 <form id="createForm" method="post" action="{{ route('skripsi.store') }}" enctype="multipart/form-data">
                                                     @csrf
                                                     <div class="form-group">
-                                                        <label for="judul">Judul Skripsi</label>
-                                                        <input  type="text" required id="judul" name="judul" class="form-control @error('judul') is-invalid @enderror" value="{{ old('judul') }}">
+                                                        <label for="semester">Semester</label>
+                                                        <input  type="text" required id="semester" name="semester" class="form-control @error('judul') is-invalid @enderror" value="{{ old('semester') }}">
                                                 
-                                                        @error('judul')
+                                                        @error('semester')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                         @enderror
                                                     </div>
+
                                                     <div class="form-group">
-                                                        <label for="stat_skripsi">Status Skripsi</label>
-                                                        <select name="stat_skripsi" id="stat_skripsi" class="form-control">
-                                                            <option selected disabled="">----------Status Skripsi----------</option>
-                                                            <option  value="progres">Sedang Berlangsung</option>
-                                                            <option value="selesai">Selesai</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group" id="progres-form" style="display: none">
-                                                        <label for="progres">Progres Ke-</label>
-                                                        <input type="number" id="progres" name="progres" class="form-control @error('progres') is-invalid @enderror" value="{{ $progresskripsi }}">
-                                                        @error('progres')
+                                                        <label for="nilai">Nilai</label>
+                                                        <input  type="text" required id="nilai" name="nilai" class="form-control @error('judul') is-invalid @enderror" value="{{ old('nilai') }}">
+                                                
+                                                        @error('nilai')
                                                         <div class="invalid-feedback">
                                                             {{ $message }}
                                                         </div>
                                                         @enderror
                                                     </div>
                                                     
-                                                    <div class="form-group" id="tanggal-sidang-form" style="display: none">
+                                                    <div class="form-group" id="tanggal-sidang-form">
                                                         <label for="tanggal_sidang">Tanggal Sidang</label>
                                                         <input type="date" id="tanggal_sidang" name="tanggal_sidang" class="form-control @error('tanggal_sidang') is-invalid @enderror" value="{{ old('tanggal_sidang') }}">
                                                         @error('tanggal_sidang')
@@ -138,7 +140,17 @@
                                                         </div>
                                                         @enderror
                                                     </div>
-                                                    
+                                                
+                                                    <div class="form-group">
+                                                        <label for="lama_studi">Lama Studi</label>
+                                                        <input  type="text" required id="lama_studi" name="lama_studi" class="form-control @error('judul') is-invalid @enderror" value="{{ old('lama_studi') }}">
+                                                
+                                                        @error('lama_studi')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
                                                     <div class="form-group">
                                                         <label for="file">File</label>
                                                         <input required type="file" name="pdf_file" id="pdf_file" class="form-control">
@@ -150,7 +162,7 @@
                                                         @enderror
                                                     </div>
                                                     <button type="submit" class="btn btn-md btn-primary">Simpan</button>
-                                                    <a href="{{ route('user') }}" class="btn btn-md btn-secondary">Back</a>
+                                                    <a href="{{ route('skripsi') }}" class="btn btn-md btn-secondary">Back</a>
                                                 </form>
                                             </div>
                                             
@@ -186,24 +198,7 @@
         </div>
     </div>
   </div>
-<script>
-    const statSkripsiSelect = document.getElementById('stat_skripsi');
-    const progresForm = document.getElementById('progres-form');
-    const tanggalSidangForm = document.getElementById('tanggal-sidang-form');
 
-    statSkripsiSelect.addEventListener('change', function () {
-        if (statSkripsiSelect.value === 'progres') {
-            progresForm.style.display = 'block';
-            tanggalSidangForm.style.display = 'none';
-        } else if (statSkripsiSelect.value === 'selesai') {
-            progresForm.style.display = 'none';
-            tanggalSidangForm.style.display = 'block';
-        } else {
-            progresForm.style.display = 'none';
-            tanggalSidangForm.style.display = 'none';
-        }
-    });
-</script>
 
 <script>
     // Periksa apakah alamat, kota, provinsi, dan handphone kosong
