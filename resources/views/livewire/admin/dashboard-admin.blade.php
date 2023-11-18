@@ -158,7 +158,7 @@
                                 <h5 class="card-title text-dark">Operator S1 Informatika</h5>
                                 {{-- @foreach($dosens as $dosen)
                                 @endforeach --}}
-                                <a href=''>edit</a>
+                                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#initialModal">edit</a>
                             </div>
                         </div>
                     </div>
@@ -392,6 +392,118 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<!-- Update Data Pribadi Modal-->
+<div class="modal fade" id="initialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Data</h5>
+                {{-- <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button> --}}
+            </div>
+            <div class="modal-body">
+                <form id="createForm" action="{{ route('profile.updateInitialData',$user->id) }}" method="POST" >
+                    @method('PUT')
+                    @csrf
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" name="nama" class="form-control" value="{{ $user->nama }}" >
+                    </div>
+                    <div class="form-group">
+                        <label for="nip">NIp</label>
+                        <input type="text" id="nip" name="nip" class="form-control" value="{{ $user->nim_nip }}" >
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input required id="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ Auth::user()->email }}">
+
+                        @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    {{-- <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <input required id="alamat" name="alamat" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->alamat }}">
+
+                        @error('alamat')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="handphone">No Handphone</label>
+                        <input required id="handphone" name="handphone" class="form-control @error('handphone') is-invalid @enderror" value="{{ $mahasiswa->handphone }}">
+
+                        @error('handphone')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="kota">Kota/Kabupaten</label>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota }}">
+
+                        @error('alamat')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div> --}}
+                    {{-- <div class="form-group">
+                        <label for="provinsi">Provinsi</label>
+                        <input required id="provinsi" name="provinsi" class="form-control @error('provinsi') is-invalid @enderror" value="{{ old('provinsi') }}">
+
+                        @error('provinsi')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div> --}}
+                    {{-- <div class="form-group">
+                        <label for="provinsi">Provinsi</label>
+                        <select class="form-select" name="provinsi" aria-label="Default select example">
+                          <option value="">-------- Pilih Provinsi --------</option>
+                          @foreach($provinsis->unique('nama') as $provinsi)
+                          <option value="{{ $provinsi->id}}">{{ $provinsi->nama }}</option>
+                          @endforeach
+                        </select>
+                    </div> --}}
+                    {{-- <div class="form-group">
+                        <label for="p">Password</label>
+                        <input type="password" required="" id="p" name="password" class="form-control">
+                    </div> --}}
+                    {{-- <div class="form-group">
+                        <label for="provinsi">Provinsi</label>
+                        <select name="provinsi_id" id="provinsi_id" class="form-control">
+                            <option disabled="">- Pilih Provinsi -</option>
+                            @foreach($provinsis->unique('nama') as $provinsi)
+                            <option value="{{ $provinsi->id}}">{{ $provinsi->nama }}</option>
+                            @endforeach
+                        </select>
+                    </div> --}}
+
+
+                    <button type="submit" class="btn btn-md btn-primary">Simpan</button>
+                </form>
+            </div>
+            {{-- @endforeach --}}
+            <div class="modal-footer">
+                {{-- <a href="{{ route('user.index') }}" class="btn btn-md btn-secondary">Back</a> --}}
+                {{-- <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                </form> --}}
+            </div>
+        </div>
     </div>
 </div>
 @stop

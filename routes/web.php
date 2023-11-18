@@ -62,6 +62,8 @@ Route::group(['namespace' => 'Departemen','middleware' => 'auth','prefix' => 'de
 
 Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin'],function(){
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
+	Route::put('/profile/update/{id}',[DashboardAdmin::class,'updateInitialData'])->name('profile.updateInitialData');
+
 	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
     Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.store');

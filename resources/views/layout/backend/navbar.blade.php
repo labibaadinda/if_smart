@@ -180,20 +180,23 @@
         @php
             $auth = Illuminate\Support\Facades\Auth::user();
             $user = App\Models\User::find($auth->id);
-            $mahasiswa = App\Models\mahasiswa::where('nim',$user->nim_nip)->forstOrFail();
+            $mahasiswa = App\Models\Mahasiswa::where('nim',$user->nim_nip)->first();
+            $dosen = App\Models\Dosen::where('nip',$user->nim_nip)->first();
 
 
-            try{
 
-            }
             if($user->role === 'admin'){
                 $data = $user;
             }
             elseif ($user->role === 'mahasiswa') {
-                $data = $mahasiswa
+                $data = $mahasiswa;
+            }
+            elseif($user->role === 'dosen'){
+                $data = $dosen;
             }
             else {
-                $data['nama'] = 'Selamat Datang'
+                $data['nama'] = 'Selamat Datang';
+                $data['foto'] = "{{ asset('template/backend/sb-admin-2') }}/img/undraw_profile.svg";
             }
 
             // App\Models\User::;
@@ -201,9 +204,9 @@
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $user->nama }}</span>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $data->nama }}</span>
                 <img class="img-profile rounded-circle"
-                    src="{{ asset('/storage/photo/'.$data->foto.) }}">
+                    src="{{ asset('storage/foto/' . $data->foto) }}">
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

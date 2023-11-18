@@ -46,7 +46,7 @@
         </div>
     </div>
 </div>
-<div class="row mt-4">
+{{-- <div class="row mt-4">
     <div class="col-md-3">
         <a href="
     {{ route('irs.index') }}
@@ -91,8 +91,9 @@
             </div>
         </a>
     </div>
-</div>
+</div> --}}
 <!-- resources/views/modal/address.blade.php -->
 </div>
+
 
 @endsection
