@@ -32,19 +32,24 @@ class DashboardAdmin extends Component
 
 
         $user = User::where('nim_nip', Auth::user()->nim_nip)->first();
-
+        $message = 'Data gagal diupdate!';
         if ($user) {
             $user->update(['email' => $validatedData['email']]);
             $user->update(['nama' => $validatedData['nama']]);
             $user->update(['nim_nip' => $validatedData['nip']]);
+            $message = 'Data berhasil diupdate!';
         }
 
         // Check the result and redirect with appropriate messages
-        if ($user) {
-            return redirect()->route('admin')->with('success', 'Data berhasil diupdate!');
-        } else {
-            return redirect()->route('admin')->with('error', 'Data gagal diupdate!');
-        }
+        // if ($user) {
+        //     return redirect()->route('admin')->with('success', 'Data berhasil diupdate!');
+        // } else {
+        //     return redirect()->route('admin')->with('error', 'Data gagal diupdate!');
+        // }
+        return redirect()->route('admin')->with('message', [
+            'status' => 'true',
+            'message' => $message,
+        ]);
     }
 
     public function edit(){

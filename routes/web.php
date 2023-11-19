@@ -104,6 +104,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::put('/profile/updateFoto/{id}',[ProfileController::class,'updateFoto'])->name('profile.updateFoto');
 });
 
+// Dosen
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 	Route::get('/',[DosenController::class,'index'])->name('dosen');
 
