@@ -105,7 +105,7 @@
                     <h5>max: {{ $thnmax->angkatan }}</h5>
                     <h5>min: {{ $thnmin }}</h5>
                     <h5>countBy: {{ $countby }}</h5>
-                    <h5>pkls test: {{ $pkls->where('stat_pkl','selesai')->whereColumn('nim','')->count() }}</h5>
+                    <h5>pkls test: {{ $pkls->where('stat_pkl','selesai')->count() }}</h5>
                 </div>
             </div>
         </div>
