@@ -108,7 +108,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Status Akademik</h5>
                                 <p class="card-text">
-                                    <span class="badge badge-success">Aktif</span>
+                                    <span class="badge badge-success">{{ $mahasiswa->status }}</span>
                                 </p>
                             </div>
                         </div>
@@ -138,7 +138,7 @@
 <script>
     // Periksa apakah alamat, kota, provinsi, dan handphone kosong
   var mahasiswaAddress = '{{ $mahasiswa->alamat }}'; // Gantilah ini dengan cara Anda mendapatkan alamat mahasiswa
-  var mahasiswaKota = '{{ $mahasiswa->kota }}'; // Gantilah ini dengan cara Anda mendapatkan kota mahasiswa
+  var mahasiswaKota = '{{ $mahasiswa->kota_id }}'; // Gantilah ini dengan cara Anda mendapatkan kota mahasiswa
   var mahasiswaProvinsi = '{{ $mahasiswa->provinsi_id }}'; // Gantilah ini dengan cara Anda mendapatkan provinsi mahasiswa
   var mahasiswaHandphone = '{{ $mahasiswa->handphone }}'; // Gantilah ini dengan cara Anda mendapatkan handphone mahasiswa
   var mahasiswaFoto = '{{ $mahasiswa->foto }}'; // Gantilah ini dengan cara Anda mendapatkan handphone mahasiswa

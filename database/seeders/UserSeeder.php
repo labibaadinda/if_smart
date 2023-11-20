@@ -28,6 +28,12 @@ class UserSeeder extends Seeder
                 'role'      => 'admin',
                 'nim_nip'       => '2',
             ],
+            [
+                'email'     => 'depart@gmail.com',
+                'password'  => Hash::make('password'),
+                'role'      => 'departemen',
+                'nim_nip'       => '23242341424',
+            ],
             // [
             //     'name'         => 'Chika Fujiwara',
             //     'email'        => 'chika@gmail.com',

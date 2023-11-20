@@ -19,7 +19,7 @@ use App\Http\Livewire\Admin\ManajemenMahasiswa;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Livewire\Departemen\DashboardDepartemen;
 use App\Http\Controllers\Admin\MahasiswaController;
-use App\Http\Controllers\Departemen\DepartemenController;
+use App\Http\Controllers\DepartemenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,30 +35,30 @@ use App\Http\Controllers\Departemen\DepartemenController;
 Route::view('/','welcome');
 
 
-Route::group(['namespace' => 'Departemen','middleware' => 'auth','prefix' => 'departemen'],function(){
-	Route::get('/',[DashboardDepartemen::class,'render'])->name('departemen')->middleware(['can:departemen']);
-	Route::resource('/user','MahasiswaController')->middleware(['can:departemen']);
-	// Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:departemen']);
-    // Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.store');
-    // Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.storeMahasiswa');
+// Route::group(['namespace' => 'Departemen','middleware' => 'auth','prefix' => 'departemen'],function(){
+// 	Route::get('/',[DashboardDepartemen::class,'render'])->name('departemen')->middleware(['can:departemen']);
+// 	Route::resource('/user','MahasiswaController')->middleware(['can:departemen']);
+// 	// Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:departemen']);
+//     // Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.store');
+//     // Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.storeMahasiswa');
 
-    // Route::get('/user/edit/{id}',[MahasiswaController::class,'edit'])->name('user.edit');
-    // // Route::post('/user/update/{id}',[MahasiswaController::class,'update'])->name('user.update');
-    // Route::put('/admin/user/{id}',[MahasiswaController::class,'update'])->name('user.update');
-    // Route::get('/user/reset-password/{id}',[MahasiswaController::class,'resetPassword'])->name('user.reset-password');
-    // Route::get('/user/delete/{id}',[MahasiswaController::class,'delete'])->name('user.delete');
+//     // Route::get('/user/edit/{id}',[MahasiswaController::class,'edit'])->name('user.edit');
+//     // // Route::post('/user/update/{id}',[MahasiswaController::class,'update'])->name('user.update');
+//     // Route::put('/admin/user/{id}',[MahasiswaController::class,'update'])->name('user.update');
+//     // Route::get('/user/reset-password/{id}',[MahasiswaController::class,'resetPassword'])->name('user.reset-password');
+//     // Route::get('/user/delete/{id}',[MahasiswaController::class,'delete'])->name('user.delete');
 
-	// Route::view('/404-page','admin.404-page')->name('404-page');
-	// Route::view('/blank-page','admin.blank-page')->name('blank-page');
-	// Route::view('/buttons','admin.buttons')->name('buttons');
-	// Route::view('/cards','admin.cards')->name('cards');
-	// Route::view('/utilities-colors','admin.utilities-color')->name('utilities-colors');
-	// Route::view('/utilities-borders','admin.utilities-border')->name('utilities-borders');
-	// Route::view('/utilities-animations','admin.utilities-animation')->name('utilities-animations');
-	// Route::view('/utilities-other','admin.utilities-other')->name('utilities-other');
-	// Route::view('/chart','admin.chart')->name('chart');
-	// Route::view('/tables','admin.tables')->name('tables');
-});
+// 	// Route::view('/404-page','admin.404-page')->name('404-page');
+// 	// Route::view('/blank-page','admin.blank-page')->name('blank-page');
+// 	// Route::view('/buttons','admin.buttons')->name('buttons');
+// 	// Route::view('/cards','admin.cards')->name('cards');
+// 	// Route::view('/utilities-colors','admin.utilities-color')->name('utilities-colors');
+// 	// Route::view('/utilities-borders','admin.utilities-border')->name('utilities-borders');
+// 	// Route::view('/utilities-animations','admin.utilities-animation')->name('utilities-animations');
+// 	// Route::view('/utilities-other','admin.utilities-other')->name('utilities-other');
+// 	// Route::view('/chart','admin.chart')->name('chart');
+// 	// Route::view('/tables','admin.tables')->name('tables');
+// });
 
 Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin'],function(){
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
@@ -141,6 +141,16 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 
 
 	// Route::post('/irs',[DosenController::class,'storeIrs'])->name('verif.irs');
+
+	
+});
+
+// Departmen
+Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
+	Route::get('/',[DepartemenController::class,'index'])->name('departemen');
+	Route::put('/profile/updateFoto/{id}',[DepartemenController::class,'updateFoto'])->name('profiledept.updateFoto');
+	Route::put('/profile/update/{id}',[DepartemenController::class,'update'])->name('profiledept.update');
+	Route::get('/profile',[DepartemenController::class,'profile'])->name('profiledept');
 
 
 });
