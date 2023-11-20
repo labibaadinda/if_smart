@@ -76,7 +76,7 @@
                                         {{ $pkl->nilai }}
                                     </td>
                                     <td class="text-sm align-middle text-center">
-                                        @if($pkl->status == '1')
+                                        @if($pkl->konfirmasi == '1')
                                             <span class="badge bg-success text-white">
                                                 Sudah Diverifikasi
                                             </span>

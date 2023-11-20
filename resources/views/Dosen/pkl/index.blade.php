@@ -1,4 +1,4 @@
-@extends('layout.backend.app',[
+    @extends('layout.backend.app',[
 'title' => 'Verifikasi PKL',
 'pageTitle' =>'Verifikasi PKL',
 ])
@@ -45,9 +45,8 @@ $message = session()->get('message')['message'];
                         <th>No</th>
                         <th>Name</th>
                         <th>NIM</th>
-                        <th>Judul</th>
-                        <th>Progres Ke</th>
-                        <th>Status</th>
+                        <th>Semester</th>
+                        <th>Nilai</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -57,9 +56,8 @@ $message = session()->get('message')['message'];
                         <th>{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</th>
                         <th>{{ $mahasiswas->where('nim',$data->nim)->first()->nama }}</th>
                         <th>{{ $data->nim }}</th>
-                        <th>{{ $data->judul }}</th>
-                        <th>{{ $data->progres }}</th>
-                        <th>{{ $data->stat_pkl }}</th>
+                        <th>{{ $data->semester }}</th>
+                        <th>{{ $data->nilai }}</th>
                         <th>
 
                             <div class="row">

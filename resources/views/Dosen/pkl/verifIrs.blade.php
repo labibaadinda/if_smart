@@ -3,25 +3,23 @@
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h5 class="my-3 font-weight-bold text-primary">Verifikasi KHS</h5>
+        <h5 class="my-3 font-weight-bold text-primary">Verifikasi PKL</h5>
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="col-md-1" >
+            <div class="col-md-2" >
                 <p><strong>Nama</strong> </p>
                 <p><strong>NIM</strong> </p>
-                <p><strong>Judul PKL</strong> </p>
-                <p><strong>Progres Ke</strong> </p>
-                <p><strong>Status</strong> </p>
-                <p style="display:inline-block"><strong>File PDF</strong>
+                <p><strong>Semester</strong> </p>
+                <p><strong>Nilai</strong> </p>
+                <p style="display:inline-block"><strong>Berita Acara</strong>
                 </p>
             </div>
-            <div class="col-md-11">
+            <div class="col-md-10">
                 <p><strong>:</strong> {{ $mahasiswas->where('nim',$pkl->nim)->first()->nama }}</p>
                 <p><strong>:</strong> {{ $pkl->nim }}</p>
-                <p><strong>:</strong> {{ $pkl->judul }}</p>
-                <p><strong>:</strong> {{ $pkl->progres }}</p>
-                <p><strong>:</strong> {{ $pkl->stat_pkl }}</p>
+                <p><strong>:</strong> {{ $pkl->semester }}</p>
+                <p><strong>:</strong> {{ $pkl->nilai }}</p>
                 <p ><strong>:</strong>
                     <a href="{{ asset('storage/pkl/' . $pkl->file) }}" target="_blank">Lihat PDF</a>
                 </p>

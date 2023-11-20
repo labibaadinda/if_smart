@@ -142,7 +142,7 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 
 	// Route::post('/irs',[DosenController::class,'storeIrs'])->name('verif.irs');
 
-
+	
 });
 
 // Departmen
