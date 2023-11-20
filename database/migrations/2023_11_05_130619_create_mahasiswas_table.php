@@ -21,7 +21,7 @@ class CreateMahasiswasTable extends Migration
             $table->string('status')->default('aktif');
             $table->string('angkatan')->nullable();
             $table->string('alamat')->nullable();
-            $table->string('kota')->nullable();
+            $table->string('kota_id')->nullable();
             $table->string('provinsi_id')->nullable();
             $table->string('jalur_masuk')->nullable();
             $table->string('handphone')->nullable();

@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $validatedData = $request->validate([
             'alamat' => 'required|string|max:255',
             'handphone' => 'required|',
-            'kota' => 'required|',
+            'kota_id' => 'required|',
             'provinsi_id' => 'required|',
             'email' => 'required|email',    
         ]);
@@ -50,9 +50,9 @@ class ProfileController extends Controller
 
         // Check the result and redirect with appropriate messages
         if ($mahasiswa && $user) {
-            return redirect()->route('user')->with('success', 'Data berhasil diupdate!');
+            return redirect()->route('profile')->with('success', 'Data berhasil diupdate!');
         } else {
-            return redirect()->route('user')->with('error', 'Data gagal diupdate!');
+            return redirect()->route('profile')->with('error', 'Data gagal diupdate!');
         }
     }
 
@@ -75,13 +75,13 @@ class ProfileController extends Controller
             // Update data Mahasiswa dengan 'foto' baru
             $mahasiswa->update(['foto' => $pdfFileName]);
     
-            return redirect()->route('user')->with('success', 'Foto berhasil diperbaharui.');
+            return redirect()->route('profile')->with('success', 'Foto berhasil diperbaharui.');
         } else {
             // Handle kasus tanpa file (opsional)
             // Jika tidak ada 'foto' yang diunggah, 'foto' tidak akan diubah
             // $mahasiswa->update($validatedData);
     
-            return redirect()->route('user')->with('success', 'Data berhasil diupdate.');
+            return redirect()->route('user')->with('error', 'Data gagal diupdate.');
         }
     }
 
