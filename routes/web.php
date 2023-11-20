@@ -106,6 +106,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::get('/profile/get-kota/{provinsi_id}', [ProfileController::class,'getKotaByProvinsi']);
 });
 
+// Dosen
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 	Route::get('/',[DosenController::class,'index'])->name('dosen');
 

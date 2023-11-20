@@ -36,7 +36,13 @@
                             <tr>
                                 <td>{{ $irs->semester }}</td>
                                 <td>{{ $irs->jumlah_sks }}</td>
-                                <td>{{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}</td>
+                                <td>
+                                    @if ($khss->where('semester',$irs->semester)->first())
+                                        {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
+                                    @else
+                                        Belum Mengupload
+                                    @endif
+                                </td>
                                 <!-- Tambahkan kolom lain sesuai kebutuhan -->
                                 <td>
                                     <!-- IRS -->
@@ -46,10 +52,12 @@
                                         <a href="{{ route('search.showVerifikasiIrs', $irs->id) }}" id="{{ $irs->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi IRS</a>
                                     @endif
                                     <!-- KHS -->
-                                    @if ($khss->where('semester',$irs->semester)->firstOrFail()->status === '1')
-                                        <a href="{{ asset('storage/khs/' . $khss->where('semester',$irs->semester)->firstOrFail()->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2 " >KHS</a>
-                                    @elseif ($khss->where('semester',$irs->semester)->firstOrFail()->status === '0')
-                                        <a href="{{ route('search.showVerifikasiKhs', $khss->where('semester',$irs->semester)->firstOrFail()->id) }}" id="{{ $khss->where('semester',$irs->semester)->firstOrFail()->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi KHS</a>
+                                    @if ($khss->where('semester',$irs->semester)->first())
+                                        @if ($khss->where('semester',$irs->semester)->firstOrFail()->status === '1')
+                                            <a href="{{ asset('storage/khs/' . $khss->where('semester',$irs->semester)->firstOrFail()->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2 " >KHS</a>
+                                        @elseif ($khss->where('semester',$irs->semester)->firstOrFail()->status === '0')
+                                            <a href="{{ route('search.showVerifikasiKhs', $khss->where('semester',$irs->semester)->firstOrFail()->id) }}" id="{{ $khss->where('semester',$irs->semester)->firstOrFail()->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi KHS</a>
+                                        @endif
                                     @endif
 
                                     {{-- <a href="{{ route('semester.detail', [$mahasiswa->nim, $semester->semester]) }}" class="btn btn-primary">Detail</a> --}}

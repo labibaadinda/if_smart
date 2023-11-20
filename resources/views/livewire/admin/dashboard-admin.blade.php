@@ -2,8 +2,32 @@
     'title' => 'Dashboard Livewire',
     'pageTitle' => 'Dashboard Livewire'
 ])
-@section('content')
+{{-- @section('content') --}}
 <!-- Content Row -->
+@push('css')
+<link href="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.css"
+    rel="stylesheet">
+@endpush
+
+@section('content')
+
+@if(session()->get('message'))
+
+@php
+$status = session()->get('message')['status'];
+$message = session()->get('message')['message'];
+@endphp
+
+@push('js')
+<script>
+    $(document).ready(function () {
+      console.log()
+      showToastr((`{{ $status }}` === 'true'), `{{ $message }}`)
+    })
+</script>
+@endpush
+@endif
+
 <div class="row">
 
     <!-- Earnings (Monthly) Card Example -->
