@@ -95,6 +95,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::post('/irs',[UserController::class,'storeIrs'])->name('irs.store');
 	Route::post('/khs',[UserController::class,'storeKhs'])->name('khs.store');
 	Route::get('/khs',[UserController::class,'khs'])->name('khs');
+	Route::put('/khs/updateFile/{id}',[UserController::class,'updateFile'])->name('khs.updateFile');
 	Route::post('/pkl',[UserController::class,'storePkl'])->name('pkl.store');
 	Route::get('/pkl',[UserController::class,'pkl'])->name('pkl');
 	Route::post('/skripsi',[UserController::class,'storeSkripsi'])->name('skripsi.store');
@@ -102,6 +103,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::put('/profile/update/{id}',[ProfileController::class,'update'])->name('profile.update');
 	Route::put('/profile/initialUpdate/{id}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
 	Route::put('/profile/updateFoto/{id}',[ProfileController::class,'updateFoto'])->name('profile.updateFoto');
+	Route::get('/profile/get-kota/{provinsi_id}', [ProfileController::class,'getKotaByProvinsi']);
 });
 
 // Dosen

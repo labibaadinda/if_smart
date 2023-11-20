@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePklsTable extends Migration
+class CreateKotasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreatePklsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pkls', function (Blueprint $table) {
+        Schema::create('kotas', function (Blueprint $table) {
             $table->id();
-            $table->string('nim')->nullable();
-            $table->string('semester')->nullable();
-            $table->string('nilai')->nullable();        
-            $table->string('konfirmasi')->nullable()->default('0');
-            $table->string('file')->nullable();
+            $table->string('provinsi_id')->nullable();
+            $table->string('nama')->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreatePklsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pkls');
+        Schema::dropIfExists('kotas');
     }
 }

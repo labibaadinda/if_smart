@@ -180,22 +180,22 @@
     <li class="nav-item">
         <a class="nav-link" href="{{ route('irs') }}">
             <i class="fa-solid fa-pen-to-square"></i>
-            <span>Entry IRS</span></a>
+            <span>IRS</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('khs') }}">
             <i class="fa-solid fa-chart-bar"></i>
-            <span>Entry KHS</span></a>
+            <span>KHS</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('pkl') }}">
             <i class="fa-solid fa-book-open"></i>
-            <span>Entry PKL</span></a>
+            <span>PKL</span></a>
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('skripsi') }}">
             <i class="fa-solid fa-graduation-cap"></i>
-            <span>Entry Skripsi</span></a>
+            <span>Skripsi</span></a>
     </li>
     @endif
 

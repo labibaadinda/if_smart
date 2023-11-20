@@ -4,7 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class ProvinsiFactory extends Factory
+class KotaFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -14,7 +14,8 @@ class ProvinsiFactory extends Factory
     public function definition()
     {
         return [
-            'nama'=>$this->faker->unique()->state(),   
+            'provinsi_id'=>mt_rand(1,10),
+            'nama'=>$this->faker->unique()->city(),   
         ];
     }
 }
