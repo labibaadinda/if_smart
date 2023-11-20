@@ -108,7 +108,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Status Akademik</h5>
                                 <p class="card-text">
-                                    <span class="badge badge-success">Aktif</span>
+                                    <span class="badge badge-success">{{ $mahasiswa->status }}</span>
                                 </p>
                             </div>
                         </div>

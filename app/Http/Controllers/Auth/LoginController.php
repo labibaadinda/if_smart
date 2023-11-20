@@ -30,6 +30,10 @@ class LoginController extends Controller
 					return redirect()->intended('dosen');
 
 					break;
+				case "departemen":
+					return redirect()->intended('departemen');
+
+					break;
 				default:
 					redirect()->to('/');
 			}

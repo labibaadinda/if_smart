@@ -1,178 +1,149 @@
-@extends('layout.backend.app',[
-'title' => 'Manage User',
-'pageTitle' =>'Manage User',
+@extends('layout.backend.app', [
+'title' => 'Welcome',
+'pageTitle' => 'Dashboard ' . ucfirst(Auth::user()->role),
 ])
-
-@push('css')
-<link href="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.css"
-    rel="stylesheet">
-@endpush
-
 @section('content')
+<hr>
+@if(session()->has('success'))
+<div class="notify">
 
-@if(session()->get('message'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
 
-@php
-$status = session()->get('message')['status'];
-$message = session()->get('message')['message'];
-@endphp
-
-@push('js')
-<script>
-    $(document).ready(function () {
-      console.log()
-      showToastr((`{{ $status }}` === 'true'), `{{ $message }}`)
-    })
-</script>
-@endpush
-@endif
-
-<div class="card">
-    <div class="card-header">
-
-        <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
-
-    </div>
-    <div class="card-body">
-        <div id='table' class="table-responsive">
-            <table class="table table-bordered data-table">
-                <thead>
-                    <tr>
-                        {{-- <th width="5%"> Test: {{ $test }}</th> --}}
-                        {{-- <th width="5%"> Test: {{ $datas }}</th> --}}
-                    </tr>
-                    <tr>
-                        <th>No</th>
-                        <th>Name</th>
-                        <th>NIM</th>
-                        <th>Angkatan</th>
-                        <th>Status</th>
-                        <th>Dosen Wali</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($datas as $data)
-                    <tr>
-                        <th>{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</th>
-                        <th>{{ $data->nama }}</th>
-                        <th>{{ $data->nim }}</th>
-                        <th>{{ $data->angkatan }}</th>
-                        <th>{{ 'status' }}</th>
-                        <th>{{ $dosens->where('id',$data->dosen_id)->first()->nama }}</th>
-                        {{-- <th>Email</th> --}}
-                        {{-- <th>Role</th> --}}
-                        <th>
-
-                            <div class="row">
-                                <a href="{{ route('user.edit', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>
-                                {{-- <a href="javascript:void(0)" id="{{ $data->id }}" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a> --}}
-                            </div>
-                        </th>
-                    </tr>
-                    @empty
-
-                    @endforelse
-                </tbody>
-            </table>
-            {{-- <div class="">{{ $datas->links() }}</div> --}}
-        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 </div>
 
+<script>
+    setTimeout(function(){
+      $('.alert').alert('close');
+    }, 2000);
+</script>
+@endif
 
-<!-- Destroy Modal -->
-<div class="modal fade" id="destroy-modal" tabindex="-1" role="dialog" aria-labelledby="destroy-modalLabel"
-    aria-hidden="true">
+@if(session()->has('error'))
+<div class="notify">
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-check"></i> {{ session('error') }}
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    setTimeout(function(){
+      $('.alert').alert('close');
+    }, 2000);
+</script>
+@endif
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="card m-0">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            @if(empty(Auth::user()->foto))
+                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="107" height="150">
+                            @else
+                                <img src= "{{ asset('storage/foto/' . Auth::user()->foto) }}" class="card-img" alt="" width="207" height="250">
+                            @endif
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">Departemen</h5>
+                                <h5 class="card-title text-dark">S1 Informatika</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-dark">Mahasiswa Aktif</h5>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card mb-3">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-dark">Mahasiswa Lulus PKL</h5>
+                                <p class="card-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-dark">Mahasiswa Lulus Skripsi</h5>
+                                <p class="card-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card ">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-dark">Jumlah Dosen</h5>
+                                <p class="card-text">
+                                    {{-- <span class="badge badge-success">Aktif</span> --}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- resources/views/modal/address.blade.php -->
+<div class="modal fade" id="addressModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="destroy-modalLabel">Yakin Hapus ?</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title">Data Tidak lengkap<i class="fa-solid fa-triangle-exclamation"></i></h5>
+            </div>
+            <div class="modal-body">
+                <p>Silakan Lengkapi Data Anda Terlebih Dahulu!!</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-danger btn-destroy">Hapus</button>
+                <a href="{{ route('profile') }}" class="btn btn-primary">Lihat Profil</a>
             </div>
         </div>
     </div>
 </div>
-<!-- Destroy Modal -->
+</div>
+{{-- <script>
+    // Periksa apakah alamat, kota, provinsi, dan handphone kosong
+  var mahasiswaAddress = '{{ $mahasiswa->alamat }}'; // Gantilah ini dengan cara Anda mendapatkan alamat mahasiswa
+  var mahasiswaKota = '{{ $mahasiswa->kota_id }}'; // Gantilah ini dengan cara Anda mendapatkan kota mahasiswa
+  var mahasiswaProvinsi = '{{ $mahasiswa->provinsi_id }}'; // Gantilah ini dengan cara Anda mendapatkan provinsi mahasiswa
+  var mahasiswaHandphone = '{{ $mahasiswa->handphone }}'; // Gantilah ini dengan cara Anda mendapatkan handphone mahasiswa
+  var mahasiswaFoto = '{{ $mahasiswa->foto }}'; // Gantilah ini dengan cara Anda mendapatkan handphone mahasiswa
 
-@stop
-
-@push('js')
-<script src="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/jquery.dataTables.min.js"></script>
-<script src="{{ asset('template/backend/sb-admin-2') }}/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('template/backend/sb-admin-2') }}/js/demo/datatables-demo.js"></script>
-
-<script type="text/javascript">
-//     $(function() {
-
-//     var table = $('.data-table').DataTable({
-//       processing: true,
-//       serverSide: true,
-//       ajax: "{{ route('user.index') }}",
-//       columns: [{
-//           data: 'DT_RowIndex',
-//           name: 'id'
-//         },
-//         {
-//           data: 'nim_nip',
-//           name: 'nim'
-//         },
-//         {
-//           data: 'email',
-//           name: 'email'
-//         },
-//         {
-//           data: 'role',
-//           name: 'role'
-//         },
-//         {
-//           data: 'action',
-//           name: 'action',
-//           orderable: false,
-//           searchable: true
-//         },
-//       ]
-//     });
-//   });
-
-
-  $('body').on("click", ".btn-delete", function() {
-    var id = $(this).attr("id")
-    $(".btn-destroy").attr("id", id)
-    $("#destroy-modal").modal("show")
-  });
-
-  $(".btn-destroy").on("click", function() {
-    var id = $(this).attr("id")
-
-    $.ajax({
-      url: "/admin/user/" + id,
-      method: "DELETE",
-      success: function() {
-        $("#destroy-modal").modal("hide")
-        $('.data-table').DataTable().ajax.reload();
-        flash('success', 'Data berhasil dihapus')
-        $("#table").html("…").load(url);
-      },
-      error : function(xhr, status, error) {
-
+  $(document).ready(function() {
+      if (mahasiswaAddress === '' || mahasiswaKota === '' || mahasiswaProvinsi === '' || mahasiswaHandphone === '' || mahasiswaFoto === '' ) {
+        $('#addressModal').modal({
+            backdrop: 'static', // Modal tidak akan ditutup saat mengklik latar belakang
+            keyboard: false,   // Modal tidak akan ditutup dengan tombol keyboard
+        });
+          // Jika salah satu dari data kosong, tampilkan modal secara otomatis
+          $('#addressModal').modal('show');
+          
       }
-    });
-  })
 
-  function flash(type, message) {
-    $(".notify").html(`<div class="alert alert-` + type + ` alert-dismissible fade show" role="alert">
-                              ` + message + `
-                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
-                            </div>`)
-  }
-</script>
-@endpush
+  });
+</script> --}}
+@endsection

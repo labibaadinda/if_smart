@@ -23,6 +23,13 @@
         </div>
         <div class="sidebar-brand-text mx-3">IF SMART</div>
     </a>
+    @elseif(Auth::user()->role == 'departemen')
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('departemen') }}">
+        <div class="sidebar-brand-icon">
+            <i class="fab fa-laravel"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">IF SMART</div>
+    </a>
     @endif
 
 
@@ -45,6 +52,12 @@
     @elseif(Auth::user()->role == 'dosen')
     <li class="nav-item">
         <a class="nav-link" href="{{ route('dosen') }}">
+            <i class="fa-solid fa-gauge"></i>
+            <span>Dashboard</span></a>
+    </li>
+    @elseif(Auth::user()->role == 'departemen')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('departemen') }}">
             <i class="fa-solid fa-gauge"></i>
             <span>Dashboard</span></a>
     </li>
@@ -203,6 +216,13 @@
     <hr class="sidebar-divider d-none d-md-block">
     <li class="nav-item">
         <a class="nav-link" href="{{ route('profile') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Profile</span></a>
+    </li>
+    @elseif(Auth::user()->role == 'departemen')
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('profiledept') }}">
             <i class="fas fa-fw fa-user"></i>
             <span>Profile</span></a>
     </li>
