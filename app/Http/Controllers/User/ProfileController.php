@@ -8,6 +8,7 @@ use Exception;
 use App\Models\User;
 
 use App\Models\Provinsi;
+use App\Models\Kota;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -88,9 +89,15 @@ class ProfileController extends Controller
     {   
         $mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
         $provinsis = Provinsi::All();
-    	return view('user.profile', compact('mahasiswas','provinsis'));
+        $kotas = Kota::All();
+    	return view('user.profile', compact('mahasiswas','provinsis','kotas'));
     }
+    public function getKotaByProvinsi($provinsi_id)
+    {
+        $kotas = Kota::where('provinsi_id', $provinsi_id)->get();
 
+        return response()->json($kotas);
+    }
     public function update(Request $request, $id) {
         $user = User::findOrFail($id);
 

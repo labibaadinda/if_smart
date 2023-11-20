@@ -14,7 +14,8 @@ class KotaFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'provinsi_id'=>mt_rand(1,10),
+            'nama'=>$this->faker->unique()->city(),   
         ];
     }
 }

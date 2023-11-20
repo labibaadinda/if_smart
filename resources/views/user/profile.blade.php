@@ -149,13 +149,14 @@
                         <input required id="handphone" name="handphone" class="form-control @error('handphone') is-invalid @enderror" value="{{ $mahasiswa->handphone }}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="kota">Kota/Kabupaten</label>
-                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota }}" disabled>
-                    </div>
-                    <div class="form-group">
                         <label for="kota">Provinsi</label>
                         <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->provinsi->nama }}" disabled>
                     </div>
+                    <div class="form-group">
+                        <label for="kota">Kota/Kabupaten</label>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota }}" disabled>
+                    </div>
+                    
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#initialModal">
                         Update Data Diri
                       </button>
@@ -242,15 +243,21 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <label for="kota">Kota/Kabupaten</label>
-                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota }}">
-
-                        @error('alamat')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                        @enderror
+                        <label for="provinsi">Provinsi</label>
+                        <select name="provinsi_id" id="provinsi_id" class="form-control">
+                            <option value="">- Pilih Provinsi -</option>
+                            @foreach($provinsis->unique('nama') as $provinsi)    
+                            <option value="{{ $provinsi->id}}">{{ $provinsi->nama }}</option>
+                            @endforeach
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="kota">Kota/Kabupaten</label>
+                        <select name="kota_id" id="kota_id" class="form-control">
+                            <option value="">- Pilih Kota/Kabupaten -</option>
+                        </select>
+                    </div>
+                    
                     {{-- <div class="form-group">
                         <label for="provinsi">Provinsi</label>
                         <input required id="provinsi" name="provinsi" class="form-control @error('provinsi') is-invalid @enderror" value="{{ old('provinsi') }}">
@@ -274,15 +281,7 @@
                         <label for="p">Password</label>
                         <input type="password" required="" id="p" name="password" class="form-control">
                     </div> --}}
-                    <div class="form-group">
-                        <label for="provinsi">Provinsi</label>
-                        <select name="provinsi_id" id="provinsi_id" class="form-control">
-                            <option disabled="">- Pilih Provinsi -</option>
-                            @foreach($provinsis->unique('nama') as $provinsi)
-                            <option value="{{ $provinsi->id}}">{{ $provinsi->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                    
 
 
                     <button type="submit" class="btn btn-md btn-primary">Simpan</button>
@@ -300,6 +299,29 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#provinsi_id').on('change', function () {
+            var provinsiId = $(this).val();
+            
+            // Make an Ajax request to fetch Kota/Kabupaten based on the selected Provinsi
+            $.ajax({
+                url: 'profile/get-kota/' + provinsiId,
+                type: 'GET',
+                success: function (data) {
+                    // Clear existing options
+                    $('#kota_id').empty();
+
+                    // Add new options based on the returned data
+                    $.each(data, function (key, value) {
+                        $('#kota_id').append('<option value="' + value.id + '">' + value.nama + '</option>');
+                    });
+                }
+            });
+        });
+    });
+</script>
 {{-- <script>
     $(document).ready(function() {
           $('#initialModal').modal('show');

@@ -14,7 +14,7 @@ class ProvinsiFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'nama'=>$this->faker->unique()->state(),   
         ];
     }
 }

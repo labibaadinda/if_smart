@@ -103,6 +103,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::put('/profile/update/{id}',[ProfileController::class,'update'])->name('profile.update');
 	Route::put('/profile/initialUpdate/{id}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
 	Route::put('/profile/updateFoto/{id}',[ProfileController::class,'updateFoto'])->name('profile.updateFoto');
+	Route::get('/profile/get-kota/{provinsi_id}', [ProfileController::class,'getKotaByProvinsi']);
 });
 
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){

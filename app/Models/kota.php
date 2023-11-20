@@ -13,3 +13,4 @@ class kota extends Model
     public function provinsi(){
         return $this->belongsTo(Provinsi::class);
 }
+}
