@@ -152,6 +152,8 @@ public function updateFile(Request $request, $id)
     // Validasi input jika diperlukan
     $request->validate([
         'file' => 'required|mimes:pdf|',
+        'semester' => 'required',
+        'ips' => 'required',
     ]);
 
     if ($request->hasFile('file')) {
@@ -162,7 +164,10 @@ public function updateFile(Request $request, $id)
         $pdfFile->storeAs('public/khs', $pdfFileName);
 
         // Update data Mahasiswa dengan 'foto' baru
-        $khs->update(['file' => $pdfFileName]);
+        $khs->update(['file' => $pdfFileName,
+                        'semester' => $request->semester,
+                        'ips' => $request->ips,
+                    ]);
 
         return redirect()->route('khs')->with('success', 'Berkas berhasil diperbaharui.');
     } else {

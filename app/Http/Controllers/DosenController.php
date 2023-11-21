@@ -31,6 +31,12 @@ class DosenController extends Controller
 		$mahasiswas = Mahasiswa::All();
 		return view('dosen.index', compact('mahasiswas','dosen'));
     }
+    public function ListMhs()
+    {
+        $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
+		$mahasiswas = Mahasiswa::All();
+		return view('dosen.listmahasiswa', compact('mahasiswas','dosen'));
+    }
 
     // Search Mahasiswa
     public function search(Request $request)

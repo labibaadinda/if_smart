@@ -109,6 +109,7 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 // Dosen
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 	Route::get('/',[DosenController::class,'index'])->name('dosen');
+	Route::get('/listmahasiswa',[DosenController::class,'ListMhs'])->name('listmahasiswa');
 
 	Route::get('/search',[DosenController::class,'search'])->name('dosen.search');
     Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');

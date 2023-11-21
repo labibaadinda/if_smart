@@ -97,8 +97,6 @@
                                         <button type="button" class="btn btn-warning btn-icon my-0 px-2 py-2" data-bs-toggle="modal" data-bs-target="#ModalUpdate{{ $khs->id }}">
                                             <i class="fas fa-pencil-alt"></i>
                                         </button>
-                                        
-                                        
                                     </td>
                                     @else
                                     <td class="text-sm align-middle text-center">
@@ -106,7 +104,62 @@
                                     </td>
                                     @endif
                                 </tr>
-
+                                <div class="modal fade" id="ModalUpdate{{ $khs->id }}" tabindex="-1" role="dialog" aria-labelledby="ModalUpdate{{ $khs->id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="iniitialModal">Edit Berkas KHS</h5>
+                                                {{-- <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button> --}}
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="createForm" action="{{ route('khs.updateFile',$khs->id) }}" method="POST" enctype="multipart/form-data" >
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="semester">Semester</label>
+                                                        <input  type="number" required id="semester" name="semester" class="form-control @error('semester') is-invalid @enderror" value="{{ $khs->semester }}">
+    
+                                                        @error('semester')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="jumlah_ips">IP Semester</label>
+                                                        <input required type="text" id="ips" name="ips" class="form-control @error('ips') is-invalid @enderror" value="{{ $khs->ips}}">
+    
+                                                        @error('ips')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="file">Masukan Berkas Baru</label>
+                                                        <input required type="file" name="file" id="file" class="form-control">
+                                        
+                                                        @error('pdf_file')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                    
+                                
+                                
+                                                    <button type="submit" class="btn btn-md btn-primary">Simpan</button>
+                                                </form>
+                                            </div>
+                                            
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 {{-- MODAL TAMBAH DATA --}}
                                 <div class="modal fade" id="initialModal" tabindex="-1" role="dialog" aria-labelledby="initialModal" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
@@ -163,40 +216,7 @@
 
 
                                 {{-- MODAL UPDATE BERKAS KHS --}}
-                                <div class="modal fade" id="ModalUpdate{{ $khs->id }}" tabindex="-1" role="dialog" aria-labelledby="ModalUpdate{{ $khs->id }}" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="iniitialModal">Edit Berkas KHS</h5>
-                                                {{-- <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">×</span>
-                                                </button> --}}
-                                            </div>
-                                            <div class="modal-body">
-                                                <form id="createForm" action="{{ route('khs.updateFile',$khs->id) }}" method="POST" enctype="multipart/form-data" >
-                                                    @method('PUT')
-                                                    @csrf
-                                                    <div class="form-group">
-                                                        <label for="file">Masukan Berkas Baru</label>
-                                                        <input required type="file" name="file" id="file" class="form-control">
-                                        
-                                                        @error('pdf_file')
-                                                        <div class="invalid-feedback">
-                                                            {{ $message }}
-                                                        </div>
-                                                        @enderror
-                                                    </div>
-                                                    
-                                
-                                
-                                                    <button type="submit" class="btn btn-md btn-primary">Simpan</button>
-                                                </form>
-                                            </div>
-                                            
-                                            <div class="modal-footer">
-                                            </div>
-                                        </div>
-                                    </div>
+                               
                                 </div>
                         </tbody>
                     </table>
