@@ -30,7 +30,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             JUMLAH MAHASISWA</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Jumlah </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mahasiswas->get()->count() }} </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -48,11 +48,64 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             MAHASISWA AKTIF</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">Jumlah</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{
+                            $mahasiswas->get()->where('status','aktif')->count() }}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg">
+        <div class="card">
+            <div class="card-body">
+                <div class="card m-0">
+                    <div class="row no-gutters">
+                        <table class="table text-center table-bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="{{ $countby->count()*2 }}">
+                                        <h5 ><strong>Angkatan = {{ $thnmax }}</strong></h5>
+                                    </th>
+                                </tr>
+                                <tr >
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="2">{{ $item }}</th>
+                                        {{-- <th>SKS</th> --}}
+                                    @endforeach
+                                </tr>
+                                <tr >
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th >Sudah</th>
+                                        <th>Belum</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach(range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                    <td>
+                                        {{ $pkls->where('stat_pkl','selesai')->count() }}
+                                        {{-- @if ($khss->where('semester',$irs->semester)->first())
+                                        {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
+                                        @else
+                                        Belum Mengupload KHS
+                                        @endif --}}
+                                    </td>
+                                    <td colspan="1"> {{ $pkls->where('stat_pkl','progres')->count() }}</td>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5>max: {{ $thnmax->angkatan }}</h5>
+                    <h5>min: {{ $thnmin }}</h5>
+                    <h5>countBy: {{ $countby }}</h5>
+                    <h5>pkls test: {{ $pkls->where('stat_pkl','selesai')->count() }}</h5>
                 </div>
             </div>
         </div>

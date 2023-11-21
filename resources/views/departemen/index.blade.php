@@ -73,7 +73,7 @@
                         <div class="card">
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Mahasiswa Aktif</h5>
-                                
+
                             </div>
                         </div>
                     </div>
@@ -103,6 +103,63 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg">
+        <div class="card">
+            <div class="card-body">
+                <div class="card m-0">
+                    <div class="row no-gutters " >
+                        <div class="text-center mx-auto">
+                            <h5 class="text-center ">Rekap Progress PKL Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</h5>
+                        </div>
+                        <table class="table text-center table-bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="100%">
+                                        <h5 ><strong>Angkatan = {{ $pkls }}</strong></h5>
+                                    </th>
+                                </tr>
+                                <tr >
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="2">{{ $item }}</th>
+                                        {{-- <th>SKS</th> --}}
+                                    @endforeach
+                                </tr>
+                                <tr >
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th >Sudah</th>
+                                        <th>Belum</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach(range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                    <td>
+                                        {{ $pkls->where('stat_pkl','selesai')->count() }} belum
+                                        {{-- @if ($khss->where('semester',$irs->semester)->first())
+                                        {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
+                                        @else
+                                        Belum Mengupload KHS
+                                        @endif --}}
+                                    </td>
+                                    <td colspan="1"> {{ $pkls->count() }}</td>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h5>max: {{ $thnmax->angkatan }}</h5>
+                    <h5>min: {{ $thnmin }}</h5>
+                    <h5>countBy: {{ $countby }}</h5>
+                    <h5 class="text-danger">pkl joint: {{ $pkl->get() }}</h5>
+                    <h5>pkls test: {{ $pkls }}</h5>
+                    <h5>Test Text Commit</h5>
                 </div>
             </div>
         </div>
@@ -141,7 +198,7 @@
         });
           // Jika salah satu dari data kosong, tampilkan modal secara otomatis
           $('#addressModal').modal('show');
-          
+
       }
 
   });

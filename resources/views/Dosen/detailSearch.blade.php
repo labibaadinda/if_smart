@@ -40,7 +40,7 @@
                                     @if ($khss->where('semester',$irs->semester)->first())
                                         {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
                                     @else
-                                        Belum Mengupload
+                                        Belum Mengupload KHS
                                     @endif
                                 </td>
                                 <!-- Tambahkan kolom lain sesuai kebutuhan -->

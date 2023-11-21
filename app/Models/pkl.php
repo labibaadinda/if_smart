@@ -10,7 +10,12 @@ class pkl extends Model
     use HasFactory;
     protected $guarded = ['id'];
 
-    public function mahasiswa(){
-        return $this->belongsTo(Mahasiswa::class);
+    // public function mahasiswa(){
+    //     return $this->belongsTo(Mahasiswa::class);
+    // }
+
+    public function mahasiswa()
+    {
+        return $this->belongsTo(Mahasiswa::class, 'nim', 'nim');
     }
 }

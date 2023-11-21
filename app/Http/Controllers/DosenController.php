@@ -28,8 +28,15 @@ class DosenController extends Controller
     public function index()
     {
         $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
-		$mahasiswas = Mahasiswa::All();
-		return view('dosen.index', compact('mahasiswas','dosen'));
+		$mahasiswas = Mahasiswa::where('dosen_id',$dosen->id);
+        $countby = Mahasiswa::get()->countBy('angkatan');
+        $thnmax = Mahasiswa::get('angkatan')->max();
+        $thnmin = Mahasiswa::get('angkatan')->min();
+        $pkls = Pkl::all();
+        // $tahuns =
+        $angkatan = '';
+        // $angkatan = $countby;
+		return view('dosen.index', compact('mahasiswas','dosen','countby','thnmax','thnmin','angkatan','pkls'));
     }
     public function ListMhs()
     {
