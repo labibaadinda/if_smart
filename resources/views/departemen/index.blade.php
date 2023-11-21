@@ -160,6 +160,7 @@
                     <h5 class="text-danger">pkl joint: {{ $pkl->get() }}</h5>
                     <h5>pkls test: {{ $pkls }}</h5>
                     <h5>Test Text Commit</h5>
+                    <h5>Test Text Commit</h5>
                 </div>
             </div>
         </div>
