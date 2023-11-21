@@ -145,6 +145,11 @@
             </div>
         </div>
     </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('listmahasiswa') }}">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>List Mahasiswa</span></a>
+    </li>
     @endif
 
     <!-- Heading -->
