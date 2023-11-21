@@ -9,12 +9,16 @@ class mahasiswa extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    
+
     public function dosen(){
         return $this->belongsTo(Dosen::class);
     }
     public function provinsi(){
         return $this->belongsTo(Provinsi::class);
+    }
+    public function pkl()
+    {
+        return $this->hasMany(Pkl::class, 'nim', 'nim');
     }
     public function irs(){
         return $this->hasMany(Irs::class);
@@ -22,9 +26,9 @@ class mahasiswa extends Model
     public function khs(){
         return $this->hasMany(Khs::class);
     }
-    public function pkl(){
-        return $this->hasMany(Pkl::class);
-    }
+    // public function pkl(){
+    //     return $this->hasMany(Pkl::class);
+    // }
     public function skripsi(){
         return $this->hasMany(Skripsi::class);
     }
