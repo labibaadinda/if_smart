@@ -141,14 +141,23 @@
                                 <tr>
                                     @foreach(range($thnmin->angkatan, $thnmax->angkatan) as $item)
                                     <td>
-                                        {{ $pkl->where('angkatan','=',$item)->count() }}
+                                        <a href="{{ route('departemen.listMahasiswaAngkatan', $item) }}">
+                                            {{-- {{ $mahasiswa->nama }} ({{ $mahasiswa->nim }}) --}}
+                                            {{ $pkl->count() }}
+                                        </a>
                                         {{-- @if ($khss->where('semester',$irs->semester)->first())
                                         {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
                                         @else
                                         Belum Mengupload KHS
                                         @endif --}}
                                     </td>
-                                    <td colspan="1">{{ $pkl->count() }}</td>
+                                    <td colspan="1">
+                                        <a href="{{ route('departemen.listMahasiswaAngkatan', $item) }}">
+                                            {{-- {{ $mahasiswa->nama }} ({{ $mahasiswa->nim }}) --}}
+                                            {{-- {{ $pkl->where('angkatan','=',$item)->count() }} --}}
+                                            {{ $pkl->count() }}
+                                        </a>
+                                    </td>
                                     @endforeach
                                 </tr>
                             </tbody>

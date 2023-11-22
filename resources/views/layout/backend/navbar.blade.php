@@ -6,17 +6,31 @@
     </button>
 
     <!-- Topbar Search -->
-    <form action="{{ route('dosen.search') }}" method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input type="text" name="keyword" class="form-control bg-light border-0 small" placeholder="Search for..."
-                aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="submit"> <!-- Perubahan disini -->
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
+    @if(Auth::user()->role == 'departemen')
+        <form action="{{ route('departemen.search') }}" method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" name="keyword" class="form-control bg-light border-0 small" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit"> <!-- Perubahan disini -->
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
             </div>
-        </div>
-    </form>
+        </form>
+    @else
+        <form action="{{ route('dosen.search') }}" method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <div class="input-group">
+                <input type="text" name="keyword" class="form-control bg-light border-0 small" placeholder="Search for..."
+                    aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="submit"> <!-- Perubahan disini -->
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+    @endif
 
     {{-- <form action="{{ route('dosen.search') }}" method="GET" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
@@ -209,7 +223,7 @@
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 @if(Auth::user()->role=='departemen')
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Departemen Informatika</span>
-                
+
                 <img class="img-profile rounded-circle" src="{{ asset('storage/foto/' . $data->foto) }}">
                 @else
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $data->nama }}</span>
@@ -217,7 +231,7 @@
                     src="{{ asset('storage/foto/' . $data->foto) }}">
                 @endif
 
-                
+
             </a>
             <!-- Dropdown - User Information -->
             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

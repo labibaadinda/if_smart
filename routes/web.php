@@ -153,6 +153,9 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
 	Route::put('/profile/update/{id}',[DepartemenController::class,'update'])->name('profiledept.update');
 	Route::get('/profile',[DepartemenController::class,'profile'])->name('profiledept');
     Route::get('/mahasiswa',[DepartemenController::class,'listMahasiswa'])->name('departemen.mahasisaw');
+    Route::get('/listMahasiswaAngkatan/{nim}',[DepartemenController::class,'listMahasiswaAngkatan'])->name('departemen.listMahasiswaAngkatan');
+    Route::get('/search',[DepartemenController::class,'search'])->name('departemen.search');
+    // Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');
 
 
 
