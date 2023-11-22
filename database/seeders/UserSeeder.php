@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
                 'email'        => 'dosen@gmail.com',
                 'password'     => Hash::make('password'),
                 'role'         => 'dosen',
-                'nim_nip'      => '00123456789',
+                'nim_nip'      => '00123456788',
                 // 'alamat'       => 'Desa Ngrapah',
                 // 'kota'         => 'Semarang',
                 // 'provinsi'  => 'Jawa Tengah',
