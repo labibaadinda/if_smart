@@ -72,7 +72,7 @@
                                 <img src= "{{ asset('storage/foto/' . $dosen->foto) }}" class="card-img" alt="" width="207" height="250">
                             @endif
                         </div>
-                        
+
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h5 class="card-title text-dark">{{ $dosen->nama }}</h5>
@@ -97,7 +97,7 @@
                         <table class="table text-center table-bordered">
                             <thead>
                                 <tr>
-                                    <th colspan="{{ $countby->count()*2 }}">
+                                    <th colspan="100%">
                                         <h5 ><strong>Angkatan</strong></h5>
                                     </th>
                                 </tr>
