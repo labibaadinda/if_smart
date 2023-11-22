@@ -62,13 +62,13 @@ $message = session()->get('message')['message'];
                         <th>{{ $data->nilai }}</th>
                         <th>{{ $data->lama_studi }}</th>
                         <th>{{ $data->tanggal_sidang }}</th>
-                        <th>
+                        {{-- <th>
                             @if ($data->stat_skripsi === 'selesai')
                                 {{ $data->tanggal_sidang }}
                             @else
                                 -
                             @endif
-                        </th>
+                        </th> --}}
                         <th>
                             <div class="row">
                                 <a href="{{ route('skripsi.showVerifikasi', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Verifikasi</a>

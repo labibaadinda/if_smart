@@ -210,13 +210,16 @@
                 @if(Auth::user()->role=='departemen')
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Departemen Informatika</span>
                 
-                <img class="img-profile rounded-circle" src="{{ asset('storage/foto/' . $data->foto) }}">
                 @else
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $data->nama }}</span>
-                <img class="img-profile rounded-circle"
-                    src="{{ asset('storage/foto/' . $data->foto) }}">
+
                 @endif
 
+                @if(empty($data->foto))
+                    <img class="img-profile rounded-circle" src="{{ asset('images/backend/ava.jpg') }}">
+                @else
+                    <img class="img-profile rounded-circle" src="{{ asset('storage/foto/' . $data->foto) }}">
+                @endif
                 
             </a>
             <!-- Dropdown - User Information -->

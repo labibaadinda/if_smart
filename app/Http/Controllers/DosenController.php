@@ -169,10 +169,10 @@ class DosenController extends Controller
     public function searchVerifSkripsi(Request $request, Skripsi $skripsi)
     {
         if ($request->action === 'verifikasi') {
-            $skripsi->update(['konfirmasi' => '1']);
+            $skripsi->update(['status' => '1']);
             $message = 'Skripsi berhasil diverifikasi.';
         } elseif ($request->action === 'tolak') {
-            $skripsi->update(['konfirmasi' => 'tolak']);
+            $skripsi->update(['status' => 'tolak']);
             $message = 'Skripsi berhasil ditolak.';
         }
 
@@ -315,7 +315,7 @@ class DosenController extends Controller
 
     // Skripsi function
     public function viewSkripsi(){
-        $datas = skripsi::where('konfirmasi','0')->orderBy('id','ASC')->paginate(20);
+        $datas = skripsi::where('status','0')->orderBy('id','ASC')->paginate(20);
 		$mahasiswas = Mahasiswa::All();
 		return view('dosen.skripsi.index', compact('datas','mahasiswas'));
     }

@@ -69,7 +69,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="{{ $countby->count()*2 }}">
-                                        <h5 ><strong>Angkatan = {{ $thnmax }}</strong></h5>
+                                        <h5 ><strong>Angkatan = {{ $thnmax->angkatan }}</strong></h5>
                                     </th>
                                 </tr>
                                 <tr >
@@ -89,7 +89,7 @@
                                 <tr>
                                     @foreach(range($thnmin->angkatan, $thnmax->angkatan) as $item)
                                     <td>
-                                        {{ $pkls->where('stat_pkl','selesai')->count() }}
+                                        {{ $pkls->where('konfirmasi','1')->count() }}
                                         {{-- @if ($khss->where('semester',$irs->semester)->first())
                                         {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
                                         @else
@@ -102,10 +102,10 @@
                             </tbody>
                         </table>
                     </div>
-                    <h5>max: {{ $thnmax->angkatan }}</h5>
-                    <h5>min: {{ $thnmin }}</h5>
+                    {{-- <h5>max: {{ $thnmax->angkatan }}</h5>
+                    <h5>min: {{ $thnmin->angkatan }}</h5>
                     <h5>countBy: {{ $countby }}</h5>
-                    <h5>pkls test: {{ $pkls->where('stat_pkl','selesai')->count() }}</h5>
+                    <h5>pkls test: {{ $pkls->where('konfirmasi','1')->count() }}</h5> --}}
                 </div>
             </div>
         </div>
