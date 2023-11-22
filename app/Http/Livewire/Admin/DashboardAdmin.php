@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\mahasiswa;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class DashboardAdmin extends Component
 {
@@ -20,25 +21,25 @@ class DashboardAdmin extends Component
 
     public function updateInitialData(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
         // $user = User::findOrFail($id);
         $validatedData = $request->validate([
             'email' => 'required|email',
             'nama' => 'required',
-            'nip' => 'required',
+            'nim_nip' => 'required',
         ]);
 
         $user->update($validatedData);
 
 
-        $user = User::where('nim_nip', Auth::user()->nim_nip)->first();
-        $message = 'Data gagal diupdate!';
-        if ($user) {
-            $user->update(['email' => $validatedData['email']]);
-            $user->update(['nama' => $validatedData['nama']]);
-            $user->update(['nim_nip' => $validatedData['nip']]);
-            $message = 'Data berhasil diupdate!';
-        }
+        // $user = User::where('nim_nip', Auth::user()->nim_nip)->first();
+        // $message = 'Data gagal diupdate!';
+        // if ($user) {
+        //     $user->update(['email' => $validatedData['email']]);
+        //     $user->update(['nama' => $validatedData['nama']]);
+        //     $user->update(['nim_nip' => $validatedData['nip']]);
+        //     $message = 'Data berhasil diupdate!';
+        // }
 
         // Check the result and redirect with appropriate messages
         // if ($user) {
@@ -46,10 +47,7 @@ class DashboardAdmin extends Component
         // } else {
         //     return redirect()->route('admin')->with('error', 'Data gagal diupdate!');
         // }
-        return redirect()->route('admin')->with('message', [
-            'status' => 'true',
-            'message' => $message,
-        ]);
+        return redirect()->route('admin')->with('success', 'Data berhasil diperbaharui.');
     }
 
     public function edit(){

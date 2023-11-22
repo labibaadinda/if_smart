@@ -27,6 +27,43 @@ $message = session()->get('message')['message'];
 </script>
 @endpush
 @endif
+@if(session()->has('success'))
+<div class="notify">
+
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-check"></i> {{ session('success') }}
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    setTimeout(function(){
+      $('.alert').alert('close');
+    }, 2000);
+</script>
+@endif
+
+@if(session()->has('error'))
+<div class="notify">
+
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <i class="fa-solid fa-circle-check"></i> {{ session('error') }}
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
+<script>
+    setTimeout(function(){
+      $('.alert').alert('close');
+    }, 2000);
+</script>
+@endif
 
 <div class="row">
 
@@ -166,7 +203,7 @@ $message = session()->get('message')['message'];
 <div class="row">
 
     <!-- Pie Chart -->
-    <div class="col-xl-4 col-lg-5">
+    <div class="col-xl-6 col-lg-7">
         <div class="card">
             <div class="card-body">
                 <div class="card m-0">
@@ -430,16 +467,16 @@ $message = session()->get('message')['message'];
                 </button> --}}
             </div>
             <div class="modal-body">
-                <form id="createForm" action="{{ route('profile.updateInitialData',$user->id) }}" method="POST" >
+                <form id="createForm" action="{{ route('updateOperator', Auth::user()->id) }}" method="POST" >
                     @method('PUT')
                     @csrf
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" id="nama" name="nama" class="form-control" value="{{ $user->nama }}" >
+                        <input type="text" id="nama" name="nama" class="form-control" value="{{ Auth::user()->nama }}" >
                     </div>
                     <div class="form-group">
-                        <label for="nip">NIp</label>
-                        <input type="text" id="nip" name="nip" class="form-control" value="{{ $user->nim_nip }}" >
+                        <label for="nip">NIP</label>
+                        <input type="text" id="nim_nip" name="nim_nip" class="form-control" value="{{ Auth::user()->nim_nip }}" >
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>

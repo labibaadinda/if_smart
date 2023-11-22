@@ -24,6 +24,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run():void
     {
+        User::create([
+            'nama'      => 'Beni Sudarman',
+            'email'     => 'operator@gmail.com',
+            'password'  => Hash::make('password'),
+            'role'      => 'admin',
+            'nim_nip'       => '1',
+        ]);
     	$this->call(UserSeeder::class);
     	$this->call(IrsSeeder::class);
     	$this->call(KhsSeeder::class);
