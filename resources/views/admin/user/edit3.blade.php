@@ -31,9 +31,9 @@ $message = session()->get('message')['message'];
 
 <div class="card">
     <div class="card-body">
-        <p>
+        {{-- <p>
             User: {{ $user }}
-        </p>
+        </p> --}}
         <form action="{{ route('user.update', $mahasiswa->id) }}" method="POST">
             @csrf
             @method('PUT')

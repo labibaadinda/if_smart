@@ -146,7 +146,7 @@ class MahasiswaController extends Controller
             'dosen_id' => $request->dosen_wali,
             'status' => $request->status,
         ]);
-            return redirect()->to('/admin/user')->with('success', 'Mahasiswa berhasil ditambahkan');
+            return redirect()->to('/operator/user')->with('success', 'Mahasiswa berhasil ditambahkan');
 
 
         // if ($request->hasFile('pdf_file')) {

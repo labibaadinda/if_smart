@@ -60,7 +60,7 @@ Route::view('/','welcome');
 // 	// Route::view('/tables','admin.tables')->name('tables');
 // });
 
-Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin'],function(){
+Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'operator'],function(){
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
 	Route::put('/profile/update/{id}',[DashboardAdmin::class,'updateInitialData'])->name('profile.updateInitialData');
 
@@ -71,7 +71,7 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'admin']
 
     Route::get('/user/edit/{id}',[MahasiswaController::class,'edit'])->name('user.edit');
     // Route::post('/user/update/{id}',[MahasiswaController::class,'update'])->name('user.update');
-    Route::put('/admin/user/{id}',[MahasiswaController::class,'update'])->name('user.update');
+    Route::put('/operator/user/{id}',[MahasiswaController::class,'update'])->name('user.update');
     Route::get('/user/reset-password/{id}',[MahasiswaController::class,'resetPassword'])->name('user.reset-password');
     Route::get('/user/delete/{id}',[MahasiswaController::class,'delete'])->name('user.delete');
 
@@ -143,7 +143,7 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 
 	// Route::post('/irs',[DosenController::class,'storeIrs'])->name('verif.irs');
 
-	
+
 });
 
 // Departmen
