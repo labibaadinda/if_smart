@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\Irs;
 use App\Models\Khs;
 use App\Models\Pkl;
+use App\Models\User;
 use App\Models\Dosen;
 use App\Models\Skripsi;
 use App\Models\Mahasiswa;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Livewire\WithPagination;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoredosenRequest;
 use App\Http\Requests\UpdatedosenRequest;
 
@@ -37,6 +39,62 @@ class DosenController extends Controller
         $angkatan = '';
         // $angkatan = $countby;
 		return view('dosen.index', compact('mahasiswas','dosen','countby','thnmax','thnmin','angkatan','pkls'));
+    }
+
+    public function profile()
+    {
+        $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
+        return view('dosen.profile', compact('dosen'));
+    }
+
+    public function updateFoto(Request $request, $id)
+    {
+        $user = Dosen::findOrFail($id);
+
+        // Validasi input jika diperlukan
+        $request->validate([
+            'foto' => 'nullable|mimes:jpg,png|max:2048',
+        ]);
+
+        if ($request->hasFile('foto')) {
+            $pdfFile = $request->file('foto');
+            $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+
+            // Simpan file ke direktori storage/app/public/foto
+            $pdfFile->storeAs('public/foto', $pdfFileName);
+
+            // Update data Mahasiswa dengan 'foto' baru
+            $user->update(['foto' => $pdfFileName]);
+
+            return redirect()->route('profiledosen')->with('success', 'Foto berhasil diperbaharui.');
+        } else {
+            // Handle kasus tanpa file (opsional)
+            // Jika tidak ada 'foto' yang diunggah, 'foto' tidak akan diubah
+            // $mahasiswa->update($validatedData);
+
+            return redirect()->route('user')->with('error', 'Data gagal diupdate.');
+        }
+    }
+
+    public function update(Request $request, $id) {
+        $user = User::findOrFail($id);
+
+        // Validasi input jika diperlukan
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        // Verifikasi password lama
+        // if (!Hash::check($request->input('current_password'), $user->password)) {
+        //     return redirect()->back()->withErrors(['current_password' => 'Password lama tidak cocok.'])->withInput();
+        // }
+
+        // Update password
+        $user->update([
+            'password' => Hash::make($request->input('password')),
+        ]);
+
+        return redirect()->route('profiledosen')->with('success', 'Password berhasil diperbaharui.');
     }
     public function ListMhs()
     {
@@ -393,10 +451,6 @@ class DosenController extends Controller
      * @param  \App\Models\dosen  $dosen
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdatedosenRequest $request, dosen $dosen)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
