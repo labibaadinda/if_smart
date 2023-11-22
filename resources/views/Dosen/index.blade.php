@@ -98,7 +98,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="{{ $countby->count()*2 }}">
-                                        <h5 ><strong>Angkatan = {{ $thnmax->angkatan }}</strong></h5>
+                                        <h5 ><strong>Angkatan</strong></h5>
                                     </th>
                                 </tr>
                                 <tr >
