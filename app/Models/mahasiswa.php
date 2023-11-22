@@ -16,6 +16,9 @@ class mahasiswa extends Model
     public function provinsi(){
         return $this->belongsTo(Provinsi::class);
     }
+    public function kota(){
+        return $this->belongsTo(Kota::class);
+    }
     public function pkl()
     {
         return $this->hasMany(Pkl::class, 'nim', 'nim');

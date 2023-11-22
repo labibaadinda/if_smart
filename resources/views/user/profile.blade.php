@@ -154,7 +154,7 @@
                     </div>
                     <div class="form-group">
                         <label for="kota">Kota/Kabupaten</label>
-                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota }}" disabled>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota->nama }}" disabled>
                     </div>
                     
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#initialModal">
