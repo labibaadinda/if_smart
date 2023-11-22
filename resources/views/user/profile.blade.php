@@ -152,11 +152,17 @@
                         <label for="kota">Provinsi</label>
                         <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->provinsi->nama }}" disabled>
                     </div>
+                    @if(empty($mahasiswa->kota_id))
+                    <div class="form-group">
+                        <label for="kota">Kota/Kabupaten</label>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" disabled>
+                    </div>
+                    @else
                     <div class="form-group">
                         <label for="kota">Kota/Kabupaten</label>
                         <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->kota->nama }}" disabled>
                     </div>
-                    
+                    @endif
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#initialModal">
                         Update Data Diri
                       </button>
