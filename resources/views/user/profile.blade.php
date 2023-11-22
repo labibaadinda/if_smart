@@ -148,10 +148,20 @@
                         <label for="handphone">No Handphone</label>
                         <input required id="handphone" name="handphone" class="form-control @error('handphone') is-invalid @enderror" value="{{ $mahasiswa->handphone }}" disabled>
                     </div>
+                    @if(empty($mahasiswa->provinsi_id))
+                    <div class="form-group">
+                        <label for="kota">Provinsi</label>
+                        <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" disabled>
+                    </div>
+                    @else
                     <div class="form-group">
                         <label for="kota">Provinsi</label>
                         <input required id="kota" name="kota" class="form-control @error('alamat') is-invalid @enderror" value="{{ $mahasiswa->provinsi->nama }}" disabled>
                     </div>
+                    @endif
+
+
+
                     @if(empty($mahasiswa->kota_id))
                     <div class="form-group">
                         <label for="kota">Kota/Kabupaten</label>
