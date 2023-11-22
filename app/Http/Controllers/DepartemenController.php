@@ -28,9 +28,9 @@ class DepartemenController extends Controller
         $thnmin = Mahasiswa::get('angkatan')->min();
         $pkls = Pkl::get();
         $angkatan = '2019';
-        $pkl = Pkl::whereHas('mahasiswa');
+        $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
         // $colspanThn = ((int)$thnmax-(int)$thnmin)*2;
-        return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl'));
+        return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl','angkatan'));
     }
     public function profile()
     {

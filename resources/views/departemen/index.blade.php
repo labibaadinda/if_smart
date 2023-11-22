@@ -121,7 +121,7 @@
                             <thead>
                                 <tr>
                                     <th colspan="100%">
-                                        <h5 ><strong>Angkatan = {{ $pkls }}</strong></h5>
+                                        <h5 ><strong>Angkatan</strong></h5>
                                     </th>
                                 </tr>
                                 <tr >
@@ -141,26 +141,26 @@
                                 <tr>
                                     @foreach(range($thnmin->angkatan, $thnmax->angkatan) as $item)
                                     <td>
-                                        {{ $pkls->where('stat_pkl','selesai')->count() }} belum
+                                        {{ $pkl->where('angkatan','=',$item)->count() }}
                                         {{-- @if ($khss->where('semester',$irs->semester)->first())
                                         {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
                                         @else
                                         Belum Mengupload KHS
                                         @endif --}}
                                     </td>
-                                    <td colspan="1"> {{ $pkls->count() }}</td>
+                                    <td colspan="1">{{ $pkl->count() }}</td>
                                     @endforeach
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <h5>max: {{ $thnmax->angkatan }}</h5>
+                    {{-- <h5>max: {{ $thnmax->angkatan }}</h5>
                     <h5>min: {{ $thnmin }}</h5>
                     <h5>countBy: {{ $countby }}</h5>
                     <h5 class="text-danger">pkl joint: {{ $pkl->get() }}</h5>
                     <h5>pkls test: {{ $pkls }}</h5>
                     <h5>Test Text Commit</h5>
-                    <h5>Test Text Commit</h5>
+                    <h5>Test Text Commit</h5> --}}
                 </div>
             </div>
         </div>
