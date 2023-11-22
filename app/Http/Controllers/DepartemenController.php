@@ -32,6 +32,37 @@ class DepartemenController extends Controller
         // $colspanThn = ((int)$thnmax-(int)$thnmin)*2;
         return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl','angkatan'));
     }
+
+    public function listMahasiswa(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = User::select('*')->orderBy('created_at', 'DESC');
+            // $data = mahasiswa::select('*')->orderBy('created_at', 'DESC');
+
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<div class="row"><a href="' . route('user.edit', $row->id)  . '" id="' . $row->id . '" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" id="' . $row->id . '" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a></div>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+            $data = mahasiswa::orderBy('nama','ASC')->paginate(20);
+            $dosens = dosen::All();
+            // $datas = DataTables::of($data);
+
+        return view('departemen.listMahasiswa',[
+            // 'test' => 'masuk',
+            'datas' => $data,
+            'dosens' => $dosens
+        ]);
+    }
+
     public function profile()
     {
         return view('departemen.profile');

@@ -81,6 +81,8 @@
     </li>
     @endcan
 
+
+
     <!-- Nav Item - Pages Collapse Menu -->
     {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
@@ -147,6 +149,13 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" href="{{ route('listmahasiswa') }}">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>List Mahasiswa</span></a>
+    </li>
+    @endif
+    @if(Auth::user()->role == 'departemen')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('departemen.mahasisaw') }}">
             <i class="fa-solid fa-pen-to-square"></i>
             <span>List Mahasiswa</span></a>
     </li>

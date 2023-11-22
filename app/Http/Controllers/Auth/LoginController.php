@@ -19,7 +19,7 @@ class LoginController extends Controller
 
 			switch ($userRole) {
 				case "admin":
-					return redirect()->intended('admin');
+					return redirect()->intended('operator');
 
 					break;
 				case "mahasiswa":

@@ -152,6 +152,8 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
 	Route::put('/profile/updateFoto/{id}',[DepartemenController::class,'updateFoto'])->name('profiledept.updateFoto');
 	Route::put('/profile/update/{id}',[DepartemenController::class,'update'])->name('profiledept.update');
 	Route::get('/profile',[DepartemenController::class,'profile'])->name('profiledept');
+    Route::get('/mahasiswa',[DepartemenController::class,'listMahasiswa'])->name('departemen.mahasisaw');
+
 
 
 });

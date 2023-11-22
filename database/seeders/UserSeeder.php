@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->insert([
             [
-                'email'     => 'admin@gmail.com',
+                'email'     => 'operator@gmail.com',
                 'password'  => Hash::make('password'),
                 'role'      => 'admin',
                 'nim_nip'       => '1',
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             //     // 'handphone'    => '08123456789',
             // ],
             [
-            
+
                 // 'name'         => 'Chika Fujiwara',
                 'email'        => 'chika@gmail.com',
                 'password'     => Hash::make('password'),
@@ -58,7 +58,7 @@ class UserSeeder extends Seeder
                 // 'handphone'    => '08123456789',
             ],
             [
-            
+
                 // 'name'         => 'Chika Fujiwara',
                 'email'        => 'dosen@gmail.com',
                 'password'     => Hash::make('password'),
@@ -75,7 +75,7 @@ class UserSeeder extends Seeder
                 'role'         => 'mahasiswa',
                 'nim_nip'      => '24060118120001',
             ],
-        
+
             [
                 'email'        => 'adel@gmail.com',
                 'password'     => Hash::make('password'),
