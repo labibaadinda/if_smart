@@ -73,7 +73,7 @@
                         <div class="card">
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Mahasiswa Aktif</h5>
-
+                                <p class="card-text">{{ $aktif }}</p>
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <div class="card mb-3">
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Mahasiswa Lulus PKL</h5>
-                                <p class="card-text"></p>
+                                <p class="card-text">{{ $allpkl }}</p>
                             </div>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                         <div class="card">
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Mahasiswa Lulus Skripsi</h5>
-                                <p class="card-text"></p>
+                                <p class="card-text">{{ $allskripsi }}</p>
                             </div>
                         </div>
                     </div>
@@ -98,6 +98,7 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Jumlah Dosen</h5>
                                 <p class="card-text">
+                                    {{ $alldosen }}
                                     {{-- <span class="badge badge-success">Aktif</span> --}}
                                 </p>
                             </div>

@@ -227,8 +227,7 @@
                 <img class="img-profile rounded-circle" src="{{ asset('storage/foto/' . $data->foto) }}">
                 @else
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ $data->nama }}</span>
-                <img class="img-profile rounded-circle"
-                    src="{{ asset('storage/foto/' . $data->foto) }}">
+
                 @endif
 
 

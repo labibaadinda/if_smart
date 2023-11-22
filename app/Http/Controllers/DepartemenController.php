@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Exception;
 use App\Models\pkl;
+use App\Models\Skripsi;
 use App\Models\User;
 
 use App\Models\dosen;
@@ -28,9 +29,13 @@ class DepartemenController extends Controller
         $thnmin = Mahasiswa::get('angkatan')->min();
         $pkls = Pkl::get();
         $angkatan = '2019';
+        $aktif = Mahasiswa::where('status', 'aktif')->count();
+        $allpkl = Pkl::count();
+        $alldosen = Dosen::count();
+        $allskripsi = Skripsi::count();
         $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
         // $colspanThn = ((int)$thnmax-(int)$thnmin)*2;
-        return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl','angkatan'));
+        return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl','angkatan','aktif','allpkl','alldosen','allskripsi'));
     }
 
     public function listMahasiswa(Request $request)

@@ -43,11 +43,11 @@ $message = session()->get('message')['message'];
                     </tr>
                     <tr>
                         <th>No</th>
-                        <th>Name</th>
+                        <th>Nama</th>
                         <th>NIM</th>
-                        <th>Judul</th>
-                        <th>Progres Ke</th>
-                        <th>Status</th>
+                        <th>Semester</th>
+                        <th>Nilai</th>
+                        <th>lama_studi</th>
                         <th>Tanggal Sidang</th>
                         <th>Action</th>
                     </tr>
@@ -58,16 +58,17 @@ $message = session()->get('message')['message'];
                         <th>{{ ($datas ->currentpage()-1) * $datas ->perpage() + $loop->index + 1 }}</th>
                         <th>{{ $mahasiswas->where('nim',$data->nim)->first()->nama }}</th>
                         <th>{{ $data->nim }}</th>
-                        <th>{{ $data->judul }}</th>
-                        <th>{{ $data->progres }}</th>
-                        <th>{{ $data->stat_skripsi }}</th>
-                        <th>
+                        <th>{{ $data->semester }}</th>
+                        <th>{{ $data->nilai }}</th>
+                        <th>{{ $data->lama_studi }}</th>
+                        <th>{{ $data->tanggal_sidang }}</th>
+                        {{-- <th>
                             @if ($data->stat_skripsi === 'selesai')
                                 {{ $data->tanggal_sidang }}
                             @else
                                 -
                             @endif
-                        </th>
+                        </th> --}}
                         <th>
                             <div class="row">
                                 <a href="{{ route('skripsi.showVerifikasi', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Verifikasi</a>

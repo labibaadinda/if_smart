@@ -41,7 +41,7 @@ class DosenController extends Controller
     public function ListMhs()
     {
         $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
-		$mahasiswas = Mahasiswa::All();
+		$mahasiswas = Mahasiswa::where('dosen_id',$dosen->id)->get();
 		return view('dosen.listmahasiswa', compact('mahasiswas','dosen'));
     }
 
@@ -65,17 +65,20 @@ class DosenController extends Controller
         // $semesters = $mahasiswa->select('semesters');
         $irss = Irs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
         $khss = Khs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
+
         // $skripsis = Skripsi::where('nim',$nim)->orderBy('progres', 'ASC')->get();
         $skripsis = Skripsi::where('nim',$nim)->get();
         $sidang = Skripsi::where('nim',$nim)->get()->last();
         // $pkls = Pkl::where('nim',$nim)->orderBy('progres', 'ASC')->get();
+
+        $skripsis = Skripsi::where('nim',$nim)->get();
+        // $sidang = Skripsi::where('nim',$nim)->get('stat_skripsi')->last();
         $pkls = Pkl::where('nim',$nim)->get();
 
 
         return view('dosen.detailSearch', compact(
             'mahasiswa',
             'skripsis',
-            'sidang',
             'irss',
             'khss',
             'pkls'
@@ -166,10 +169,10 @@ class DosenController extends Controller
     public function searchVerifSkripsi(Request $request, Skripsi $skripsi)
     {
         if ($request->action === 'verifikasi') {
-            $skripsi->update(['konfirmasi' => '1']);
+            $skripsi->update(['status' => '1']);
             $message = 'Skripsi berhasil diverifikasi.';
         } elseif ($request->action === 'tolak') {
-            $skripsi->update(['konfirmasi' => 'tolak']);
+            $skripsi->update(['status' => 'tolak']);
             $message = 'Skripsi berhasil ditolak.';
         }
 
@@ -312,7 +315,7 @@ class DosenController extends Controller
 
     // Skripsi function
     public function viewSkripsi(){
-        $datas = skripsi::where('konfirmasi','0')->orderBy('id','ASC')->paginate(20);
+        $datas = skripsi::where('status','0')->orderBy('id','ASC')->paginate(20);
 		$mahasiswas = Mahasiswa::All();
 		return view('dosen.skripsi.index', compact('datas','mahasiswas'));
     }
@@ -326,10 +329,10 @@ class DosenController extends Controller
     public function verifSkripsi(Request $request, Skripsi $skripsi)
     {
         if ($request->action === 'verifikasi') {
-            $skripsi->update(['konfirmasi' => '1']);
+            $skripsi->update(['status' => '1']);
             $message = 'Skripsi berhasil diverifikasi.';
         } elseif ($request->action === 'tolak') {
-            $skripsi->update(['konfirmasi' => 'tolak']);
+            $skripsi->update(['status' => 'tolak']);
             $message = 'Skripsi berhasil ditolak.';
         }
 
