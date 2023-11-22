@@ -60,6 +60,35 @@
     </div>
 </div>
 <div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="card m-0">
+                    <div class="row no-gutters">
+                        <div class="col-md-4">
+                            @if(empty($dosen->foto))
+                                <img src="{{ asset('images/backend/ava.jpg') }}" class="card-img" alt="" width="107" height="150">
+                            @else
+                                <img src= "{{ asset('storage/foto/' . $dosen->foto) }}" class="card-img" alt="" width="207" height="250">
+                            @endif
+                        </div>
+                        
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 class="card-title text-dark">{{ $dosen->nama }}</h5>
+                                <h5 class="card-title text-dark">{{ $dosen->nip }}</h5>
+                                <h5 class="card-title text-dark">Dosen S1 Informatika</h5>
+                                {{-- @foreach($dosens as $dosen)
+                                @endforeach --}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-lg">
         <div class="card">
             <div class="card-body">
@@ -111,31 +140,7 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-6">
-        <div class="card">
-            <div class="card-body">
-                <div class="card m-0">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="{{ asset('images/backend/profile.jpg') }}" class="card-img" alt="" width="207"
-                                height="207">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title text-dark">{{ $dosen->nama }}</h5>
-                                <h5 class="card-title text-dark">{{ $dosen->nip }}</h5>
-                                <h5 class="card-title text-dark">Dosen S1 Informatika</h5>
-                                {{-- @foreach($dosens as $dosen)
-                                @endforeach --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 {{-- <div class="row mt-4">
     <div class="col-md-3">
         <a href="

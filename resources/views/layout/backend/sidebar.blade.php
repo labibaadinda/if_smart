@@ -240,6 +240,13 @@
             <i class="fas fa-fw fa-user"></i>
             <span>Profile</span></a>
     </li>
+    @elseif(Auth::user()->role == 'dosen')
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('profiledosen') }}">
+            <i class="fas fa-fw fa-user"></i>
+            <span>Profile</span></a>
+    </li>
     @endif
 
 

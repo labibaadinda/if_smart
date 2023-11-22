@@ -140,6 +140,10 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
     Route::get('skripsi/verif/{skripsi}', [DosenController::class,'showVerifikasiSkripsi'])->name('skripsi.showVerifikasi');
     Route::post('skripsi/verif/{skripsi}', [DosenController::class,'verifSkripsi'])->name('skripsi.verifSkripsi');
 
+	Route::put('/profile/updateFoto/{id}',[DosenController::class,'updateFoto'])->name('profiledosen.updateFoto');
+	Route::put('/profile/update/{id}',[DosenController::class,'update'])->name('profiledosen.update');
+	Route::get('/profile',[DosenController::class,'profile'])->name('profiledosen');
+
 
 	// Route::post('/irs',[DosenController::class,'storeIrs'])->name('verif.irs');
 
