@@ -17,7 +17,7 @@
                     ini foto
                 </p> --}}
                 {{-- <img src="{{ asset('storage/foto/' . $mahasiswa->foto) }}" class="card-img" alt="" width="207" height="207"> --}}
-                
+
             </div>
             <div class="col-md-8">
                 <h5>{{ $mahasiswa->nama }}</h5>
@@ -53,14 +53,14 @@
                                     <!-- IRS -->
                                     @if ($irs->status === '1')
                                         <a href="{{ asset('storage/irs/' . $irs->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2">IRS</a>
-                                    @elseif ($irs->status === '0')
+                                    @elseif ($irs->status === '0' && Auth::user()->role == 'dosen')
                                         <a href="{{ route('search.showVerifikasiIrs', $irs->id) }}" id="{{ $irs->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi IRS</a>
                                     @endif
                                     <!-- KHS -->
                                     @if ($khss->where('semester',$irs->semester)->first())
                                         @if ($khss->where('semester',$irs->semester)->firstOrFail()->status === '1')
                                             <a href="{{ asset('storage/khs/' . $khss->where('semester',$irs->semester)->firstOrFail()->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2 " >KHS</a>
-                                        @elseif ($khss->where('semester',$irs->semester)->firstOrFail()->status === '0')
+                                        @elseif ($khss->where('semester',$irs->semester)->firstOrFail()->status === '0' && Auth::user()->role == 'dosen')
                                             <a href="{{ route('search.showVerifikasiKhs', $khss->where('semester',$irs->semester)->firstOrFail()->id) }}" id="{{ $khss->where('semester',$irs->semester)->firstOrFail()->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi KHS</a>
                                         @endif
                                     @endif
@@ -101,7 +101,8 @@
                                 <td>
                                     @if ($pkl->konfirmasi === '1')
                                         <a href="{{ asset('storage/pkl/' . $pkl->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2">PDF</a>
-                                    @elseif ($pkl->konfirmasi === '0')
+
+                                        @elseif ($pkl->konfirmasi === '0' && Auth::user()->role == 'dosen')
                                         <a href="{{ route('search.showVerifikasiPkl', $pkl->id) }}" id="{{ $pkl->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi PKL</a>
                                     @endif
                                 </td>
@@ -131,9 +132,13 @@
                                 {{-- <td>{{ $skripsi->stat_skripsi }}</td> --}}
                                 <td>{{ $skripsi->tanggal_sidang }}</td>
                                 <td>
+
                                     @if ($skripsi->status === '1')
                                         <a href="{{ asset('storage/skripsi/' . $skripsi->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2">PDF</a>
-                                    @elseif ($skripsi->status === '0')
+                                    {{-- @elseif($skripsi->status === '1')
+                                        <a href="{{ asset('storage/skripsi/' . $skripsi->file) }}" target="_blank" class="btn btn-primary btn-sm ml-2">PDF</a> --}}
+
+                                    @elseif ($skripsi->status === '0' && Auth::user()->role == 'dosen')
                                         <a href="{{ route('search.showVerifikasiSkripsi', $skripsi->id) }}" id="{{ $skripsi->id }}" class="btn btn-danger btn-sm ml-2 btn-edit">Verifikasi Skripsi</a>
                                     @endif
                                 </td>
