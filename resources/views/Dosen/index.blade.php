@@ -93,7 +93,10 @@
         <div class="card">
             <div class="card-body">
                 <div class="card m-0">
-                    <div class="row no-gutters">
+                    <div class="row no-gutters " >
+                        <div class="text-center mx-auto">
+                            <h5 class="text-center ">Rekap Progress PKL Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</h5>
+                        </div>
                         <table class="table text-center table-bordered">
                             <thead>
                                 <tr>
@@ -118,23 +121,35 @@
                                 <tr>
                                     @foreach(range($thnmin->angkatan, $thnmax->angkatan) as $item)
                                     <td>
-                                        {{ $pkls->where('konfirmasi','1')->count() }}
+                                        <a href="{{ route('departemen.listMahasiswaAngkatan', $item) }}">
+                                            {{-- {{ $mahasiswa->nama }} ({{ $mahasiswa->nim }}) --}}
+                                            {{ $pkl->count() }}
+                                        </a>
                                         {{-- @if ($khss->where('semester',$irs->semester)->first())
                                         {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
                                         @else
                                         Belum Mengupload KHS
                                         @endif --}}
                                     </td>
-                                    <td colspan="1"> {{ $pkls->where('stat_pkl','progres')->count() }}</td>
+                                    <td colspan="1">
+                                        <a href="{{ route('departemen.listMahasiswaAngkatan', $item) }}">
+                                            {{-- {{ $mahasiswa->nama }} ({{ $mahasiswa->nim }}) --}}
+                                            {{-- {{ $pkl->where('angkatan','=',$item)->count() }} --}}
+                                            {{ $pkl->count() }}
+                                        </a>
+                                    </td>
                                     @endforeach
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     {{-- <h5>max: {{ $thnmax->angkatan }}</h5>
-                    <h5>min: {{ $thnmin->angkatan }}</h5>
+                    <h5>min: {{ $thnmin }}</h5>
                     <h5>countBy: {{ $countby }}</h5>
-                    <h5>pkls test: {{ $pkls->where('konfirmasi','1')->count() }}</h5> --}}
+                    <h5 class="text-danger">pkl joint: {{ $pkl->get() }}</h5>
+                    <h5>pkls test: {{ $pkls }}</h5>
+                    <h5>Test Text Commit</h5>
+                    <h5>Test Text Commit</h5> --}}
                 </div>
             </div>
         </div>

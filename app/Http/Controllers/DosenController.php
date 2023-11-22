@@ -35,10 +35,13 @@ class DosenController extends Controller
         $thnmax = Mahasiswa::get('angkatan')->max();
         $thnmin = Mahasiswa::get('angkatan')->min();
         $pkls = Pkl::all();
-        // $tahuns =
-        $angkatan = '';
-        // $angkatan = $countby;
-		return view('dosen.index', compact('mahasiswas','dosen','countby','thnmax','thnmin','angkatan','pkls'));
+        $angkatan = '2019';
+        $aktif = Mahasiswa::where('status', 'aktif')->count();
+        $allpkl = Pkl::count();
+        $alldosen = Dosen::count();
+        $allskripsi = Skripsi::count();
+        $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
+		return view('dosen.index', compact('mahasiswas','dosen','countby','thnmax','thnmin','pkls','pkl','angkatan','aktif','allpkl','alldosen','allskripsi'));
     }
 
     public function profile()
