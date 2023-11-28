@@ -17,12 +17,13 @@
 
         @if(count($mahasiswas) > 0)
             <h5>Search Results for '{{ $keyword }}'</h5>
+            {{-- <h5> {{ $mahasiswas }}</h5> --}}
             <ul class="list-group">
                 @foreach($mahasiswas as $mahasiswa)
                     <li class="list-group-item">
-                        {{-- <a href="{{ route('dosen.detailSearch', $mahasiswa->nim) }}">
+                        <a href="{{ route('departemen.detailSearch', $mahasiswa->nim) }}">
                             {{ $mahasiswa->nama }} ({{ $mahasiswa->nim }})
-                        </a> --}}
+                        </a>
                     </li>
                 @endforeach
             </ul>

@@ -18,6 +18,7 @@ $status = session()->get('message')['status'];
 $message = session()->get('message')['message'];
 @endphp
 
+
 @push('js')
 <script>
     $(document).ready(function () {
