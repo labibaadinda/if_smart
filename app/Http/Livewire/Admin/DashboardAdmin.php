@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
+use App\Models\Dosen;
 use Livewire\Component;
 use App\Models\mahasiswa;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,25 @@ class DashboardAdmin extends Component
         return view('livewire.admin.dashboard-admin',compact('sumMahasiswa','mahasiswaAktif','mahasiswas','user'));
     }
 
+    public function listmahasiswa()
+    {
+        $user = User::find(Auth::user()->id);
+        $sumMahasiswa = mahasiswa::count();
+        $mahasiswaaktifs = mahasiswa::where('status','aktif')->get();
+        $mahasiswas = mahasiswa::all();
+        return view('livewire.admin.listmahasiswa',compact('sumMahasiswa','mahasiswaaktifs','mahasiswas','user'));
+    }
+
+    public function listAktif()
+    {
+        $user = User::find(Auth::user()->id);
+        $sumMahasiswa = mahasiswa::count();
+        $mahasiswaaktifs = mahasiswa::with('dosen')->where('status','aktif')->get();
+        $mahasiswas = mahasiswa::all();
+        $dosens = dosen::all();
+        return view('livewire.admin.listaktif',compact('sumMahasiswa','mahasiswaaktifs','mahasiswas','user','dosens'));
+    }
+    
     public function updateInitialData(Request $request, $id)
     {
         $user = User::findOrFail($id);
