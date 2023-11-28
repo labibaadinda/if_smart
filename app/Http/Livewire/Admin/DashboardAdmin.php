@@ -38,6 +38,26 @@ class DashboardAdmin extends Component
         $dosens = dosen::all();
         return view('livewire.admin.listaktif',compact('sumMahasiswa','mahasiswaaktifs','mahasiswas','user','dosens'));
     }
+
+    public function listTertua()
+    {
+        $user = User::find(Auth::user()->id);
+        $mahasiswaTua = mahasiswa::max('angkatan');
+        $mahasiswaaktifs = mahasiswa::with('dosen')->where('status','aktif')->get();
+        $mahasiswas = mahasiswa::where('angkatan', $mahasiswaTua)->get();
+        $dosens = dosen::all();
+        return view('livewire.admin.listtertua',compact('mahasiswaaktifs','mahasiswas','user','dosens'));
+    }
+    public function listTermuda()
+    {
+        $user = User::find(Auth::user()->id);
+        $mahasiswaMuda = mahasiswa::min('angkatan');
+        $sumMahasiswa = mahasiswa::count();
+        $mahasiswaaktifs = mahasiswa::with('dosen')->where('status','aktif')->get();
+        $mahasiswas = mahasiswa::where('angkatan', $mahasiswaMuda)->get();
+        $dosens = dosen::all();
+        return view('livewire.admin.listtermuda',compact('sumMahasiswa','mahasiswaaktifs','mahasiswas','user','dosens'));
+    }
     
     public function updateInitialData(Request $request, $id)
     {

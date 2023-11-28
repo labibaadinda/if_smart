@@ -65,6 +65,8 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'operato
 	Route::put('/profile/update/{id}',[DashboardAdmin::class,'updateInitialData'])->name('updateOperator');
 	Route::get('/listmahasiswa',[DashboardAdmin::class,'listmahasiswa'])->name('listmhsadmin');
 	Route::get('/listmahasiswaaktif',[DashboardAdmin::class,'listAktif'])->name('listmhsaktif');
+	Route::get('/listmahasiswatertua',[DashboardAdmin::class,'listTertua'])->name('listmhstertua');
+	Route::get('/listmahasiswatermuda',[DashboardAdmin::class,'listTermuda'])->name('listmhstermuda');
 
 	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
