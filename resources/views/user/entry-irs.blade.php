@@ -124,7 +124,7 @@
                                                         @enderror
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="file">File</label>
+                                                        <label for="file">File (*pdf)</label>
                                                         <input required type="file" name="pdf_file" id="pdf_file" class="form-control">
                                         
                                                         @error('pdf_file')
