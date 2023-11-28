@@ -230,9 +230,13 @@
                 @endif
 
                 @if(empty($data->foto))
-                    <img class="img-profile rounded-circle" src="{{ asset('images/backend/ava.jpg') }}">
+                    @if(Auth::user()->role=='admin')
+                        <img class="img-profile rounded-circle" src="{{ asset('images/backend/profile.jpg') }}">
+                    @else
+                        <img class="img-profile rounded-circle" src="{{ asset('images/backend/ava.jpg') }}">
+                    @endif
                 @else
-                    <img class="img-profile rounded-circle" src="{{ asset('storage/foto/' . $data->foto) }}">
+                   <img class="img-profile rounded-circle" src="{{ asset('storage/foto/' . $data->foto) }}">
                 @endif
 
             </a>

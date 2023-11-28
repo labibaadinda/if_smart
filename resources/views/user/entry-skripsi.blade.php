@@ -66,6 +66,7 @@
                                 <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center">Lama Studi</th>
                                 <th class="text-secondary text-xs font-weight-semibold opacity-7 text-center ps-2">Status Entry</th>
                                 <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Berita Acara</th>
+                                <th class="text-center text-secondary text-xs font-weight-semibold opacity-7">Edit</th>
                             </tr>
                         </thead>
                         <tbody id="alatTableBody">
@@ -98,7 +99,93 @@
                                         <a href="{{ asset('storage/skripsi/' . $skripsi->file) }}" target="_blank"
                                             class="btn btn-primary btn-sm ml-2">Skripsi</a>
                                     </td>
+                                    @if($skripsi->status==0)
+                                    <td class="text-sm align-middle text-center">
+                                        <button type="button" class="btn btn-warning btn-icon my-0 px-2 py-2" data-bs-toggle="modal" data-bs-target="#ModalUpdate{{ $skripsi->id }}">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                    </td>
+                                    @else
+                                    <td class="text-sm align-middle text-center">
+                                        <p>TIDAK BISA EDIT</p>
+                                    </td>
+                                    @endif
                                 </tr>
+                                <div class="modal fade" id="ModalUpdate{{ $skripsi->id }}" tabindex="-1" role="dialog" aria-labelledby="ModalUpdate{{ $skripsi->id }}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="iniitialModal">Edit Berkas skripsi</h5>
+                                                {{-- <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">×</span>
+                                                </button> --}}
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="createForm" action="{{ route('skripsi.updateSkripsi',$skripsi->id) }}" method="POST" enctype="multipart/form-data" >
+                                                    @method('PUT')
+                                                    @csrf
+                                                    <div class="form-group">
+                                                        <label for="semester">Semester</label>
+                                                        <input  type="number" required id="semester" name="semester" class="form-control @error('semester') is-invalid @enderror" value="{{ $skripsi->semester }}">
+    
+                                                        @error('semester')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="nilai">Nilai</label>
+                                                        <input required type="text" id="nilai" name="nilai" class="form-control @error('ips') is-invalid @enderror" value="{{ $skripsi->nilai }}">
+    
+                                                        @error('ips')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group" id="tanggal-sidang-form">
+                                                        <label for="tanggal_sidang">Tanggal Sidang</label>
+                                                        <input type="date" id="tanggal_sidang" name="tanggal_sidang" class="form-control @error('tanggal_sidang') is-invalid @enderror" value="{{ $skripsi->tanggal_sidang }}">
+                                                        @error('tanggal_sidang')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                
+                                                    <div class="form-group">
+                                                        <label for="lama_studi">Lama Studi</label>
+                                                        <input  type="text" required id="lama_studi" name="lama_studi" class="form-control @error('judul') is-invalid @enderror" value="{{ $skripsi->lama_studi }}">
+                                                
+                                                        @error('lama_studi')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="file">Masukan Berita Acara Baru (*pdf)</label>
+                                                        <input type="file" name="file" id="file" class="form-control">
+                                        
+                                                        @error('pdf_file')
+                                                        <div class="invalid-feedback">
+                                                            {{ $message }}
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                    
+                                
+                                
+                                                    <button type="submit" class="btn btn-md btn-primary">Simpan</button>
+                                                </form>
+                                            </div>
+                                            
+                                            <div class="modal-footer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endforeach
                                 <div class="modal fade" id="initialModal" tabindex="-1" role="dialog" aria-labelledby="initialModal" aria-hidden="true">
                                     <div class="modal-dialog" role="document">

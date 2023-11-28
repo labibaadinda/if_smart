@@ -89,15 +89,19 @@ use Illuminate\Support\Facades\Auth;
         $pdfFile->storeAs('public/irs', $pdfFileName);
 
         // Simpan data IRS ke dalam tabel IRS
-        Irs::create([
+        $result = Irs::create([
             'nim' => Auth::user()->nim_nip,
             'semester' => $request->semester,
             'jumlah_sks' => $request->jumlah_sks,
             'file' => $pdfFileName,
             'status' => '0'
         ]);
-
-        return redirect()->route('irs')->with('success', 'File IRS berhasil diunggah.');
+        if($result){
+            return redirect()->route('irs')->with('success', 'File IRS berhasil diunggah.');
+        }
+        else{
+            return redirect()->route('irs')->with('error', 'Format yang dimasukkan');
+        }
     }
 }
 
@@ -151,7 +155,6 @@ public function updateFile(Request $request, $id)
 
     // Validasi input jika diperlukan
     $request->validate([
-        'file' => 'required|mimes:pdf|',
         'semester' => 'required',
         'ips' => 'required',
     ]);
@@ -174,8 +177,48 @@ public function updateFile(Request $request, $id)
         // Handle kasus tanpa file (opsional)
         // Jika tidak ada 'foto' yang diunggah, 'foto' tidak akan diubah
         // $mahasiswa->update($validatedData);
+        $khs->update([
+                        'semester' => $request->semester,
+                        'ips' => $request->ips,
+                    ]);
+        return redirect()->route('khs')->with('success', 'Data berhasil diupdate.');
+    }
+}
 
-        return redirect()->route('user')->with('success', 'Data berhasil diupdate.');
+
+public function updatePkl(Request $request, $id)
+{ 
+    $pkl = Pkl::findOrFail($id);
+
+    // Validasi input jika diperlukan
+    $request->validate([
+        'semester' => 'required',
+        'nilai' => 'required',
+    ]);
+
+    if ($request->hasFile('file')) {
+        $pdfFile = $request->file('file');
+        $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+
+        // Simpan file ke direktori storage/app/public/foto
+        $pdfFile->storeAs('public/pkl', $pdfFileName);
+
+        // Update data Mahasiswa dengan 'foto' baru
+        $pkl->update(['file' => $pdfFileName,
+                        'semester' => $request->semester,
+                        'nilai' => $request->nilai,
+                    ]);
+
+        return redirect()->route('pkl')->with('success', 'Berkas berhasil diperbaharui.');
+    } else {
+        // Handle kasus tanpa file (opsional)
+        // Jika tidak ada 'foto' yang diunggah, 'foto' tidak akan diubah
+        // $mahasiswa->update($validatedData);
+        $pkl->update([
+                        'semester' => $request->semester,
+                        'nilai' => $request->nilai,
+                    ]);
+        return redirect()->route('pkl')->with('success', 'Data berhasil diupdate.');
     }
 }
 
@@ -188,8 +231,10 @@ public function updateFile(Request $request, $id)
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
 
-	
-
+	$existingData = Pkl::where('nim', Auth::user()->nim_nip)->first();
+    if($existingData){
+        return redirect()->route('pkl')->with('error', 'Hanya dapat melakukan entry PKL sebanyak satu kali!!');
+    }
     if ($request->hasFile('pdf_file')) {
         $pdfFile = $request->file('pdf_file');
         $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
@@ -221,8 +266,10 @@ public function updateFile(Request $request, $id)
         'lama_studi' => 'required',
         'pdf_file' => 'required|mimes:pdf|', // File PDF dengan maksimum 2 MB
     ]);
-	$existingData = Skripsi::where('nim', Auth::user()->nim_nip)->get();
-
+	$existingData = Skripsi::where('nim', Auth::user()->nim_nip)->first();
+    if($existingData){
+        return redirect()->route('skripsi')->with('error', 'Hanya dapat melakukan entry Skripsi sebanyak satu kali!!');
+    }
 
     
     if ($request->hasFile('pdf_file')) {
@@ -245,4 +292,45 @@ public function updateFile(Request $request, $id)
         return redirect()->route('skripsi')->with('success', 'Entry Skripsi berhasil.');
     }
 }
+
+public function updateSkripsi(Request $request, $id)
+{ 
+    $skripsi = Skripsi::findOrFail($id);
+
+    // Validasi input jika diperlukan
+    $request->validate([
+        'semester' => 'required',
+        'nilai' => 'required',
+    ]);
+
+    if ($request->hasFile('file')) {
+        $pdfFile = $request->file('file');
+        $pdfFileName = time() . '.' . $pdfFile->getClientOriginalExtension();
+
+        // Simpan file ke direktori storage/app/public/foto
+        $pdfFile->storeAs('public/skripsi', $pdfFileName);
+
+        // Update data Mahasiswa dengan 'foto' baru
+        $skripsi->update(['file' => $pdfFileName,
+                        'semester' => $request->semester,
+                        'nilai' => $request->nilai,
+                        'tanggal_sidang' => $request->tanggal_sidang,
+                        'lama_studi' => $request->lama_studi,
+                    ]);
+
+        return redirect()->route('skripsi')->with('success', 'Berkas berhasil diperbaharui.');
+    } else {
+        // Handle kasus tanpa file (opsional)
+        // Jika tidak ada 'foto' yang diunggah, 'foto' tidak akan diubah
+        // $mahasiswa->update($validatedData);
+        $skripsi->update([
+                        'semester' => $request->semester,
+                        'nilai' => $request->nilai,
+                        'tanggal_sidang' => $request->tanggal_sidang,
+                        'lama_studi' => $request->lama_studi,
+                    ]);
+        return redirect()->route('skripsi')->with('success', 'Data berhasil diupdate.');
+    }
+}
+
 }

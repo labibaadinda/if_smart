@@ -96,9 +96,11 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::post('/khs',[UserController::class,'storeKhs'])->name('khs.store');
 	Route::get('/khs',[UserController::class,'khs'])->name('khs');
 	Route::put('/khs/updateFile/{id}',[UserController::class,'updateFile'])->name('khs.updateFile');
+	Route::put('/pkl/updatePkl/{id}',[UserController::class,'updatePkl'])->name('pkl.updatePkl');
 	Route::post('/pkl',[UserController::class,'storePkl'])->name('pkl.store');
 	Route::get('/pkl',[UserController::class,'pkl'])->name('pkl');
 	Route::post('/skripsi',[UserController::class,'storeSkripsi'])->name('skripsi.store');
+	Route::put('/skripsi/updatePkl/{id}',[UserController::class,'updateSkripsi'])->name('skripsi.updateSkripsi');
 	Route::get('/skripsi',[UserController::class,'skripsi'])->name('skripsi');
 	Route::put('/profile/update/{id}',[ProfileController::class,'update'])->name('profile.update');
 	Route::put('/profile/initialUpdate/{id}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
