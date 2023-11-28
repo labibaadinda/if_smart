@@ -83,7 +83,7 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'operato
 	Route::view('/utilities-borders','admin.utilities-border')->name('utilities-borders');
 	Route::view('/utilities-animations','admin.utilities-animation')->name('utilities-animations');
 	Route::view('/utilities-other','admin.utilities-other')->name('utilities-other');
-	Route::view('/chart','admin.chart')->name('chart');
+	Route::view('/chart','admin.chart')->name('chart'); 
 	Route::view('/tables','admin.tables')->name('tables');
 });
 
