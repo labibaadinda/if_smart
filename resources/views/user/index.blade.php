@@ -108,7 +108,21 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Status Akademik</h5>
                                 <p class="card-text">
-                                    <span class="badge badge-success">{{ $mahasiswa->status }}</span>
+                                    <span class="badge badge-success">@if ($mahasiswa->status === 'aktif')
+                                        Aktif
+                                    @elseif ($mahasiswa->status === 'do')
+                                        DO
+                                    @elseif ($mahasiswa->status === 'mangkir')
+                                        Mangkir
+                                    @elseif ($mahasiswa->status === 'mengundurkan_diri')
+                                        Mengundurkan Diri
+                                    @elseif ($mahasiswa->status === 'cuti')
+                                        Cuti
+                                    @elseif ($mahasiswa->status === 'meninggal_dunia')
+                                        Meninggal Dunia
+                                    @elseif ($mahasiswa->status === 'lulus')
+                                        Lulus
+                                    @endif</span>
                                 </p>
                             </div>
                         </div>
