@@ -17,13 +17,18 @@ use Illuminate\Support\Facades\Auth;
     public function index()
 	{
 		$mahasiswas = Mahasiswa::with('dosen')->where('nim', Auth::user()->nim_nip)->get();
+		$skripsi = Skripsi::where('nim', Auth::user()->nim_nip)->where('status','1')->get();
+		$pkl = pkl::where('nim', Auth::user()->nim_nip)->where('konfirmasi','1')->get();
+		$irs = irs::where('nim', Auth::user()->nim_nip)->where('status','1')->get();
+		$khs = khs::where('nim', Auth::user()->nim_nip)->where('status','1')->get();
+
 		$dosens = Dosen::All();
 
 		$IPK = Khs::selectRaw('AVG(CAST(ips AS DECIMAL(10, 2)))')->where('nim', Auth::user()->nim_nip)->where('status', 1)->first();
-		$semester = Irs::where('nim', Auth::user()->nim_nip)->max('semester');
+		$semester = Irs::where('nim', Auth::user()->nim_nip)->where('status','1')->max('semester');
 		$sksk = Irs::where('nim', Auth::user()->nim_nip)->where('status', 1)->sum('jumlah_sks');
 		// $sksk = number_format($sks, 2);
-		return view('user.index', compact('mahasiswas','dosens', 'IPK', 'semester', 'sksk'));
+		return view('user.index', compact('mahasiswas','dosens', 'IPK', 'semester', 'sksk','skripsi','pkl','irs','khs'));
 	}
 
 	public function irs()
