@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Exception;
+use App\Models\irs;
+use App\Models\khs;
 use App\Models\pkl;
-use App\Models\Skripsi;
-use App\Models\User;
 
+use App\Models\User;
 use App\Models\dosen;
+use App\Models\Skripsi;
 use App\Models\mahasiswa;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
@@ -20,6 +22,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DepartemenController extends Controller
 {
+    use WithPagination;
+
+
 
     public function index()
     {
@@ -104,11 +109,38 @@ class DepartemenController extends Controller
         $keyword = $request->input('keyword');
 
         // Sesuaikan dengan model Mahasiswa dan struktur tabel di database
-        $mahasiswas = mahasiswa::where('nim', 'LIKE', "%$keyword%")
+        $mahasiswas = Mahasiswa::where('nim', 'LIKE', "%$keyword%")
             ->orWhere('nama', 'LIKE', "%$keyword%")
             ->get();
 
         return view('departemen.search', compact('mahasiswas', 'keyword'));
+    }
+
+    public function showDetail($nim)
+    {
+        $mahasiswa = Mahasiswa::where('nim', $nim)->firstOrFail();
+        // Sesuaikan dengan model dan struktur tabel semester di database
+        // $semesters = $mahasiswa->select('semesters');
+        $irss = irs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
+        $khss = khs::where('nim',$nim)->orderBy('semester', 'ASC')->get();
+
+        // $skripsis = Skripsi::where('nim',$nim)->orderBy('progres', 'ASC')->get();
+        $skripsis = Skripsi::where('nim',$nim)->get();
+        $sidang = Skripsi::where('nim',$nim)->get()->last();
+        // $pkls = Pkl::where('nim',$nim)->orderBy('progres', 'ASC')->get();
+
+        $skripsis = Skripsi::where('nim',$nim)->get();
+        // $sidang = Skripsi::where('nim',$nim)->get('stat_skripsi')->last();
+        $pkls = Pkl::where('nim',$nim)->get();
+
+
+        return view('departemen.detailSearch', compact(
+            'mahasiswa',
+            'skripsis',
+            'irss',
+            'khss',
+            'pkls'
+        ));
     }
 
     public function profile()
