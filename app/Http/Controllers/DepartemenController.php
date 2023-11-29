@@ -63,7 +63,7 @@ class DepartemenController extends Controller
             ];
         }
 
-        return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl','aktif','allpkl','alldosen','allskripsi','statuss','sudahPkl','belumPkl','angkatanArray'));
+        return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl','aktif','allpkl','alldosen','allskripsi','statuss','angkatanArray'));
     }
 
     public function listMahasiswa(Request $request)
