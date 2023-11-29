@@ -21,7 +21,7 @@ use App\Http\Requests\StoreUserRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
 
 class DepartemenController extends Controller
 {
