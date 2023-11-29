@@ -286,19 +286,19 @@ class DepartemenController extends Controller
         ]);
     }
 
-    public function cetakPdf($angkatan)
-    {
-        $mahasiswasSudahPkl = Mahasiswa::where('angkatan', $angkatan)
-            ->join('pkls', 'mahasiswas.nim', '=', 'pkls.nim')
-            ->whereNotNull('pkls.id')
-            ->get();
+    // public function cetakPdf($angkatan)
+    // {
+    //     $mahasiswasSudahPkl = Mahasiswa::where('angkatan', $angkatan)
+    //         ->join('pkls', 'mahasiswas.nim', '=', 'pkls.nim')
+    //         ->whereNotNull('pkls.id')
+    //         ->get();
 
-        $mahasiswasBelumPkl = Mahasiswa::where('angkatan', $angkatan)
-            ->leftJoin('pkls', 'mahasiswas.nim', '=', 'pkls.nim')
-            ->whereNull('pkls.id')
-            ->get();
+    //     $mahasiswasBelumPkl = Mahasiswa::where('angkatan', $angkatan)
+    //         ->leftJoin('pkls', 'mahasiswas.nim', '=', 'pkls.nim')
+    //         ->whereNull('pkls.id')
+    //         ->get();
 
-        $pdf = PDF::loadView('pdf.mahasiswa', compact('mahasiswasSudahPkl', 'mahasiswasBelumPkl', 'angkatan'));
-        return $pdf->download('rekap_mahasiswa_pkl.pdf');
-    }
+    //     $pdf = PDF::loadView('pdf.mahasiswa', compact('mahasiswasSudahPkl', 'mahasiswasBelumPkl', 'angkatan'));
+    //     return $pdf->download('rekap_mahasiswa_pkl.pdf');
+    // }
 }
