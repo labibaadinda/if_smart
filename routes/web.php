@@ -158,8 +158,13 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
 	Route::get('/profile',[DepartemenController::class,'profile'])->name('profiledept');
     Route::get('/mahasiswa',[DepartemenController::class,'listMahasiswa'])->name('departemen.mahasisaw');
     Route::get('/listMahasiswaAngkatan/{nim}',[DepartemenController::class,'listMahasiswaAngkatan'])->name('departemen.listMahasiswaAngkatan');
+    Route::get('/mahasiswa/{status}/{angkatan}',[DepartemenController::class,'listMahasiswaStatus'])->name('departemen.listStatusMahasiswa');
+    Route::get('/mahasiswa/cuti/{angkatan}',[DepartemenController::class,'mahasiswaCuti'])->name('departemen.mahasiswaCuti');
+
+
     Route::get('/search',[DepartemenController::class,'search'])->name('departemen.search');
     Route::get('/mahasiswa/{nim}',[DepartemenController::class,'showDetail'])->name('departemen.detailSearch');
+    Route::get('/cetak-pdf/{angkatan}', [DepartemenController::class, 'cetakPdf'])->name('cetak.pdf');
     // Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');
 
 

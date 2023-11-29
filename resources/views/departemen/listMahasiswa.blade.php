@@ -48,7 +48,8 @@ $message = session()->get('message')['message'];
                         <th>Angkatan</th>
                         <th>Status</th>
                         <th>Dosen Wali</th>
-                        {{-- <th>Action</th> --}}
+                        <th>Nilai</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -78,13 +79,15 @@ $message = session()->get('message')['message'];
                         <th>{{ $dosens->where('id',$data->dosen_id)->first()->nama }}</th>
                         {{-- <th>Email</th> --}}
                         {{-- <th>Role</th> --}}
-                        {{-- <th>
+                        <th>{{ $data->nilai }}</th>
+                        <th>
 
                             <div class="row">
-                                <a href="{{ route('user.edit', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>
-                                <a href="javascript:void(0)" id="{{ $data->id }}" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a>
+                                <a href="{{ route('departemen.detailSearch', $data->nim) }}" id="{{ $data->nim }}" class="btn btn-primary btn-sm ml-2 btn-edit">Detail</a>
+                                {{-- <a href="{{ route('user.edit', $data->id) }}" id="{{ $data->id }}" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a> --}}
+                                {{-- <a href="javascript:void(0)" id="{{ $data->id }}" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a> --}}
                             </div>
-                        </th> --}}
+                        </th>
                     </tr>
                     @empty
 
