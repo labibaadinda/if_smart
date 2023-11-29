@@ -55,7 +55,7 @@ class DepartemenController extends Controller
             $belumPklCount = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')
                 ->where('mahasiswas.angkatan', $angkatanItem)
                 ->whereNull('pkls.id')
-                ->count();
+                ->count(); 
 
             $angkatanArray[$angkatanItem] = [
                 'sudah_pkl' => $sudahPklCount,
