@@ -108,16 +108,87 @@
                             <div class="card-body text-center">
                                 <h5 class="card-title text-dark">Status Akademik</h5>
                                 <p class="card-text">
-                                    <span class="badge badge-success">{{ $mahasiswa->status }}</span>
+                                    <span class="badge badge-success">@if ($mahasiswa->status === 'aktif')
+                                        Aktif
+                                    @elseif ($mahasiswa->status === 'do')
+                                        DO
+                                    @elseif ($mahasiswa->status === 'mangkir')
+                                        Mangkir
+                                    @elseif ($mahasiswa->status === 'mengundurkan_diri')
+                                        Mengundurkan Diri
+                                    @elseif ($mahasiswa->status === 'cuti')
+                                        Cuti
+                                    @elseif ($mahasiswa->status === 'meninggal_dunia')
+                                        Meninggal Dunia
+                                    @elseif ($mahasiswa->status === 'lulus')
+                                        Lulus
+                                    @endif</span>
                                 </p>
                             </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
     </div>
+    
 </div>
+<div class="container mt-2">
+    <div class="row">
+        @for($i = 1; $i <= 14; $i++)
+            <div class="col-md-2">
+                <button class="btn btn-md btn-block mb-2
+                    @if($skripsi->isNotEmpty() && $skripsi->first()->semester == $i) btn-success
+                    @elseif($pkl->isNotEmpty() && $pkl->first()->semester == $i) btn-warning
+                    @elseif($irs->where('semester', $i)->isNotEmpty() && $khs->where('semester', $i)->isNotEmpty()) btn-primary
+                    @else btn-danger
+                    @endif"
+                    data-toggle="modal" data-target="#semesterModal{{ $i }}">
+                    {{ $i }}
+                </button>
+            </div>
+            
+            <!-- Modal for Semester {{$i}} -->
+            <div class="modal fade" id="semesterModal{{ $i }}" tabindex="-1" role="dialog" aria-labelledby="semesterModalLabel{{ $i }}" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="semesterModalLabel{{ $i }}">Informasi Semester {{ $i }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Tambahkan informasi sesuai kebutuhan, contoh dengan jumlah_sks dari IRS -->
+                            @if($skripsi->isNotEmpty() && $skripsi->first()->semester == $i)
+                                <p>Jumlah SKS: {{ $irs->where('semester', $i)->first()->jumlah_sks }}</p>
+                                <p>Jumlah IP Semester: {{ $khs->where('semester', $i)->first()->ips }}</p>
+                                <p>Nilai Skripsi: {{ $skripsi->where('semester', $i)->first()->nilai }}</p>
+                                <p>Tanggal Sidang: {{ $skripsi->where('semester', $i)->first()->tanggal_sidang }}</p>
+                                <p>Lama Studi: {{ $skripsi->where('semester', $i)->first()->lama_studi }}</p>
+                                <!-- Tambahkan informasi lainnya jika diperlukan -->
+                            @elseif($pkl->isNotEmpty() && $pkl->first()->semester == $i)
+                                <p>Jumlah SKS: {{ $irs->where('semester', $i)->first()->jumlah_sks }}</p>
+                                <p>Jumlah IP Semester: {{ $khs->where('semester', $i)->first()->ips }}</p>
+                                <p>Nilai PKL: {{ $pkl->where('semester', $i)->first()->nilai }}</p>
+                            @elseif($irs->where('semester', $i)->isNotEmpty() && $khs->where('semester', $i)->isNotEmpty())
+                                <p>Jumlah SKS: {{ $irs->where('semester', $i)->first()->jumlah_sks }}</p>
+                                <p>Jumlah IP Semester: {{ $khs->where('semester', $i)->first()->ips }}</p>
+                            @else 
+                                <p>INFORMASI BELUM TERSEDIA</p>
+                            @endif
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endfor
+    </div>
+</div>
+
 <!-- resources/views/modal/address.blade.php -->
 <div class="modal fade" id="addressModal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">

@@ -139,7 +139,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="file">Masukan Berkas Baru (*pdf)</label>
-                                                        <input required type="file" name="file" id="file" class="form-control">
+                                                        <input type="file" name="file" id="file" class="form-control">
                                         
                                                         @error('pdf_file')
                                                         <div class="invalid-feedback">

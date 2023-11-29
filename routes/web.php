@@ -63,6 +63,10 @@ Route::view('/','welcome');
 Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'operator'],function(){
 	Route::get('/',[DashboardAdmin::class,'render'])->name('admin')->middleware(['can:admin']);
 	Route::put('/profile/update/{id}',[DashboardAdmin::class,'updateInitialData'])->name('updateOperator');
+	Route::get('/listmahasiswa',[DashboardAdmin::class,'listmahasiswa'])->name('listmhsadmin');
+	Route::get('/listmahasiswaaktif',[DashboardAdmin::class,'listAktif'])->name('listmhsaktif');
+	Route::get('/listmahasiswatertua',[DashboardAdmin::class,'listTertua'])->name('listmhstertua');
+	Route::get('/listmahasiswatermuda',[DashboardAdmin::class,'listTermuda'])->name('listmhstermuda');
 
 	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
@@ -75,16 +79,16 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'operato
     Route::get('/user/reset-password/{id}',[MahasiswaController::class,'resetPassword'])->name('user.reset-password');
     Route::get('/user/delete/{id}',[MahasiswaController::class,'delete'])->name('user.delete');
 
-	Route::view('/404-page','admin.404-page')->name('404-page');
-	Route::view('/blank-page','admin.blank-page')->name('blank-page');
-	Route::view('/buttons','admin.buttons')->name('buttons');
-	Route::view('/cards','admin.cards')->name('cards');
-	Route::view('/utilities-colors','admin.utilities-color')->name('utilities-colors');
-	Route::view('/utilities-borders','admin.utilities-border')->name('utilities-borders');
-	Route::view('/utilities-animations','admin.utilities-animation')->name('utilities-animations');
-	Route::view('/utilities-other','admin.utilities-other')->name('utilities-other');
-	Route::view('/chart','admin.chart')->name('chart');
-	Route::view('/tables','admin.tables')->name('tables');
+	// Route::view('/404-page','admin.404-page')->name('404-page');
+	// Route::view('/blank-page','admin.blank-page')->name('blank-page');
+	// Route::view('/buttons','admin.buttons')->name('buttons');
+	// Route::view('/cards','admin.cards')->name('cards');
+	// Route::view('/utilities-colors','admin.utilities-color')->name('utilities-colors');
+	// Route::view('/utilities-borders','admin.utilities-border')->name('utilities-borders');
+	// Route::view('/utilities-animations','admin.utilities-animation')->name('utilities-animations');
+	// Route::view('/utilities-other','admin.utilities-other')->name('utilities-other');
+	// Route::view('/chart','admin.chart')->name('chart');
+	// Route::view('/tables','admin.tables')->name('tables');
 });
 
 
@@ -96,9 +100,11 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 	Route::post('/khs',[UserController::class,'storeKhs'])->name('khs.store');
 	Route::get('/khs',[UserController::class,'khs'])->name('khs');
 	Route::put('/khs/updateFile/{id}',[UserController::class,'updateFile'])->name('khs.updateFile');
+	Route::put('/pkl/updatePkl/{id}',[UserController::class,'updatePkl'])->name('pkl.updatePkl');
 	Route::post('/pkl',[UserController::class,'storePkl'])->name('pkl.store');
 	Route::get('/pkl',[UserController::class,'pkl'])->name('pkl');
 	Route::post('/skripsi',[UserController::class,'storeSkripsi'])->name('skripsi.store');
+	Route::put('/skripsi/updatePkl/{id}',[UserController::class,'updateSkripsi'])->name('skripsi.updateSkripsi');
 	Route::get('/skripsi',[UserController::class,'skripsi'])->name('skripsi');
 	Route::put('/profile/update/{id}',[ProfileController::class,'update'])->name('profile.update');
 	Route::put('/profile/initialUpdate/{id}',[ProfileController::class,'updateInitialData'])->name('profile.updateInitialData');
