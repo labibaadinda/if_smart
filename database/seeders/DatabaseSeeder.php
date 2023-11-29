@@ -36,18 +36,20 @@ class DatabaseSeeder extends Seeder
     	$this->call(KhsSeeder::class);
     	$this->call(MahasiswaSeeder::class);
     	$this->call(DosenSeeder::class);
+    	$this->call(ProvinsiSeeder::class);
+    	$this->call(KotaSeeder::class);
     	// $this->call(ProvinsiSeeder::class);
         Mahasiswa::create([
             'nama' => 'Freyana Syifa Jayawardana',
             'nim' => '24060118120002',
             'angkatan' => '2018',
             'alamat'       => 'Desa Ngrapah',
-            'provinsi_id'  => '1',
+            'provinsi_id'  => '11',
             'dosen_id'  => '1',
             'handphone'    => '08123456789',
         ]);
         // User::factory(10)->create();
-        Provinsi::factory(10)->create();
-        Kota::factory(40)->create();
+        // Provinsi::factory(10)->create();
+        // Kota::factory(40)->create();
     }
 }

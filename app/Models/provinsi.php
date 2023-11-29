@@ -9,7 +9,10 @@ class provinsi extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $fillable = [
+        'id',
+        'nama',
+    ];
     public function mahasiswa(){
         return $this->hasMany(Mahasiswa::class);
     }
