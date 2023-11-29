@@ -12,6 +12,7 @@ use App\Models\Skripsi;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
+use Yajra\DataTables\DataTables;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +31,8 @@ class DosenController extends Controller
     public function index()
     {
         $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
-		$mahasiswas = Mahasiswa::where('dosen_id',$dosen->id);
+		$allMahasiswas = Mahasiswa::where('dosen_id',$dosen->id);
+		$mahasiswas = Mahasiswa::all();
         $countby = Mahasiswa::get()->countBy('angkatan');
         $thnmax = Mahasiswa::get('angkatan')->max();
         $thnmin = Mahasiswa::get('angkatan')->min();
@@ -41,7 +43,28 @@ class DosenController extends Controller
         $alldosen = Dosen::count();
         $allskripsi = Skripsi::count();
         $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
-		return view('dosen.index', compact('mahasiswas','dosen','countby','thnmax','thnmin','pkls','pkl','angkatan','aktif','allpkl','alldosen','allskripsi'));
+
+
+        $angkatanArray = [];
+
+        foreach (range($thnmin->angkatan, $thnmax->angkatan) as $angkatanItem) {
+            $sudahPklCount = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')
+                ->where('mahasiswas.angkatan', $angkatanItem)
+                ->whereNotNull('pkls.id')
+                ->count();
+
+            $belumPklCount = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')
+                ->where('mahasiswas.angkatan', $angkatanItem)
+                ->whereNull('pkls.id')
+                ->count();
+
+            $angkatanArray[$angkatanItem] = [
+                'sudah_pkl' => $sudahPklCount,
+                'belum_pkl' => $belumPklCount,
+            ];
+        }
+
+		return view('dosen.index', compact('mahasiswas','dosen','countby','thnmax','thnmin','pkls','pkl','angkatan','aktif','allpkl','alldosen','allskripsi','angkatanArray'));
     }
 
     public function profile()
@@ -103,6 +126,79 @@ class DosenController extends Controller
     {
         $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
 		$mahasiswas = Mahasiswa::where('dosen_id',$dosen->id)->get();
+		return view('dosen.listmahasiswa', compact('mahasiswas','dosen'));
+    }
+
+    public function listMahasiswaAngkatan(Request $request, $thn)
+    {
+        if ($request->ajax()) {
+            $data = User::select('*')->orderBy('created_at', 'DESC');
+            // $data = mahasiswa::select('*')->orderBy('created_at', 'DESC');
+
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<div class="row"><a href="' . route('user.edit', $row->id)  . '" id="' . $row->id . '" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" id="' . $row->id . '" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a></div>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+            $data = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->where('angkatan',$thn)->orderBy('nama','ASC')->paginate(20);
+            $dosens = dosen::All();
+            // $datas = DataTables::of($data);
+
+        return view('departemen.listMahasiswa',[
+            // 'test' => 'masuk',
+            'datas' => $data,
+            'dosens' => $dosens
+        ]);
+    }
+
+    //Mahasiswa Aktif
+    public function listMahasiswaStatus(Request $request, $status, $thn)
+    {
+        if ($request->ajax()) {
+            $data = User::select('*')->orderBy('created_at', 'DESC');
+            // $data = mahasiswa::select('*')->orderBy('created_at', 'DESC');
+
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<div class="row"><a href="' . route('user.edit', $row->id)  . '" id="' . $row->id . '" class="btn btn-primary btn-sm ml-2 btn-edit">Edit</a>';
+                    $btn .= '<a href="javascript:void(0)" id="' . $row->id . '" class="btn btn-danger btn-sm ml-2 btn-delete">Delete</a></div>';
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+
+            // $data = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->where('angkatan',$thn)->orderBy('nama','ASC')->paginate(20);
+            $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
+            $data = Mahasiswa::where('dosen_id',$dosen->id)->where('status',$status)->where('angkatan',$thn)->orderBy('nama','ASC')->paginate(20);
+            $dosens = dosen::All();
+            // $datas = DataTables::of($data);
+
+        return view('departemen.listMahasiswa',[
+            // 'test' => 'masuk',
+            'datas' => $data,
+            'dosens' => $dosens,
+            // 'status' => $status,
+        ]);
+    }
+
+
+
+    public function listMahasiswa( $status )
+    {
+        $dosen = Dosen::with('mahasiswa')->where('nip', Auth::user()->nim_nip)->first();
+		$mahasiswas = Mahasiswa::where('dosen_id',$dosen->id)->where('status',$status)->get();
 		return view('dosen.listmahasiswa', compact('mahasiswas','dosen'));
     }
 

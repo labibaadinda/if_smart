@@ -116,6 +116,11 @@ Route::group(['namespace' => 'User','middleware' => 'auth' ,'prefix' => 'user'],
 Route::group(['middleware' => 'auth' ,'prefix' => 'dosen'],function(){
 	Route::get('/',[DosenController::class,'index'])->name('dosen');
 	Route::get('/listmahasiswa',[DosenController::class,'ListMhs'])->name('listmahasiswa');
+	Route::get('/listMahasiswa/{status}',[DosenController::class,'listMahasiswa'])->name('listMahasiswa');
+    Route::get('/mahasiswa/{status}/{angkatan}',[DosenController::class,'listMahasiswaStatus'])->name('dosen.listStatusMahasiswa');
+    Route::get('/listMahasiswaAngkatan/{angkatan}',[DosenController::class,'listMahasiswaAngkatan'])->name('dosen.listMahasiswaAngkatan');
+
+
 
 	Route::get('/search',[DosenController::class,'search'])->name('dosen.search');
     Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');
@@ -163,9 +168,14 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
 	Route::put('/profile/update/{id}',[DepartemenController::class,'update'])->name('profiledept.update');
 	Route::get('/profile',[DepartemenController::class,'profile'])->name('profiledept');
     Route::get('/mahasiswa',[DepartemenController::class,'listMahasiswa'])->name('departemen.mahasisaw');
-    Route::get('/listMahasiswaAngkatan/{nim}',[DepartemenController::class,'listMahasiswaAngkatan'])->name('departemen.listMahasiswaAngkatan');
+    Route::get('/listMahasiswaAngkatan/{status}/',[DepartemenController::class,'listMahasiswaAngkatan'])->name('departemen.listMahasiswaAngkatan');
+    Route::get('/mahasiswa/{status}/{angkatan}',[DepartemenController::class,'listMahasiswaStatus'])->name('departemen.listStatusMahasiswa');
+    Route::get('/mahasiswa/cuti/{angkatan}',[DepartemenController::class,'mahasiswaCuti'])->name('departemen.mahasiswaCuti');
+
+
     Route::get('/search',[DepartemenController::class,'search'])->name('departemen.search');
     Route::get('/mahasiswa/{nim}',[DepartemenController::class,'showDetail'])->name('departemen.detailSearch');
+    Route::get('/cetak-pdf/{angkatan}', [DepartemenController::class, 'cetakPdf'])->name('cetak.pdf');
     // Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');
 
 

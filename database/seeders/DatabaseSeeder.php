@@ -2,15 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Mahasiswa;
-use App\Models\Provinsi;
 use App\Models\Kota;
+use App\Models\User;
+use App\Models\Provinsi;
+use App\Models\Mahasiswa;
 use Database\Seeders\IrsSeeder;
 use Database\Seeders\KhsSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
 use Database\Seeders\DosenSeeder;
+use Illuminate\Support\Facades\DB;
 use Database\Seeders\ProvinsiSeeder;
 use Illuminate\Support\Facades\Hash;
 use Database\Seeders\MahasiswaSeeder;
@@ -49,7 +50,15 @@ class DatabaseSeeder extends Seeder
             'handphone'    => '08123456789',
         ]);
         // User::factory(10)->create();
+
         // Provinsi::factory(10)->create();
         // Kota::factory(40)->create();
+
+        Provinsi::factory(10)->create();
+        Kota::factory(40)->create();
+
+        // ini_set('memory_limit', '-1');
+        // DB::unprepared(file_get_contents(__dir__ . '\source\indonesia_provinces_regencies.sql'));
+
     }
 }
