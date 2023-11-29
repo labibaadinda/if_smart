@@ -41,8 +41,7 @@ class DepartemenController extends Controller
         $alldosen = Dosen::count();
         $allskripsi = Skripsi::count();
         $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
-        $sudahPkl = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')->select('mahasiswas.nama', 'pkls.nim', 'pkls.semester', 'mahasiswas.angkatan')->whereNotNull('pkls.id');
-        $belumPkl = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')->select('mahasiswas.nama', 'pkls.nim', 'pkls.semester', 'mahasiswas.angkatan')->whereNull('pkls.id');
+
         $statuss = Mahasiswa::get()->countBy('status');
 
         $angkatanArray = [];

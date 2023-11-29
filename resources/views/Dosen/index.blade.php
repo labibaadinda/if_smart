@@ -30,7 +30,11 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             JUMLAH MAHASISWA</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $mahasiswas->get()->count() }} </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <a href="{{ route('listmahasiswa') }}">
+                                {{ $mahasiswas->where('dosen_id',$dosen->id)->count() }}
+                            </a>
+                        </div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -48,8 +52,11 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             MAHASISWA AKTIF</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{
-                            $mahasiswas->get()->where('status','aktif')->count() }}</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            <a href="{{ route('listMahasiswa','aktif') }}">
+                                {{-- {{ $mahasiswas->get()->count() }} --}}
+                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','aktif')->count() }}</div>
+                            </a>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -90,11 +97,11 @@
 </div>
 <div class="row">
     <div class="col-lg">
-        <div class="card">
+        <div class="card mb-2">
             <div class="card-body">
                 <div class="card m-0">
                     <div class="row no-gutters " >
-                        <div class="text-center mx-auto">
+                        <div class="text-center mx-auto py-2">
                             <h5 class="text-center ">Rekap Progress PKL Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</h5>
                         </div>
                         <table class="table text-center table-bordered">
@@ -107,7 +114,6 @@
                                 <tr >
                                     @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
                                         <th colspan="2">{{ $item }}</th>
-                                        {{-- <th>SKS</th> --}}
                                     @endforeach
                                 </tr>
                                 <tr >
@@ -119,25 +125,121 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    @foreach(range($thnmin->angkatan, $thnmax->angkatan) as $item)
-                                    <td>
-                                        <a href="{{ route('departemen.listMahasiswaAngkatan', $item) }}">
-                                            {{-- {{ $mahasiswa->nama }} ({{ $mahasiswa->nim }}) --}}
-                                            {{ $pkl->count() }}
-                                        </a>
-                                        {{-- @if ($khss->where('semester',$irs->semester)->first())
-                                        {{ $khss->where('semester',$irs->semester)->firstOrFail()->ips }}
-                                        @else
-                                        Belum Mengupload KHS
-                                        @endif --}}
-                                    </td>
-                                    <td colspan="1">
-                                        <a href="{{ route('departemen.listMahasiswaAngkatan', $item) }}">
-                                            {{-- {{ $mahasiswa->nama }} ({{ $mahasiswa->nim }}) --}}
-                                            {{-- {{ $pkl->where('angkatan','=',$item)->count() }} --}}
-                                            {{ $pkl->count() }}
-                                        </a>
-                                    </td>
+                                    @foreach ($angkatanArray as $angkatanItem => $jumlah)
+                                        <td>
+                                            <a href="{{ route('departemen.listMahasiswaAngkatan', $angkatanItem) }}">
+                                                {{ $jumlah['sudah_pkl'] }}
+                                            </a>
+                                        </td>
+                                        <td colspan="1">
+                                            <a href="{{ route('departemen.listMahasiswaAngkatan', $angkatanItem) }}">
+                                                {{ $jumlah['belum_pkl'] }}
+                                            </a>
+                                        </td>
+                                    @endforeach
+                                </tr>
+                            </tbody>
+                        </table>
+                        {{-- <div class="btn">
+                            <a href="#">
+                                Tombol Cetgak
+                            </a>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="card m-0">
+                    <div class="row no-gutters " >
+                        <div class="text-center mx-auto">
+                            <h5 class="text-center ">Rekap Status Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</h5>
+                        </div>
+                        <table class="table text-center table-bordered">
+                            <thead>
+                                <tr class="align-items-center">
+                                    <th rowspan="2" class="align-content-center align-items-center">Status</th>
+                                    <th colspan="100%">
+                                        <h5 ><strong>Angkatan</strong></h5>
+                                    </th>
+                                </tr>
+                                <tr >
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">{{ $item }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr >
+                                    <th class="col-md-2">Aktif</th>
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">
+                                            <a href="{{ route('departemen.listStatusMahasiswa',['status' => 'aktif', 'angkatan' => $item]) }}">
+                                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','aktif')->where('angkatan',$item)->count() }}
+                                            </a>
+                                        </th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th class="col-md-2">Cuti</th>
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">
+                                            <a href="{{ route('departemen.listStatusMahasiswa', ['status' => 'cuti', 'angkatan' => $item]) }}">
+                                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','cuti')->where('angkatan',$item)->count() }}
+                                            </a>
+                                        </th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th class="col-md-2">Mengundurkan Diri</th>
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">
+                                            <a href="{{ route('departemen.listStatusMahasiswa', ['status' => 'mengundurkan_diri', 'angkatan' => $item]) }}">
+                                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','mengundurkan_diri')->where('angkatan',$item)->count() }}
+                                            </a>
+                                        </th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th class="col-md-2">Mangkir</th>
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">
+                                            <a href="{{ route('departemen.listStatusMahasiswa', ['status' => 'mangkir', 'angkatan' => $item]) }}">
+                                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','mangkir')->where('angkatan',$item)->count() }}
+                                            </a>
+                                        </th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th class="col-md-2">Lulus</th>
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">
+                                            <a href="{{ route('departemen.listStatusMahasiswa', ['status' => 'lulus', 'angkatan' => $item]) }}">
+                                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','lulus')->where('angkatan',$item)->count() }}
+                                            </a>
+                                        </th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th class="col-md-2">Do</th>
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">
+                                            <a href="{{ route('departemen.listStatusMahasiswa', ['status' => 'do', 'angkatan' => $item]) }}">
+                                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','do')->where('angkatan',$item)->count() }}
+                                            </a>
+                                        </th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th class="col-md-2">Meninggal Dunia</th>
+                                    @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <th colspan="">
+                                            <a href="{{ route('departemen.listStatusMahasiswa', ['status' => 'meninggal_dunia', 'angkatan' => $item]) }}">
+                                                {{ $mahasiswas->where('dosen_id',$dosen->id)->where('status','meninggal_dunia')->where('angkatan',$item)->count() }}
+                                            </a>
+                                        </th>
                                     @endforeach
                                 </tr>
                             </tbody>

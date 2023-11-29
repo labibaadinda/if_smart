@@ -170,7 +170,6 @@
                     <div class="row no-gutters " >
                         <div class="text-center mx-auto">
                             <h5 class="text-center ">Rekap Status Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</h5>
-                            {{-- <h5>{{ $statuss }}</h5> --}}
                         </div>
                         <table class="table text-center table-bordered">
                             <thead>
