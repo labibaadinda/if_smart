@@ -38,6 +38,9 @@ $message = session()->get('message')['message'];
             <table class="table table-bordered data-table">
                 <thead>
                     <tr>
+                        {{-- <td>
+                            {{ $datas }}
+                        </td> --}}
                         {{-- <th width="5%"> Test: {{ $test }}</th> --}}
                         {{-- <th width="5%"> Test: {{ $datas }}</th> --}}
                     </tr>
@@ -94,7 +97,7 @@ $message = session()->get('message')['message'];
                     @endforelse
                 </tbody>
             </table>
-            {{-- <div class="">{{ $datas->links() }}</div> --}}
+            <div class="mt-3 mx-3 d-flex align-items-center justify-content-center text-danger">{{ $datas->links() }}</div>
         </div>
     </div>
 </div>
