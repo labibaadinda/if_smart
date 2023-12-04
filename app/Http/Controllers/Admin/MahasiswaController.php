@@ -9,10 +9,13 @@ use App\Models\dosen;
 use App\Models\mahasiswa;
 use Illuminate\Http\Request;
 use Livewire\WithPagination;
+use App\Imports\MahasiswaImport;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\StoreUserRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -56,6 +59,27 @@ class MahasiswaController extends Controller
         $dosens = dosen::All();
 
         return view('admin.user.create',compact('dosens'));
+    }
+
+    public function storeExcel(Request $request)
+    {
+		$request->validate([
+            'file' => 'required|mimes:xlsx|max:10240',
+        ]);
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs('excel_files', $fileName, 'public');
+
+            // Use Maatwebsite\Excel to import data from Excel file
+            $import = new MahasiswaImport();
+            Excel::import($import, public_path('storage/excel_files/' . $fileName));
+
+            return redirect()->back()->with('success', 'File uploaded and data imported successfully.');
+        }
+
+        return redirect()->back()->with('error', 'File upload failed.');
     }
 
     public function store(StoreUserRequest $request)

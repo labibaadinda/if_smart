@@ -78,20 +78,9 @@
                                         {{ $mahasiswaaktif->angkatan }}
                                     </td>
                                     <td class="text-sm align-middle text-center">
-                                        @if ($mahasiswa->status === 'aktif')
+                                        @if ($mahasiswaaktif->status === 'aktif')
                                             Aktif
-                                        @elseif ($mahasiswa->status === 'do')
-                                            DO
-                                        @elseif ($mahasiswa->status === 'mangkir')
-                                            Mangkir
-                                        @elseif ($mahasiswa->status === 'mengundurkan_diri')
-                                            Mengundurkan Diri
-                                        @elseif ($mahasiswa->status === 'cuti')
-                                            Cuti
-                                        @elseif ($mahasiswa->status === 'meninggal_dunia')
-                                            Meninggal Dunia
-                                        @elseif ($mahasiswa->status === 'lulus')
-                                            Lulus
+                                       
                                         @endif
                                     </td>
                                     <td class="text-sm align-middle text-center">

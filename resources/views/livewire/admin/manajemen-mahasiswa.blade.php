@@ -33,7 +33,7 @@ $message = session()->get('message')['message'];
         <a href="
         {{ route('create-mahasiswa') }}
         " class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
-
+      </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">

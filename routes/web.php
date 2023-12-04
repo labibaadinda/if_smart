@@ -71,9 +71,11 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'operato
 	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
     Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.store');
+    
     Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.storeMahasiswa');
 
     Route::get('/user/edit/{id}',[MahasiswaController::class,'edit'])->name('user.edit');
+	Route::post('/operator/user/excel',[MahasiswaController::class,'storeExcel'])->name('excel.store');
     // Route::post('/user/update/{id}',[MahasiswaController::class,'update'])->name('user.update');
     Route::put('/operator/user/{id}',[MahasiswaController::class,'update'])->name('user.update');
     Route::get('/user/reset-password/{id}',[MahasiswaController::class,'resetPassword'])->name('user.reset-password');

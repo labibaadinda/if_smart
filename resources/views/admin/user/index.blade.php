@@ -31,8 +31,39 @@ $message = session()->get('message')['message'];
     <div class="card-header">
 
         <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
-
+        <a type="button" class="btn btn-success" data-toggle="modal" data-target="#initialModal">Import<i class="mx-2 fa-solid fa-file-excel"></i></a>
+        <div class="modal fade" id="initialModal" tabindex="-1" role="dialog" aria-labelledby="initialModal" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="iniitialModal">Import File Excel</h5>
+                  </div>
+                  <div class="modal-body">
+                      <form id="createForm" action="{{ route('excel.store') }}" method="POST" enctype="multipart/form-data" >
+                          @csrf
+                          <div class="form-group">
+                              <label for="file">Masukan File(.xlsx)</label>
+                              <input type="file" name="file" id="file" class="form-control">
+              
+                              @error('file')
+                              <div class="invalid-feedback">
+                                  {{ $message }}
+                              </div>
+                              @enderror
+                          </div>
+                          
+      
+      
+                          <button type="submit" class="btn btn-md btn-primary">Simpan</button>
+                      </form>
+                  </div>
+                  
+                  <div class="modal-footer">
+                  </div>
+              </div>
+          </div>
     </div>
+
     <div class="card-body">
         <div id='table' class="table-responsive">
             <table class="table table-bordered data-table">
@@ -94,6 +125,7 @@ $message = session()->get('message')['message'];
             {{-- <div class="">{{ $datas->links() }}</div> --}}
         </div>
     </div>
+</div>
 </div>
 
 
