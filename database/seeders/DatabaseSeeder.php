@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
     	$this->call(UserSeeder::class);
     	$this->call(IrsSeeder::class);
     	$this->call(KhsSeeder::class);
-    	$this->call(MahasiswaSeeder::class);
+    	$this->call(MahasiswaSeeder::class); 
     	$this->call(DosenSeeder::class);
     	$this->call(ProvinsiSeeder::class);
     	$this->call(KotaSeeder::class);
@@ -48,7 +48,7 @@ class DatabaseSeeder extends Seeder
             'provinsi_id'  => '11',
             'dosen_id'  => '1',
             'handphone'    => '08123456789',
-        ]);
+        ]); 
         // User::factory(10)->create();
 
         // Provinsi::factory(10)->create();
