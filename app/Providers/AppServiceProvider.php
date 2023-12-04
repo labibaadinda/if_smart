@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 use Gate;
 
@@ -32,5 +33,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('user',function($user){
             return $user->role == 'user';
         });
+
+        Paginator::useBootstrap();
     }
 }
