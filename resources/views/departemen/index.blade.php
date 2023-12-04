@@ -154,14 +154,15 @@
                                 </tr>
                             </tbody>
                         </table>
-                        {{-- <div class="btn">
-                            <a href="#">
+                        <div class="btn align-content-end">
+                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF') }}">
                                 Tombol Cetgak
                             </a>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="card">

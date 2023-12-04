@@ -1,5 +1,7 @@
 <?php
 
+use Barryvdh\DomPDF\ServiceProvider;
+
 return [
 
     /*
@@ -167,6 +169,9 @@ return [
          */
         Yajra\DataTables\DataTablesServiceProvider::class,
         // Barryvdh\Snappy\ServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
+        ServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         /*
          * Application Service Providers...
          */
@@ -230,6 +235,7 @@ return [
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
         // 'PDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
     ],
 
 ];

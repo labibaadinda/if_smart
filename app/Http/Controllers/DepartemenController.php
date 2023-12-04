@@ -19,9 +19,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\StoreUserRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
-
-// use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use PDF;
 
 class DepartemenController extends Controller
 {
@@ -55,7 +53,7 @@ class DepartemenController extends Controller
             $belumPklCount = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')
                 ->where('mahasiswas.angkatan', $angkatanItem)
                 ->whereNull('pkls.id')
-                ->count(); 
+                ->count();
 
             $angkatanArray[$angkatanItem] = [
                 'sudah_pkl' => $sudahPklCount,
@@ -64,6 +62,18 @@ class DepartemenController extends Controller
         }
 
         return view('departemen.index',compact('mahasiswas','countby','thnmax','thnmin','pkls','pkl','aktif','allpkl','alldosen','allskripsi','statuss','angkatanArray'));
+    }
+
+    // Generate PDF
+    public function createPDF() {
+        // retreive all records from db
+        $data = pkl::all();
+        // share data to view
+        view()->share('data', $data);
+        $pdf = PDF::loadView('departemen.cetakPDF',[
+            'data'=>$data,
+        ]);
+        return $pdf->stream('pdf_file.pdf');
     }
 
     public function listMahasiswa(Request $request)

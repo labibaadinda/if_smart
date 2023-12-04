@@ -175,7 +175,9 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
 
     Route::get('/search',[DepartemenController::class,'search'])->name('departemen.search');
     Route::get('/mahasiswa/{nim}',[DepartemenController::class,'showDetail'])->name('departemen.detailSearch');
-    Route::get('/cetak-pdf/{angkatan}', [DepartemenController::class, 'cetakPdf'])->name('cetak.pdf');
+    // Route::get('/cetak-pdf/{angkatan}', [DepartemenController::class, 'cetakPdf'])->name('cetak.pdf');
+    Route::get('/cetak-pdf', [DepartemenController::class, 'createPDF'])->name('departemen.createPDF');
+
     // Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');
 
 
