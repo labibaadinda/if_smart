@@ -114,7 +114,7 @@
         <div class="card mb-2">
             <div class="card-body">
                 <div class="card m-0">
-                    <div class="row no-gutters " >
+                    <div class="row no-gutters justify-content-end" >
                         <div class="text-center mx-auto py-2">
                             <h5 class="text-center ">Rekap Progress PKL Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</h5>
                         </div>
@@ -141,12 +141,12 @@
                                 <tr>
                                     @foreach ($angkatanArray as $angkatanItem => $jumlah)
                                         <td>
-                                            <a href="{{ route('departemen.listMahasiswaAngkatan', $angkatanItem) }}">
+                                            <a href="{{ route('departemen.listMahasiswaAngkatan', ['angkatan' => $angkatanItem, 'status' => 'sudah']) }}">
                                                 {{ $jumlah['sudah_pkl'] }}
                                             </a>
                                         </td>
                                         <td colspan="1">
-                                            <a href="{{ route('departemen.listMahasiswaAngkatan', $angkatanItem) }}">
+                                            <a href="{{ route('departemen.listMahasiswaAngkatan', ['angkatan' => $angkatanItem, 'status' => 'belum']) }}">
                                                 {{ $jumlah['belum_pkl'] }}
                                             </a>
                                         </td>
@@ -154,9 +154,9 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="btn align-content-end">
-                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF') }}">
-                                Tombol Cetgak
+                        <div class="btn">
+                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF',  ['pdf' => 'pkl', 'detail' => 'all', 'angkatan' => ' ']) }}">
+                                CETAK
                             </a>
                         </div>
                     </div>
@@ -168,7 +168,7 @@
         <div class="card">
             <div class="card-body">
                 <div class="card m-0">
-                    <div class="row no-gutters " >
+                    <div class="row no-gutters justify-content-end" >
                         <div class="text-center mx-auto">
                             <h5 class="text-center ">Rekap Status Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</h5>
                         </div>
@@ -260,6 +260,11 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="btn">
+                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF',  ['pdf' => 'status', 'detail' => 'all','angkatan' => ' ']) }}">
+                                CETAK
+                            </a>
+                        </div>
                     </div>
                     {{-- <h5>max: {{ $thnmax->angkatan }}</h5>
                     <h5>min: {{ $thnmin }}</h5>

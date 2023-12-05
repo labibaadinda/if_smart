@@ -96,20 +96,20 @@ $message = session()->get('message')['message'];
                           <div class="form-group">
                               <label for="file">Masukan File(.xlsx)</label>
                               <input type="file" name="file" id="file" class="form-control">
-              
+
                               @error('file')
                               <div class="invalid-feedback">
                                   {{ $message }}
                               </div>
                               @enderror
                           </div>
-                          
-      
-      
+
+
+
                           <button type="submit" class="btn btn-md btn-primary">Simpan</button>
                       </form>
                   </div>
-                  
+
                   <div class="modal-footer">
                   </div>
               </div>
@@ -174,7 +174,7 @@ $message = session()->get('message')['message'];
                     @endforelse
                 </tbody>
             </table>
-            {{-- <div class="">{{ $datas->links() }}</div> --}}
+            <div class="mt-3 mx-3 d-flex align-items-center justify-content-center text-danger">{{ $datas->links() }}</div>
         </div>
     </div>
 </div>

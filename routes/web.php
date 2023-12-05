@@ -71,7 +71,7 @@ Route::group(['namespace' => 'Admin','middleware' => 'auth','prefix' => 'operato
 	Route::resource('/user','MahasiswaController')->middleware(['can:admin']);
 	Route::get('/create-mahasiswa',[CreateMahasiswa::class,'render'])->name('create-mahasiswa')->middleware(['can:admin']);
     Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.store');
-    
+
     Route::post('/user',[MahasiswaController::class,'storeMahasiswa'])->name('user.storeMahasiswa');
 
     Route::get('/user/edit/{id}',[MahasiswaController::class,'edit'])->name('user.edit');
@@ -170,7 +170,7 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
 	Route::put('/profile/update/{id}',[DepartemenController::class,'update'])->name('profiledept.update');
 	Route::get('/profile',[DepartemenController::class,'profile'])->name('profiledept');
     Route::get('/mahasiswa',[DepartemenController::class,'listMahasiswa'])->name('departemen.mahasisaw');
-    Route::get('/listMahasiswaAngkatan/{status}/',[DepartemenController::class,'listMahasiswaAngkatan'])->name('departemen.listMahasiswaAngkatan');
+    Route::get('/listMahasiswaAngkatan/{angkatan}/{status}',[DepartemenController::class,'listMahasiswaAngkatan'])->name('departemen.listMahasiswaAngkatan');
     Route::get('/mahasiswa/{status}/{angkatan}',[DepartemenController::class,'listMahasiswaStatus'])->name('departemen.listStatusMahasiswa');
     Route::get('/mahasiswa/cuti/{angkatan}',[DepartemenController::class,'mahasiswaCuti'])->name('departemen.mahasiswaCuti');
 
@@ -178,7 +178,7 @@ Route::group(['middleware' => 'auth' ,'prefix' => 'departemen'],function(){
     Route::get('/search',[DepartemenController::class,'search'])->name('departemen.search');
     Route::get('/mahasiswa/{nim}',[DepartemenController::class,'showDetail'])->name('departemen.detailSearch');
     // Route::get('/cetak-pdf/{angkatan}', [DepartemenController::class, 'cetakPdf'])->name('cetak.pdf');
-    Route::get('/cetak-pdf', [DepartemenController::class, 'createPDF'])->name('departemen.createPDF');
+    Route::get('/cetak-pdf/{pdf}/{detail}/{angkatan}', [DepartemenController::class, 'createPDF'])->name('departemen.createPDF');
 
     // Route::get('/mahasiswa/{nim}',[DosenController::class,'showDetail'])->name('dosen.detailSearch');
 

@@ -25,6 +25,8 @@ class DepartemenController extends Controller
 {
     use WithPagination;
 
+    public $thnmax, $thnmin, $pkls, $aktif, $pkl, $mahasiswa, $angkatan;
+
 
 
     public function index()
@@ -39,8 +41,9 @@ class DepartemenController extends Controller
         $alldosen = Dosen::count();
         $allskripsi = Skripsi::count();
         $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
-
         $statuss = Mahasiswa::get()->countBy('status');
+
+
 
         $angkatanArray = [];
 
@@ -50,10 +53,8 @@ class DepartemenController extends Controller
                 ->whereNotNull('pkls.id')
                 ->count();
 
-            $belumPklCount = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')
-                ->where('mahasiswas.angkatan', $angkatanItem)
-                ->whereNull('pkls.id')
-                ->count();
+            $mahasiswaAll = Mahasiswa::where('angkatan',$angkatanItem)->count();
+            $belumPklCount = $mahasiswaAll-$sudahPklCount;
 
             $angkatanArray[$angkatanItem] = [
                 'sudah_pkl' => $sudahPklCount,
@@ -65,15 +66,86 @@ class DepartemenController extends Controller
     }
 
     // Generate PDF
-    public function createPDF() {
-        // retreive all records from db
-        $data = pkl::all();
-        // share data to view
-        view()->share('data', $data);
-        $pdf = PDF::loadView('departemen.cetakPDF',[
-            'data'=>$data,
-        ]);
-        return $pdf->stream('pdf_file.pdf');
+    public function createPDF($pdf,$detail,$angkatan) {
+        $mahasiswas = Mahasiswa::all();
+        $thnmax = Mahasiswa::get('angkatan')->max();
+        $thnmin = Mahasiswa::get('angkatan')->min();
+        $pkls = Pkl::get();
+        $aktif = Mahasiswa::where('status', 'aktif')->count();
+        $cntpkl = Pkl::count();
+        $cntdosen = Dosen::count();
+        $cntskripsi = Skripsi::count();
+        $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
+        $statuss = Mahasiswa::get()->countBy('status');
+        $angkatanArray = [];
+        $dosens = dosen::All();
+
+
+        foreach (range($thnmin->angkatan, $thnmax->angkatan) as $angkatanItem) {
+            $sudahPklCount = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')
+                ->where('mahasiswas.angkatan', $angkatanItem)
+                ->whereNotNull('pkls.id')
+                ->count();
+
+            $mahasiswaAll = Mahasiswa::where('angkatan',$angkatanItem)->count();
+            $belumPklCount = $mahasiswaAll-$sudahPklCount;
+
+            $angkatanArray[$angkatanItem] = [
+                'sudah_pkl' => $sudahPklCount,
+                'belum_pkl' => $belumPklCount,
+            ];
+        }
+
+        if($pdf === 'pkl'){
+            if($detail === 'all'){
+                $pdf = PDF::loadView('departemen.cetakPdfPkl',[
+                    'thnmin' => $thnmin,
+                    'thnmax' => $thnmax,
+                    'angkatanArray' => $angkatanArray,
+                    ])->setPaper('a4', 'landscape');
+                    return $pdf->stream('pdf_file.pdf');
+            }
+            else{
+                if($detail === 'belum'){
+                    $data = Mahasiswa::leftJoin('pkls','mahasiswas.nim','=','pkls.nim')->select('mahasiswas.*')->where('angkatan',$angkatan)->orderBy('nama','ASC')->get();
+                    $pdf = PDF::loadView('departemen.cetakPdfDetail',[
+                        'title' => 'Belum Mengikuti PKL Angkatan '.$angkatan.'',
+                        'datas' => $data,
+                        'dosens' => $dosens,
+                        'detail' => $detail,
+                    ])->setPaper('a4', 'portrait');
+                    return $pdf->stream('pdf_file.pdf');
+                }
+                else{
+                    $data = Mahasiswa::leftJoin('pkls','mahasiswas.nim','=','pkls.nim')->select('mahasiswas.*','pkls.nilai')->where('angkatan',$angkatan)->whereNotNull('nilai')->get();
+                    // return $data->toJson();
+                    $pdf = PDF::loadView('departemen.cetakPdfDetail',[
+                        'title' => 'Sudah Mengikuti PKL Angkatan '.$angkatan.'',
+                        'datas' => $data,
+                        'dosens' => $dosens,
+                        'detail' => $detail,
+                    ])->setPaper('a4', 'portrait');
+                    return $pdf->stream('pdf_file.pdf');
+                }
+            }
+        }
+        elseif($pdf === 'status'){
+            $pdf = PDF::loadView('departemen.cetakPdfStatus',[
+                'mahasiswas' => $mahasiswas,
+                'thnmax' => $thnmax,
+                'thnmin' => $thnmin,
+                'pkls' => $pkls,
+                'pkl' => $pkl,
+                'aktif' => $aktif,
+                'cntpkl' => $cntpkl,
+                'cntdosen' => $cntdosen,
+                'cntskripsi' => $cntskripsi,
+                'statuss' => $statuss,
+                'angkatanArray' => $angkatanArray,
+            ])->setPaper('a4', 'landscape');
+            return $pdf->stream('pdf_file.pdf');
+        }
+
     }
 
     public function listMahasiswa(Request $request)
@@ -106,7 +178,7 @@ class DepartemenController extends Controller
         ]);
     }
 
-    public function listMahasiswaAngkatan(Request $request, $thn)
+    public function listMahasiswaAngkatan(Request $request, $angkatan, $status)
     {
         if ($request->ajax()) {
             $data = User::select('*')->orderBy('created_at', 'DESC');
@@ -125,14 +197,27 @@ class DepartemenController extends Controller
                 ->make(true);
         }
 
-            $data = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->where('angkatan',$thn)->orderBy('nama','ASC')->paginate(20);
-            $dosens = dosen::All();
-            // $datas = DataTables::of($data);
+        $dosens = dosen::All();
+        $this->angkatan = $angkatan;
+        if($status === 'sudah'){
+            $data = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->where('angkatan',$angkatan)->orderBy('nama','ASC')->paginate(20);
+            $title = 'Sudah PKL';
+        }
+        elseif($status === 'belum'){
+            $data = Mahasiswa::leftJoin('pkls','mahasiswas.nim','=','pkls.nim')->select('mahasiswas.*')->where('angkatan',$angkatan)->orderBy('nama','ASC')->paginate(20);
+            $title = 'Belum PKL Angkatan '.$angkatan.'';
+            // ->get()->toJson();
+            // ->renameColumn('mahasiswas.nim', 'nim')
+            // return $data;
+        }
 
         return view('departemen.listMahasiswa',[
             // 'test' => 'masuk',
             'datas' => $data,
-            'dosens' => $dosens
+            'dosens' => $dosens,
+            'title' => $title,
+            'angkatan' => $angkatan,
+            'status' => $status,
         ]);
     }
 
