@@ -25,7 +25,7 @@ class DepartemenController extends Controller
 {
     use WithPagination;
 
-    public $thnmax, $thnmin, $pkls, $aktif, $pkl, $mahasiswa;
+    public $thnmax, $thnmin, $pkls, $aktif, $pkl, $mahasiswa, $angkatan;
 
 
 
@@ -66,7 +66,7 @@ class DepartemenController extends Controller
     }
 
     // Generate PDF
-    public function createPDF($pdf,$detail) {
+    public function createPDF($pdf,$detail,$angkatan) {
         $mahasiswas = Mahasiswa::all();
         $thnmax = Mahasiswa::get('angkatan')->max();
         $thnmin = Mahasiswa::get('angkatan')->min();
@@ -78,6 +78,8 @@ class DepartemenController extends Controller
         $pkl = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->select('mahasiswas.nama','pkls.nim','pkls.semester','mahasiswas.angkatan');
         $statuss = Mahasiswa::get()->countBy('status');
         $angkatanArray = [];
+        $dosens = dosen::All();
+
 
         foreach (range($thnmin->angkatan, $thnmax->angkatan) as $angkatanItem) {
             $sudahPklCount = Pkl::join('mahasiswas', 'pkls.nim', '=', 'mahasiswas.nim')
@@ -104,7 +106,27 @@ class DepartemenController extends Controller
                     return $pdf->stream('pdf_file.pdf');
             }
             else{
-                return 'pkl Ini Angkatan';
+                if($detail === 'belum'){
+                    $data = Mahasiswa::leftJoin('pkls','mahasiswas.nim','=','pkls.nim')->select('mahasiswas.*')->where('angkatan',$angkatan)->orderBy('nama','ASC')->get();
+                    $pdf = PDF::loadView('departemen.cetakPdfDetail',[
+                        'title' => 'Belum Mengikuti PKL Angkatan '.$angkatan.'',
+                        'datas' => $data,
+                        'dosens' => $dosens,
+                        'detail' => $detail,
+                    ])->setPaper('a4', 'portrait');
+                    return $pdf->stream('pdf_file.pdf');
+                }
+                else{
+                    $data = Mahasiswa::leftJoin('pkls','mahasiswas.nim','=','pkls.nim')->select('mahasiswas.*','pkls.nilai')->where('angkatan',$angkatan)->whereNotNull('nilai')->get();
+                    // return $data->toJson();
+                    $pdf = PDF::loadView('departemen.cetakPdfDetail',[
+                        'title' => 'Sudah Mengikuti PKL Angkatan '.$angkatan.'',
+                        'datas' => $data,
+                        'dosens' => $dosens,
+                        'detail' => $detail,
+                    ])->setPaper('a4', 'portrait');
+                    return $pdf->stream('pdf_file.pdf');
+                }
             }
         }
         elseif($pdf === 'status'){
@@ -176,11 +198,14 @@ class DepartemenController extends Controller
         }
 
         $dosens = dosen::All();
+        $this->angkatan = $angkatan;
         if($status === 'sudah'){
             $data = Pkl::join('mahasiswas','pkls.nim','=','mahasiswas.nim')->where('angkatan',$angkatan)->orderBy('nama','ASC')->paginate(20);
+            $title = 'Sudah PKL';
         }
         elseif($status === 'belum'){
             $data = Mahasiswa::leftJoin('pkls','mahasiswas.nim','=','pkls.nim')->select('mahasiswas.*')->where('angkatan',$angkatan)->orderBy('nama','ASC')->paginate(20);
+            $title = 'Belum PKL Angkatan '.$angkatan.'';
             // ->get()->toJson();
             // ->renameColumn('mahasiswas.nim', 'nim')
             // return $data;
@@ -189,7 +214,10 @@ class DepartemenController extends Controller
         return view('departemen.listMahasiswa',[
             // 'test' => 'masuk',
             'datas' => $data,
-            'dosens' => $dosens
+            'dosens' => $dosens,
+            'title' => $title,
+            'angkatan' => $angkatan,
+            'status' => $status,
         ]);
     }
 

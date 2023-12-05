@@ -155,7 +155,7 @@
                             </tbody>
                         </table>
                         <div class="btn">
-                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF',  ['pdf' => 'pkl', 'detail' => 'all']) }}">
+                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF',  ['pdf' => 'pkl', 'detail' => 'all', 'angkatan' => ' ']) }}">
                                 CETAK
                             </a>
                         </div>
@@ -261,7 +261,7 @@
                             </tbody>
                         </table>
                         <div class="btn">
-                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF',  ['pdf' => 'status', 'detail' => 'all']) }}">
+                            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF',  ['pdf' => 'status', 'detail' => 'all','angkatan' => ' ']) }}">
                                 CETAK
                             </a>
                         </div>

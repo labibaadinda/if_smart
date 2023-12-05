@@ -1,6 +1,9 @@
+@php
+    $titles = 'List Mahasiswa '.$title.'';
+@endphp
 @extends('layout.backend.app',[
-'title' => 'List Mahasiswa',
-'pageTitle' =>'List Mahasiswa',
+'title' => $titles,
+'pageTitle' => $titles,
 ])
 
 @push('css')
@@ -27,12 +30,19 @@ $message = session()->get('message')['message'];
 @endpush
 @endif
 
-<div class="card">
+<div class="card ">
     {{-- <div class="card-header">
 
         <a href="{{ route('user.create') }}" class="btn btn-md btn-success mb-3 float-right">Tambah Data</a>
 
     </div> --}}
+    <div class="card-header">
+        <div class="btn">
+            <a type="button" class="btn btn-outline-primary align-content-end" href="{{ route('departemen.createPDF',  ['pdf' => 'pkl', 'detail' => $status, 'angkatan' => $angkatan]) }}">
+                CETAK
+            </a>
+        </div>
+    </div>
     <div class="card-body">
         <div id='table' class="table-responsive">
             <table class="table table-bordered data-table">
