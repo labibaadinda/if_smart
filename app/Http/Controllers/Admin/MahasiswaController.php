@@ -76,7 +76,11 @@ class MahasiswaController extends Controller
             $import = new MahasiswaImport();
             Excel::import($import, public_path('storage/excel_files/' . $fileName));
 
-            return redirect()->back()->with('success', 'File uploaded and data imported successfully.');
+            if ($import->changesMade()) {
+                return redirect()->back()->with('success', 'Data Berhasil Di Import.');
+            } else {
+                return redirect()->back()->with('warning', 'Data yang di Import Sama atau Tidak ada perubahan data.');
+            }
         }
 
         return redirect()->back()->with('error', 'File upload failed.');
