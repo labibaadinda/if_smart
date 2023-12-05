@@ -49,7 +49,7 @@
                             <tr>
                                 <th colspan="4"
                                     style="font-size: 26px;font-family:'Times New Roman'!important;padding: 0px;margin: 0px;">
-                                    <b> Rekap Progress PKL Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</b></th>
+                                    <b>Rekap Status Mahasiswa Informatika Fakultas Sains dan Matematika UNDIP Semarang</b></th>
                             </tr>
                             <tr>
                                 <th colspan="2">&nbsp;</th>
@@ -58,53 +58,100 @@
                     </table>
                     <table style="min-width: 100%;font-size: 12px; font-family: 'Times New Roman'!important;">
                         <thead style="font-size: 12px;">
-                            <tr style="text-align: center;height: 30px;">
+                            <tr style="text-align: center;height: 50px;">
                                 <td></td>
                                 @php
                                     $i = 0;
                                     foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
                                         $i++;
-                                    $i=$i*2
+                                    $i=$i
                                 @endphp
-                                <td style="width: 50px;background-color: #a9a9a99c;font-size: 20px;" class="pertama" colspan="{{ $i }}">
+                                <td rowspan="2" style="width: 50px;background-color: #a9a9a99c;font-size: 15px;" class="pertama">
+                                    <b ><strong>Status</strong></b>
+                                </td>
+                                <td colspan="{{ $i }}" style="width: 50px;background-color: #a9a9a99c;font-size: 20px;" class="pertama">
                                     <b ><strong>Angkatan</strong></b>
                                 </td>
                                 <td></td>
                             </tr>
                             <tr style="text-align: center;height: 30px;">
                                 <td></td>
-
-
                                 @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
-                                    <td style="width: 50px;background-color: #a9a9a99c;" class="pertama" colspan="2">
+                                    <td style="width: 50px;background-color: #a9a9a99c;" class="pertama" colspan="">
                                         <b>{{ $item }}</b>
                                     </td>
                                 @endforeach
-                                <th></th>
-
-                            </tr>
-                            <tr style="text-align: center;height: 30px;">
                                 <td></td>
-                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
-                                        <td style="width: 50px;background-color: #a9a9a99c;" class="pertama" ><b>Sudah</b></td>
-                                        <td style="width: 50px;background-color: #a9a9a99c;" class="pertama" ><b>Belum</b></td>
-                                    @endforeach
-                                <td></td>
-
                             </tr>
                         </thead>
                         <tbody style="font-size: 12px;margin: 0;padding: 0;font-family: 'Times New Roman'!important;">
                             <tr>
                                 <td></td>
-                                @foreach ($angkatanArray as $angkatanItem => $jumlah)
-                                    <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
-                                            {{ $jumlah['sudah_pkl'] }}
-                                        </a>
-                                    </td>
-                                    <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
-                                            {{ $jumlah['belum_pkl'] }}
-                                        </a>
-                                    </td>
+                                <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">Aktif</td>
+                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
+                                            {{ $mahasiswas->where('status','aktif')->where('angkatan',$item)->count() }}
+                                        </td>
+                                @endforeach
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">Cuti</td>
+                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
+                                            {{ $mahasiswas->where('status','Cuti')->where('angkatan',$item)->count() }}
+                                        </td>
+                                @endforeach
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">Mengundurkan Diri</td>
+                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
+                                            {{ $mahasiswas->where('status','mengundurkan_diri')->where('angkatan',$item)->count() }}
+                                        </td>
+                                @endforeach
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">Mangkir</td>
+                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
+                                            {{ $mahasiswas->where('status','mangkir')->where('angkatan',$item)->count() }}
+                                        </td>
+                                @endforeach
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">Lulus</td>
+                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
+                                            {{ $mahasiswas->where('status','lulus')->where('angkatan',$item)->count() }}
+                                        </td>
+                                @endforeach
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">DO</td>
+                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <td style="width: 50px;text-align: center;vertical-align: top;" class="kedua">
+                                            {{ $mahasiswas->where('status','do')->where('angkatan',$item)->count() }}
+                                        </td>
+                                @endforeach
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td style="width: 100px;text-align: center;vertical-align: top;" class="kedua">Meninggal Dunia</td>
+                                @foreach (range($thnmin->angkatan, $thnmax->angkatan) as $item)
+                                        <td style="width: 100px;text-align: center;vertical-align: top;" class="kedua">
+                                            {{ $mahasiswas->where('status','meninggal_dunia')->where('angkatan',$item)->count() }}
+                                        </td>
                                 @endforeach
                                 <td></td>
                             </tr>

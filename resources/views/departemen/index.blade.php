@@ -140,16 +140,16 @@
                             <tbody>
                                 <tr>
                                     @foreach ($angkatanArray as $angkatanItem => $jumlah)
-                                        <td>
+                                        <th>
                                             <a href="{{ route('departemen.listMahasiswaAngkatan', ['angkatan' => $angkatanItem, 'status' => 'sudah']) }}">
                                                 {{ $jumlah['sudah_pkl'] }}
                                             </a>
-                                        </td>
-                                        <td colspan="1">
+                                        </th>
+                                        <th colspan="1">
                                             <a href="{{ route('departemen.listMahasiswaAngkatan', ['angkatan' => $angkatanItem, 'status' => 'belum']) }}">
                                                 {{ $jumlah['belum_pkl'] }}
                                             </a>
-                                        </td>
+                                        </th>
                                     @endforeach
                                 </tr>
                             </tbody>
