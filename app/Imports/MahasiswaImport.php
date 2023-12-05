@@ -10,31 +10,68 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class MahasiswaImport implements ToModel, WithHeadingRow
 {
+    private $changesMade = false;
+
     public function model(array $row)
     {
-        // Map the headers to the corresponding database fields
-        $mahasiswa = new Mahasiswa([
-            'nim' => $row['nim'],
-            'nama' => $row['nama'],
-            'dosen_id' => $row['dosen_id'],
-            'status' => $row['status'],
-            'angkatan' => $row['angkatan'],
-            // Add other fields as needed
-        ]);
+        // Find Mahasiswa record based on the nim
+        $mahasiswa = Mahasiswa::where('nim', $row['nim'])->first();
 
-        // Save the Mahasiswa record
-        $mahasiswa->save();
+        if ($mahasiswa) {
+            // Check if any changes are made
+            $changes = [
+                'nama' => $row['nama'],
+                'dosen_id' => $row['dosen_id'],
+                'status' => $row['status'],
+                'angkatan' => $row['angkatan'],
+                // Add other fields as needed
+            ];
 
-        $user = new User([
-            'nim_nip' => $row['nim'],
-            'password' => Hash::make('password'),
-            'role' => 'mahasiswa',
-            // Add other fields as needed
-        ]);
+            if ($this->hasChanges($mahasiswa, $changes)) {
+                // Changes found, update the fields
+                $mahasiswa->update($changes);
+                $this->changesMade = true;
+            }
+        } else {
+            // No existing record found, create a new Mahasiswa record
+            Mahasiswa::create([
+                'nim' => $row['nim'],
+                'nama' => $row['nama'],
+                'dosen_id' => $row['dosen_id'],
+                'status' => $row['status'],
+                'angkatan' => $row['angkatan'],
+                // Add other fields as needed
+            ]);
 
-        // Save the User record
-        $user->save();
+            $this->changesMade = true;
+        }
+
+        // Create or update User record based on nim_nip
+        User::updateOrCreate(
+            ['nim_nip' => $row['nim']],
+            [
+                'password' => Hash::make('password'),
+                'role' => 'mahasiswa',
+                // Add other fields as needed
+            ]
+        );
 
         return $mahasiswa;
     }
+
+    public function changesMade()
+    {
+        return $this->changesMade;
+    }
+
+    private function hasChanges($model, $changes)
+{
+    foreach ($changes as $field => $value) {
+        if ($model->{$field} != $value) {
+            return true;
+        }
+    }
+
+    return false;
+}
 }
